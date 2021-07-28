@@ -1,0 +1,28 @@
+version: '3'
+services:
+  # postgresを起こす
+  db:
+    image: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data 
+    environment: 
+      POSTGRES_PASSWORD: 'postgres'
+
+  # rails sを実行
+  app:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ".:/myapp"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - RAILS_ENV=development
+    #   - REDIS_URL=redis://redis:6379
+    #   - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+    tty: true
+    stdin_open: true
