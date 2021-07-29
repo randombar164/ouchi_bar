@@ -1,0 +1,2 @@
+class DrinkMethod < ApplicationRecord
+end
