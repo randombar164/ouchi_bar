@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_29_113241) do
+ActiveRecord::Schema.define(version: 2021_07_29_110901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,32 +70,6 @@ ActiveRecord::Schema.define(version: 2021_07_29_113241) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "event_members", force: :cascade do |t|
-    t.bigint "event_id", null: false
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["event_id"], name: "index_event_members_on_event_id"
-  end
-
-  create_table "events", force: :cascade do |t|
-    t.string "uuid"
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "events_base_ingredients", force: :cascade do |t|
-    t.bigint "event_id", null: false
-    t.bigint "base_ingredient_id", null: false
-    t.bigint "assigned_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["assigned_id"], name: "index_events_base_ingredients_on_assigned_id"
-    t.index ["base_ingredient_id"], name: "index_events_base_ingredients_on_base_ingredient_id"
-    t.index ["event_id"], name: "index_events_base_ingredients_on_event_id"
-  end
-
   create_table "glass_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -130,9 +104,5 @@ ActiveRecord::Schema.define(version: 2021_07_29_113241) do
   add_foreign_key "concrete_ingredients", "base_ingredients"
   add_foreign_key "concrete_ingredients_handling_stores", "concrete_ingredients"
   add_foreign_key "concrete_ingredients_handling_stores", "handling_stores"
-  add_foreign_key "event_members", "events"
-  add_foreign_key "events_base_ingredients", "base_ingredients"
-  add_foreign_key "events_base_ingredients", "event_members", column: "assigned_id"
-  add_foreign_key "events_base_ingredients", "events"
   add_foreign_key "unit_conversions", "units"
 end
