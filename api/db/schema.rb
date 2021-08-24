@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_29_110901) do
+ActiveRecord::Schema.define(version: 2021_08_24_133924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,22 @@ ActiveRecord::Schema.define(version: 2021_07_29_110901) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "uuid"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uuid"], name: "index_users_on_uuid", unique: true
+  end
+
+  create_table "users_base_ingredients", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "base_ingredient_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["base_ingredient_id"], name: "users_base_ingredients_index_2"
+    t.index ["user_id"], name: "users_base_ingredients_index_1"
+  end
+
   add_foreign_key "base_drinks", "drink_methods"
   add_foreign_key "base_drinks", "glass_types"
   add_foreign_key "base_drinks_base_ingredients", "base_drinks"
@@ -105,4 +121,6 @@ ActiveRecord::Schema.define(version: 2021_07_29_110901) do
   add_foreign_key "concrete_ingredients_handling_stores", "concrete_ingredients"
   add_foreign_key "concrete_ingredients_handling_stores", "handling_stores"
   add_foreign_key "unit_conversions", "units"
+  add_foreign_key "users_base_ingredients", "base_ingredients"
+  add_foreign_key "users_base_ingredients", "users"
 end
