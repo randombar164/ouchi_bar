@@ -1,8 +1,11 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import {useGetUser} from "utils/hooks/useGetUser";
 
 export default function Home() {
+  const uuid = useGetUser();
+  console.log(uuid);
   return (
     <div className={styles.container}>
       <Head>
