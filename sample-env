@@ -1,2 +1,4 @@
 POSTGRES_PASSWORD=password
 POSTGRES_USER=root
+HOST_NAME="localhost"
+API_PORT="3010"
