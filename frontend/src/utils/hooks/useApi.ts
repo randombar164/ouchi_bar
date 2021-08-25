@@ -7,6 +7,7 @@ type GetProps = {
     url: string;
     params?: any;
 }
+
 export const useGetApi = (
     url: string,
     params?: any

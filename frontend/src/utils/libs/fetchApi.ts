@@ -1,5 +1,3 @@
-import camelcaseKeys from "camelcase-keys";
-
 const HOSTNAME = process.env.hostname;
 
 type GetProps = {

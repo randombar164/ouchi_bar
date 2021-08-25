@@ -1,4 +1,4 @@
-import {usePostApi} from "utils/hooks/useApi";
+import {usePostApi} from "src/utils/hooks/useApi";
 import { useEffect } from "react";
 
 export const useGetUser = () => {
