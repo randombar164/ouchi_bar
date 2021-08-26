@@ -38,7 +38,6 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "react/display-name": "error",
     "react-hooks/rules-of-hooks": "error", //フックのルールをチェック
-    "react-hooks/exhaustive-deps": "warn", //effectの依存関係をチェック
     "import/newline-after-import": "error", // import後に空行作る
     "import/no-default-export": "error", //default export禁止
     "simple-import-sort/imports": "error", // import 並び替え

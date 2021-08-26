@@ -4,9 +4,8 @@ import { Context } from "src/utils/contexts/provider";
 import { useGetUser } from "src/utils/hooks/useGetUser";
 
 const SakaguraPage: VFC = () => {
-  const { uuid, setUuid } = useContext(Context);
-  console.log(uuid);
-  useGetUser(uuid, setUuid);
+  const { uuid } = useContext(Context);
+  useGetUser();
   return <div className="text-sm">{uuid}</div>;
 };
 

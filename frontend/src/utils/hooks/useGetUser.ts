@@ -1,29 +1,26 @@
 import { useEffect } from "react";
+import { useContext } from "react";
+import { Context } from "src/utils/contexts/provider";
 import { usePostApi } from "src/utils/hooks/useApi";
 
-export const useGetUser = (
-  uuid: string | null,
-  setUuid: (u: string) => void
-) => {
+export const useGetUser = () => {
+  const { setUuid } = useContext(Context);
   const { loading, response, postFn } = usePostApi("/users", {}, {}, true);
-  console.log(uuid);
   useEffect(() => {
+    const uuid = localStorage.getItem("uuid");
     if (uuid) {
       return;
     }
-    console.log(loading, response);
     if (!response && !loading) {
       postFn();
       return;
     }
     return;
-  }, [loading, uuid]);
+  }, [loading, response]);
 
   useEffect(() => {
     if (response) {
-      console.log(response);
       const u = response?.user?.uuid;
-      console.log(u);
       setUuid(u);
     }
   }, [response]);

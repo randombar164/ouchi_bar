@@ -18,7 +18,6 @@ export const Context = createContext<ContextProps>(defaultContext);
 export const ContextProvider: VFC<{ children: ReactNode }> = (props) => {
   const [uuid, setUuid] = useState<string | null>(null);
   useEffect(() => {
-    console.log("called");
     setUuid(localStorage.getItem("uuid"));
   }, []);
 
