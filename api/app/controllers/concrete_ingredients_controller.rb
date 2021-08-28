@@ -6,7 +6,7 @@ class ConcreteIngredientsController < ApplicationController
 
   def create
     user = User.find_by(uuid: params[:user_uuid])
-    concrete_ingredients = ConcreteIngredient.where(params[:concrete_ingredient_ids])
+    concrete_ingredients = ConcreteIngredient.where(id: params[:concrete_ingredient_ids])
     user.concrete_ingredients = concrete_ingredients
     render json: { concrete_ingredients: user.concrete_ingredients }
   end
