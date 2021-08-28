@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 2021_08_25_123522) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["concrete_ingredient_id"], name: "users_concrete_ingredients_index_2"
+    t.index ["user_id", "concrete_ingredient_id"], name: "users_concrete_ingredients_index_3", unique: true
     t.index ["user_id"], name: "users_concrete_ingredients_index_1"
   end
 

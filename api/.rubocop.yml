@@ -22,6 +22,9 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/SymbolArray:
+  Enabled: false
+
 # returnがなくてもいい場所で書いてもいい設定
 Style/RedundantReturn:
   Enabled: false

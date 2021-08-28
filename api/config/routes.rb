@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :users, only: [:create], param: :uuid do
-    resources :concrete_ingredients, only: [:index]
+    resources :concrete_ingredients, only: [:index, :create]
   end
 end
