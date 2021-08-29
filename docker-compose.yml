@@ -11,6 +11,8 @@ services:
     command: /bin/sh -c "yarn dev"
     tty: true
     stdin_open: true
+    env_file:
+      - .env
 
   api:
     build:
