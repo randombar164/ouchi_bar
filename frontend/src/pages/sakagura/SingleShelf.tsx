@@ -13,7 +13,7 @@ export const SingleShelf: VFC<Props> = ({ items, columnNumber }) => {
         return (
           <div key={i} className={`w-[${itemWidth}]`}>
             <Image
-              src={item img-src}
+              src={item.img_src}
               alt="適当なaltタグを設置してください"
               width={80}
               height={110}
