@@ -10,17 +10,21 @@ export const useGetApi = (url: string, params: any = {}, lazy = false) => {
 
   const getFn = async () => {
     setLoading(true);
-    await fetch(hostname + url, {
+    const jsonedRes = await fetch(hostname + url, {
       method: "GET",
       ...params,
     })
       .then((res) => {
-        setResponse(camelcaseKeys(res.json(), { deep: true }));
+        if (!res.ok) {
+          console.error("サーバーエラー");
+        }
+        return res.json();
       })
       .catch((e) => {
         console.error(e);
         setError(e);
       });
+    setResponse(camelcaseKeys(jsonedRes));
     setLoading(false);
   };
   useEffect(() => {
@@ -57,6 +61,7 @@ export const usePostApi = (
         setError(e);
       });
     setResponse(camelcaseKeys(jsonedRes));
+    setLoading(false);
   };
 
   useEffect(() => {
