@@ -1,12 +1,17 @@
 import Image from "next/image";
 import type { VFC } from "react";
+import React from "react";
+import {SakaguraPage} from "src/pages/sakagura/index";
+
+
 
 type Props = {
-  items: any[];
+  items : any[];
   columnNumber: number;
 };
 export const SingleShelf: VFC<Props> = ({ items, columnNumber }) => {
   const itemWidth = window.innerWidth / columnNumber;
+  
   return (
     <div className="w-full">
       {items.map((item, i) => {
@@ -25,3 +30,5 @@ export const SingleShelf: VFC<Props> = ({ items, columnNumber }) => {
     </div>
   );
 };
+
+export default SingleShelf;

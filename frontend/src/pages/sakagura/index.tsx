@@ -1,7 +1,10 @@
 import type { VFC } from "react";
+import React from "react";
 import { useContext } from "react";
 import { Context } from "src/utils/contexts/provider";
 import { useGetUser } from "src/utils/hooks/useGetUser";
+import { SingleShelf } from "src/pages/sakagura/SingleShelf";
+
 
 const responseObj = {
   concrete_ingredients: [
@@ -126,18 +129,22 @@ const responseObj = {
   ],
 };
 
-const SakaguraPage: VFC = () => {
+
+export const SakaguraPage: VFC = () => {
   const { uuid } = useContext(Context);
   useGetUser();
-
+  /*const Case = [];
+  for (let i=0;i<=(responseObj.concrete_ingredients.length);i=i+5){
+    let Array = responseObj.concrete_ingredients.slice(i,i+4)
+    Case.push(Array)
+  }*/
   return (
     <div>
       {responseObj.concrete_ingredients.map((concrete_ingredient) => {
         return (
-          // <p>{concrete_ingredient.id}
-          // {concrete_ingredient.name}
-          // </p>
-          <img src={concrete_ingredient.img_src} />
+        <p>
+         あ 
+        </p> 
         );
       })}
     </div>
@@ -145,4 +152,56 @@ const SakaguraPage: VFC = () => {
   //<div className="text-sm">{uuid}</div>;
 };
 
+//classつかって送ろうとした、失敗
+/*let Case = [];
+for (let i=0;i<=(responseObj.concrete_ingredients.length);i=i+5){
+  let Array = responseObj.concrete_ingredients.slice(i,i+4)
+  Case.push(Array)
+}
+class INDEX extends React.Component{
+  constructor(props){
+    super(props);
+  }
+render(){  
+  return(
+    Array
+  )
+}
+}*/
+
+
+//関数で送ろうとした、よく判らない。
+/*export const INDEX = React.createContext()
+
+function App(){
+  let Case = [];
+for (let i=0;i<=(responseObj.concrete_ingredients.length);i=i+5){
+  let Array = responseObj.concrete_ingredients.slice(i,i+4)
+  Case.push(Array)
+}
+  returen(
+    <div>
+      <p>
+      Array
+      </p> 
+    </div>
+  );
+}*/
+//export default INDEX;
+/*let Case = [];
+for (let i=0;i<=(responseObj.concrete_ingredients.length);i=i+5){
+  let Array = responseObj.concrete_ingredients.slice(i,i+4)
+  Case.push(Array)
+}*/
+/*export const index = () => {
+  const Case = [];
+  for (let i=0;i<=(responseObj.concrete_ingredients.length);i=i+5){
+    let Array = responseObj.concrete_ingredients.slice(i,i+4)
+    Case.push(Array)
+  }
+  return(
+    Case
+    );
+}
+*/
 export default SakaguraPage;
