@@ -25,7 +25,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:50:10.257Z",
-      img_src: "略",
+        img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 76,
@@ -34,7 +34,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:49:55.135Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 587,
@@ -43,7 +43,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:50:08.259Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 419,
@@ -52,7 +52,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:50:04.463Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 262,
@@ -61,7 +61,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:50:00.714Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 256,
@@ -70,7 +70,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:50:00.573Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 189,
@@ -79,7 +79,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:49:58.434Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 179,
@@ -88,7 +88,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:49:58.364Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 494,
@@ -97,7 +97,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:50:06.162Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 495,
@@ -106,7 +106,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:50:06.186Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 496,
@@ -115,7 +115,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:50:06.215Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
     {
       id: 461,
@@ -124,7 +124,7 @@ const responseObj = {
       tag: "略",
       created_at: "2021-08-28T14:17:25.180Z",
       updated_at: "2021-08-29T11:50:05.408Z",
-      img_src: "略",
+      img_src: "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP",
     },
   ],
 };
@@ -142,9 +142,7 @@ export const SakaguraPage: VFC = () => {
     <div>
       {responseObj.concrete_ingredients.map((concrete_ingredient) => {
         return (
-        <p>
-         あ 
-        </p> 
+         <img src={concrete_ingredient.img_src}/>
         );
       })}
     </div>
@@ -204,4 +202,5 @@ for (let i=0;i<=(responseObj.concrete_ingredients.length);i=i+5){
     );
 }
 */
+
 export default SakaguraPage;
