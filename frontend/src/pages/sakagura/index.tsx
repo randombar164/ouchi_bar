@@ -133,11 +133,8 @@ const responseObj = {
 export const SakaguraPage: VFC = () => {
   const { uuid } = useContext(Context);
   useGetUser();
-  /*const Case = [];
-  for (let i=0;i<=(responseObj.concrete_ingredients.length);i=i+5){
-    let Array = responseObj.concrete_ingredients.slice(i,i+4)
-    Case.push(Array)
-  }*/
+ const imgObj = SingleShelf();
+
   return (
     <div>
       {responseObj.concrete_ingredients.map((concrete_ingredient) => {
@@ -160,7 +157,7 @@ class INDEX extends React.Component{
   constructor(props){
     super(props);
   }
-render(){  
+render(){
   return(
     Array
   )
