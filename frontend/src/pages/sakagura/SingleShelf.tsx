@@ -1,32 +1,30 @@
 import Image from "next/image";
 import type { VFC } from "react";
-import React from "react";
-import {SakaguraPage} from "src/pages/sakagura/index";
-
-
+import styles from "src/styles/SingleShelf.module.css";
 
 type Props = {
-  items : any[];
-  columnNumber: number;
+  items: any[];
 };
-export const SingleShelf: VFC<Props> = ({ items, columnNumber }) => {
-  const itemWidth = window.innerWidth / columnNumber;
-  
+export const SingleShelf: VFC<Props> = ({ items }) => {
   return (
-    <div className="w-full">
-      {items.map((item, i) => {
-        return (
-          <div key={i} className={`w-[${itemWidth}]`}>
-            <Image
-              src={item.img_src}
-              alt="適当なaltタグを設置してください"
-              width={80}
-              height={110}
-              layout={"responsive"}
-            />
-          </div>
-        );
-      })}
+    <div>
+      <div className="flex justify-around items-end w-full h-[150px]">
+        {items.map((item, i) => {
+          return (
+            <div key={i} className="w-[40px]">
+              <Image
+                src={item.img_src}
+                alt="適当なaltタグを設置してください"
+                width={40}
+                height={110}
+                layout={"responsive"}
+                objectFit="contain"
+              />
+            </div>
+          );
+        })}
+      </div>
+      <div className={`${styles.shelf}`}></div>
     </div>
   );
 };
