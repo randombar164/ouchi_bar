@@ -4,6 +4,7 @@ import { createContext, useEffect, useState } from "react";
 type ContextProps = {
   uuid: string | null;
   setUuid: (u: string | null) => void;
+  isVisited: boolean;
 };
 
 const defaultContext: ContextProps = {
@@ -11,14 +12,18 @@ const defaultContext: ContextProps = {
   setUuid: () => {
     /* do nothing */
   },
+  isVisited: false,
 };
 
 export const Context = createContext<ContextProps>(defaultContext);
 
 export const ContextProvider: VFC<{ children: ReactNode }> = (props) => {
   const [uuid, setUuid] = useState<string | null>(null);
+  const [isVisited, setIsVisited] = useState<boolean>(false);
+
   useEffect(() => {
     setUuid(localStorage.getItem("uuid"));
+    setIsVisited(true);
   }, []);
 
   return (
@@ -33,6 +38,7 @@ export const ContextProvider: VFC<{ children: ReactNode }> = (props) => {
           }
           localStorage.setItem("uuid", u);
         },
+        isVisited,
       }}
     >
       {props.children}
