@@ -1,45 +1,39 @@
 import camelcaseKeys from "camelcase-keys";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 const hostname = `${process.env.NEXT_PUBLIC_HOST_NAME}:${process.env.NEXT_PUBLIC_API_PORT}`;
 
-export const useGetApi = (url: string, params: any = {}, lazy = false) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [response, setResponse] = useState<any>(null);
+export const useGetApi = (url: string, params: any = {}) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [response, setResponse] = useState<any | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
-  const getFn = async () => {
+  const getFn = useCallback(async () => {
     setLoading(true);
-    const jsonedRes = await fetch(hostname + url, {
+    await fetch(hostname + url, {
       method: "GET",
       ...params,
     })
-      .then((res) => {
+      .then(async (res) => {
         if (!res.ok) {
           console.error("サーバーエラー");
         }
-        return res.json();
+        const jsonedRes = await res.json();
+        setResponse(camelcaseKeys(jsonedRes));
       })
       .catch((e) => {
         console.error(e);
         setError(e);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    setResponse(camelcaseKeys(jsonedRes));
-    setLoading(false);
-  };
-  useEffect(() => {
-    if (!lazy) getFn();
   }, [url]);
 
-  return { loading, response, error, getFn };
+  return { loading, error, response, getFn };
 };
 
-export const usePostApi = (
-  url: string,
-  params: any = {},
-  body: any = {},
-  lazy = false
-) => {
+export const usePostApi = (url: string, params: any = {}, body: any = {}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -63,10 +57,6 @@ export const usePostApi = (
     setResponse(camelcaseKeys(jsonedRes));
     setLoading(false);
   };
-
-  useEffect(() => {
-    if (!lazy) postFn();
-  }, [url]);
 
   return { loading, response, error, postFn };
 };
