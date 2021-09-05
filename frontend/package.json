@@ -9,10 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "autoprefixer": "^10.3.2",
     "camelcase-keys": "^7.0.0",
     "next": "11.0.1",
-    "postcss": "^8.3.6",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
@@ -22,6 +20,7 @@
     "@types/react": "17.0.15",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
+    "autoprefixer": "^10.3.2",
     "eslint": "7.31.0",
     "eslint-config-next": "11.0.1",
     "eslint-config-prettier": "^8.3.0",
@@ -33,6 +32,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-tailwindcss": "^1.14.3",
+    "postcss": "^8.3.6",
     "prettier": "^2.3.2",
     "tailwindcss": "^2.2.7",
     "typescript": "4.3.5"
