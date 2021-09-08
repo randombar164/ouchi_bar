@@ -28,7 +28,7 @@ export const useGetApi = (url: string, params: any = {}) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [url]);
+  }, [url, params]);
 
   return { loading, error, response, getFn };
 };
@@ -37,26 +37,28 @@ export const usePostApi = (url: string, params: any = {}, body: any = {}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
-  const postFn = async () => {
+  const postFn = useCallback(async () => {
     setLoading(true);
-    const jsonedRes = await fetch(hostname + url, {
+    await fetch(hostname + url, {
       method: "POST",
       body: JSON.stringify(body),
       ...params,
     })
-      .then((res) => {
+      .then(async (res) => {
         if (!res.ok) {
           console.error("サーバーエラー");
         }
-        return res.json();
+        const jsonedRes = await res.json();
+        setResponse(camelcaseKeys(jsonedRes));
       })
       .catch((e) => {
         console.error(e);
         setError(e);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    setResponse(camelcaseKeys(jsonedRes));
-    setLoading(false);
-  };
+  }, [url, params, body]);
 
-  return { loading, response, error, postFn };
+  return { loading, error, response, postFn };
 };
