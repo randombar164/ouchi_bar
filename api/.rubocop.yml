@@ -31,6 +31,9 @@ Style/Lambda:
 Style/HashAsLastArrayItem:
   Enabled: false
 
+Style/RedundantSelf:
+  Enabled: false
+
 # returnがなくてもいい場所で書いてもいい設定
 Style/RedundantReturn:
   Enabled: false
@@ -42,6 +45,10 @@ Style/RedundantReturn:
 # Max length in one line
 Layout/LineLength:
   Max: 120
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
 
 # メソッド名のprefixに「set_」「get_」を許可
 Naming/AccessorMethodName:
