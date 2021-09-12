@@ -1,9 +1,4 @@
-class Cocktail < ApplicationRecord
-  self.table_name = 'base_drinks'
-
-  belongs_to :drink_method
-  belongs_to :glass_type
-
+class Cocktail < BaseDrink
   has_many :ingredients, class_name: 'BaseDrinksBaseIngredient', foreign_key: 'base_drink_id', dependent: :destroy
 
   scope :with_recipe, -> do
