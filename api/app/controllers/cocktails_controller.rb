@@ -1,4 +1,10 @@
 class CocktailsController < ApplicationController
+  def index
+    user = User.find_by(uuid: params[:user_uuid])
+    return response_not_found('User') if user.nil?
+    render json: { cocktails: user.cocktails }
+  end
+
   def show
     cocktail = Cocktail.with_recipe.find(params[:id])
     render json: { cocktail: cocktail }, include: [

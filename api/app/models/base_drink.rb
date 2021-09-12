@@ -4,4 +4,11 @@ class BaseDrink < ApplicationRecord
 
   has_many :base_drinks_base_ingredients, dependent: :destroy
   has_many :base_ingredients, through: :base_drinks_base_ingredients
+
+  def check_enough_base_ingredients?(ids)
+    self.base_drinks_base_ingredients.each do |base_drink_base_ingredient|
+      return false unless ids.include?(base_drink_base_ingredient.base_ingredient_id)
+    end
+    return true
+  end
 end
