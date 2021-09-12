@@ -23,11 +23,12 @@ class User < ApplicationRecord
   end
 
   def cocktails
-    cocktails = []
-    base_ingredient_ids = self.base_ingredients.pluck(:id)
-    Cocktail.with_recipe.includes(:base_drinks_base_ingredients).find_each do |cocktail|
-      cocktails.push(cocktail) if cocktail.check_enough_base_ingredients?(base_ingredient_ids)
-    end
-    return cocktails
+    return Cocktail.where(id: self.cookable_base_drinks.pluck(:id))
+    # cocktails = []
+    # base_ingredient_ids = self.base_ingredients.pluck(:id)
+    # Cocktail.with_recipe.includes(:base_drinks_base_ingredients).find_each do |cocktail|
+    #   cocktails.push(cocktail) if cocktail.check_enough_base_ingredients?(base_ingredient_ids)
+    # end
+    # return cocktails
   end
 end
