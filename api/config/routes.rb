@@ -4,4 +4,5 @@ Rails.application.routes.draw do
     resources :concrete_ingredients, only: [:index]
   end
   resources :users_concrete_ingredients, only: [:create]
+  resources :cocktails, only: [:show]
 end

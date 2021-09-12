@@ -25,6 +25,12 @@ Style/FrozenStringLiteralComment:
 Style/SymbolArray:
   Enabled: false
 
+Style/Lambda:
+  Enabled: false
+
+Style/HashAsLastArrayItem:
+  Enabled: false
+
 # returnがなくてもいい場所で書いてもいい設定
 Style/RedundantReturn:
   Enabled: false
