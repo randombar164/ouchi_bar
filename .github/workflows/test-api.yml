@@ -5,15 +5,21 @@
 # This workflow will download a prebuilt Ruby version, install dependencies, and  run linters
 name: Test api
 
+defaults:
+  run:
+    working-directory: api
+
 on:
   push:
     branches: [ develop ]
     paths:
       - 'api/**'
+      - '.github/workflows/test-api.yml'
   pull_request:
     branches: [ develop ]
     paths:
       - 'api/**'
+      - '.github/workflows/test-api.yml'
 jobs:
   rubocop:
     runs-on: ubuntu-latest
