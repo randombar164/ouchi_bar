@@ -1,6 +1,6 @@
 import type { VFC } from "react";
 
-let cocktail : {
+const cocktail = {
 		id: 1,
 		name: "．50キャリバー",
 		strength: 36,
