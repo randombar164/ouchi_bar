@@ -1,6 +1,9 @@
 import type { VFC } from "react";
+import camelcaseKeys from "camelcase-keys";
 
-const cocktail = {
+const cocktails = {
+    cocktail:[
+        {
 		id: 1,
 		name: "．50キャリバー",
 		strength: 36,
@@ -206,6 +209,8 @@ const cocktail = {
 				}
 			}
 		]
+        }
+    ]
 };
 
 export const CocktailRecipe:VFC = () => {
@@ -214,26 +219,35 @@ return(
 <div>
     <p>＜ 手元のお酒の設定に戻る</p>
     <div id="cocktailContent">
-      <p>{ cocktail.name }</p>
+    {cocktails.cocktail.map((cocktail) => {
+      <p>{ cocktail.name}</p>
+    })}
         <div id="cocktailIngredients">
         <p>材料</p>
             <div>
-            {cocktail.ingredients.map((ingredient, i) => {
+            {cocktails.cocktail.map((cocktail,i) => {
+             cocktail.ingredients.map((ingredients) => {
               return (
                 <div key={i}>
-                    <p>{ingredient.base_ingredient.name}</p>
-                    <p>{ingredient.amount}</p>
-                    <p>{ingredient.unit}</p>
+                    <p>{ingredients.base_ingredient.name}</p>
+                    <p>{ingredients.amount}</p>
+                    <p>{ingredients.unit}</p>
                     <hr/>
                 </div>
              );
+              })
              })}
             </div>
     </div>
-      <div>
+      <div id = "cocktaildrinkmethod">
         <p>作り方</p>
-        <p>{ cocktail.drink_method }</p>
-        <p>{ cocktail.cook_explanation }</p>
+        {cocktails.cocktail.map((cocktail) => {
+           
+        <><p>{cocktail.drink_method.name}</p><p>{cocktail.cook_explanation}</p></>
+
+        })}
+   
+        
       </div>
 </div>
 </div>
