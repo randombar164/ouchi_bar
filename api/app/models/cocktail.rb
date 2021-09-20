@@ -1,7 +1,7 @@
 class Cocktail < BaseDrink
   has_many :ingredients, class_name: 'BaseDrinksBaseIngredient',
                          foreign_key: 'base_drink_id',
-                         inverse_of: 'cocktail',
+                         inverse_of: 'base_drink',
                          dependent: :destroy
 
   scope :with_recipe, -> do
