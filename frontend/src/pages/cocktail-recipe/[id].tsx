@@ -224,7 +224,7 @@ const cocktails = {
 export const CocktailRecipe: VFC = () => {
   return (
     <div>
-      <p>＜ 手元のお酒の設定に戻る</p>
+      <p className = "text-2xl">＜ 手元のお酒の設定に戻る</p>
       <div id="cocktailContent">
         {cocktails.cocktail.map((cocktail) => {
           <p>{cocktail.name}</p>;
@@ -237,21 +237,22 @@ export const CocktailRecipe: VFC = () => {
                 <div key={i}>
                   <p>{ingredients.base_ingredient.name}</p>
                   <p>{ingredients.amount}</p>
-                  <p>{ingredients.unit}</p>
+                  <p>{ingredients.unit.name}</p>
                   <hr />
                 </div>
               );
             })}
-            )
           </div>
         </div>
         <div id="cocktaildrinkmethod">
           <p>作り方</p>
           {cocktails.cocktail.map((cocktail) => {
+			return(
             <>
               <p>{cocktail.drink_method.name}</p>
               <p>{cocktail.cook_explanation}</p>
-            </>;
+            </>
+			);
           })}
         </div>
       </div>
