@@ -16,11 +16,9 @@ class User < ApplicationRecord
     return BaseIngredient.where(id: base_ingredient_ids)
   end
 
-  def cookable_base_drinks
-    drinks = []
-    base_ingredient_ids = self.base_ingredients.pluck(:id)
-    BaseDrink.includes(:base_drinks_base_ingredients).find_each do |drink|
-      drinks.push(drink) if drink.check_enough_base_ingredients?(base_ingredient_ids)
+  # ============
+  # mutation methods
+  # ============
     end
     return drinks
   end
@@ -34,6 +32,13 @@ class User < ApplicationRecord
   #   # end
   #   # return cocktails
   # end
-    # return cocktails
+
+  def update_cookable_cocktails
+    cocktail_ids = []
+    base_ingredient_ids = self.base_ingredients.pluck(:id)
+    Cocktail.includes(:base_drinks_base_ingredients).find_each do |cocktail|
+      cocktail_ids.push(cocktail.id) if cocktail.check_enough_base_ingredients?(base_ingredient_ids)
+    end
+    self.cocktails = Cocktail.where(id: cocktail_ids)
   end
 end
