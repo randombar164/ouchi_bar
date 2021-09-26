@@ -1,5 +1,6 @@
 import camelcaseKeys from "camelcase-keys";
-import type { VFC } from "react";
+import Link from "next/link";
+import { ContentWraper } from "src/components/ContentWrapper";
 
 const cocktails = {
   cocktail: [
@@ -221,54 +222,63 @@ const cocktails = {
   ],
 };
 
-export const CocktailRecipe: VFC = () => {
+const ToCocktailsLink: React.VFC = () => {
   return (
-    <div>
-      <a href="" className = "text-sm text-red-600 no-underline hover:underline">＜ カクテル一覧ページへ戻る</a>
-      <div id="cocktailContent" className="p-3 m-3">
+    <Link href="/cocktails">
+      <span className="text-sm text-red-600 underline">
+        ＜ カクテル一覧ページへ戻る
+      </span>
+    </Link>
+  );
+};
+
+export const CocktailRecipe: React.VFC = () => {
+  return (
+    <ContentWraper>
+      <ToCocktailsLink />
+      <div id="cocktailContent" className="py-3">
         <div className="flex p-2 m-4">
-            <img
-              src="https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00VPZRMAK&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP"
-              width={49}
-              height={177}
-            />
-        {cocktails.cocktail.map((cocktail) => {
-          return (
-          　<p className="text-2xl font-bold p-2 m-2 place-self-center">{cocktail.name}</p>
-       　　)})
-        }
+          <img
+            src="https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00VPZRMAK&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP"
+            width={49}
+            height={177}
+            alt="カクテルの画像"
+          />
+          <p className="place-self-center py-4 text-2xl font-bold">
+            {cocktails.cocktail[0].name}
+          </p>
         </div>
-        <div id="cocktailIngredients" className="p-2 m-4">
-          <p className="text-xl font-semibold p-2">材料</p>
-          <div className="flex flex-col align-top">
+        <div id="cocktailIngredients" className="py-4">
+          <p className="p-2 text-xl font-semibold">材料</p>
+          <div className="mx-auto w-full max-w-[300px]">
             {cocktails.cocktail[0].ingredients.map((ingredients, i) => {
               return (
-                <div key={i} className="grid grid-cols-2">
-                  <p className="flex p-2">{ingredients.base_ingredient.name}</p>
-                  <p className="flex flex-row-reverse text-base p-2">
-                    <p>{ingredients.unit.name}</p>
-                    <p>{ingredients.amount}</p>
+                <div
+                  key={i}
+                  className="flex justify-between items-end pt-4 border-b border-gray-300 border-solid"
+                >
+                  <p>{ingredients.base_ingredient.name}</p>
+                  <p className="text-base">
+                    {ingredients.amount}
+                    {ingredients.unit.name}
                   </p>
-                  <hr />
                 </div>
               );
             })}
           </div>
         </div>
-        <div id="cocktaildrinkmethod" className="p-2 m-4">
-          <p className="text-xl font-semibold p-2">作り方</p>
-          {cocktails.cocktail.map((cocktail) => {
-			return(
-            <div className="text-base p-2">
-              <p>{cocktail.drink_method.name}</p>
-              <p>{cocktail.cook_explanation}</p>
-            </div>
-			);
-          })}
+        <div id="cocktaildrinkmethod" className="py-4">
+          <p className="py-2 text-xl font-semibold">作り方</p>
+          <p className="text-lg font-bold">
+            {cocktails.cocktail[0].drink_method.name}
+          </p>
+          <div className="py-2 text-base">
+            <p>{cocktails.cocktail[0].cook_explanation}</p>
+          </div>
         </div>
       </div>
-      <a href="" className = "text-sm text-red-600 no-underline hover:underline">＜ カクテル一覧ページへ戻る</a>
-    </div>
+      <ToCocktailsLink />
+    </ContentWraper>
   );
 };
 export default CocktailRecipe;
