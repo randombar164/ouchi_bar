@@ -8,7 +8,7 @@ const cocktails = {
       name: "．50キャリバー",
       strength: 36,
       cook_explanation:
-        "氷を入れたハイボールグラスに材料を注ぎステア、最後にソーダを加える。",
+        "1.氷を入れたハイボールグラスに材料を注ぎステアする。2.ソーダを加える。",
       drink_method_id: 1,
       glass_type_id: 1,
       created_at: "2021-08-28T14:07:48.259Z",
@@ -224,38 +224,50 @@ const cocktails = {
 export const CocktailRecipe: VFC = () => {
   return (
     <div>
-      <p className = "text-2xl">＜ 手元のお酒の設定に戻る</p>
-      <div id="cocktailContent">
+      <a href="" className = "text-sm text-red-600 no-underline hover:underline">＜ カクテル一覧ページへ戻る</a>
+      <div id="cocktailContent" className="p-3 m-3">
+        <div className="flex p-2 m-4">
+            <img
+              src="https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00VPZRMAK&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP"
+              width={49}
+              height={177}
+            />
         {cocktails.cocktail.map((cocktail) => {
-          <p>{cocktail.name}</p>;
-        })}
-        <div id="cocktailIngredients">
-          <p>材料</p>
-          <div>
+          return (
+          　<p className="text-2xl font-bold p-2 m-2 place-self-center">{cocktail.name}</p>
+       　　)})
+        }
+        </div>
+        <div id="cocktailIngredients" className="p-2 m-4">
+          <p className="text-xl font-semibold p-2">材料</p>
+          <div className="flex flex-col align-top">
             {cocktails.cocktail[0].ingredients.map((ingredients, i) => {
               return (
-                <div key={i}>
-                  <p>{ingredients.base_ingredient.name}</p>
-                  <p>{ingredients.amount}</p>
-                  <p>{ingredients.unit.name}</p>
+                <div key={i} className="grid grid-cols-2">
+                  <p className="flex p-2">{ingredients.base_ingredient.name}</p>
+                  <p className="flex flex-row-reverse text-base p-2">
+                    <p>{ingredients.unit.name}</p>
+                    <p>{ingredients.amount}</p>
+                  </p>
                   <hr />
                 </div>
               );
             })}
           </div>
         </div>
-        <div id="cocktaildrinkmethod">
-          <p>作り方</p>
+        <div id="cocktaildrinkmethod" className="p-2 m-4">
+          <p className="text-xl font-semibold p-2">作り方</p>
           {cocktails.cocktail.map((cocktail) => {
 			return(
-            <>
+            <div className="text-base p-2">
               <p>{cocktail.drink_method.name}</p>
               <p>{cocktail.cook_explanation}</p>
-            </>
+            </div>
 			);
           })}
         </div>
       </div>
+      <a href="" className = "text-sm text-red-600 no-underline hover:underline">＜ カクテル一覧ページへ戻る</a>
     </div>
   );
 };
