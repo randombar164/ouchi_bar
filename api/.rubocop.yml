@@ -38,6 +38,9 @@ Style/RedundantSelf:
 Style/RedundantReturn:
   Enabled: false
 
+Style/BlockComments:
+  Enabled: false
+
 # array.map(&:somemethod)みたいな書き方ができる場所でしなくてもいい設定
 # Style/SymbolProc:
 #   Enabled: false
