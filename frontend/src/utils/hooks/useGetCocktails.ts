@@ -1,11 +1,19 @@
+import { useContext } from "react";
 import { useGetApi } from "src/utils/hooks/useApi";
 
+import { Context } from "../contexts/provider";
+
 export const useGetCocktails = () => {
-    const uuid = "31c7027e-6755-42e0-ba0e-5d10ac3e192d";
-    const { loading, error, response } = useGetApi(
-        `/users/${uuid}/cocktails`,
-      );
-    return { loading, error, response };
+	// const uuid = "31c7027e-6755-42e0-ba0e-5d10ac3e192d";
+	const { uuid } = useContext(Context);
+	const { loading, error, response, getFn } = useGetApi(
+		`/users/${uuid}/cocktails`,
+	);
+	const getCocktailsFn = () => {
+		if (!uuid) return;
+		getFn();
+	};
+	return { loading, error, response, getCocktailsFn };
 }
 
 export const sampleCocktailsRes = {
