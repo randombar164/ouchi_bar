@@ -9,10 +9,12 @@ export const useGetCocktails = () => {
 	const { loading, error, response, getFn } = useGetApi(
 		`/users/${uuid}/cocktails`,
 	);
+
 	const getCocktailsFn = () => {
 		if (!uuid) return;
 		getFn();
 	};
+
 	return { loading, error, response, getCocktailsFn };
 }
 
