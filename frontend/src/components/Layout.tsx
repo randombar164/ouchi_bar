@@ -1,4 +1,4 @@
-import { Footer } from "src/components/footer";
+import { Footer } from "src/components/Footer";
 
 
 type Props = {
