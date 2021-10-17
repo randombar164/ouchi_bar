@@ -1,5 +1,6 @@
 //mochikun用
 import type { VFC } from "react";
+import { IngredientCard } from "src/components/IngredientCard";
 import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
 
 import { RegisterField } from "./RegisterFiels";

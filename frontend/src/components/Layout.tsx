@@ -1,12 +1,13 @@
-import { Footer } from "src/components/Footer";
-
-
 type Props = {
   children: React.ReactNode;
 };
 
 const Header: React.VFC = () => {
-  return <div className="place-self-center fixed top-0 w-full text-2xl text-center text-red-600 font-semibold p-2">お家Bar</div>;
+  return (
+    <div className="fixed top-0 z-50 place-self-center p-2 w-full text-2xl font-semibold text-center text-red-600 bg-white">
+      お家Bar
+    </div>
+  );
 };
 
 // const Footer: React.VFC = () => {
@@ -23,7 +24,6 @@ export const Layout: React.VFC<Props> = ({ children }) => {
     <>
       <Header />
       {children}
-      <Footer tab={0}/>
     </>
   );
 };

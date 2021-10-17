@@ -1,32 +1,60 @@
 // import type { React.VFC } from "react";
 
 type Props = {
-    tab:number;
+  tab: number;
 };
 
 export const Footer: React.VFC<Props> = ({ tab }) => {
-  if (tab==0){
+  if (tab == 0) {
     return (
-      <div className="place-self-center fixed bottom-0 grid grid-cols-2 w-full divide-x rounded-t-2xl divide-gray-400 p-2 border-t-4 border-r-0 border-b-0 border-l-0 border-gray-400 border-opacity-20">
-        <a href="#" className="text-base text-center text-red-600 font-semibold">My酒蔵</a>
-        <a href="#" className="text-base text-center text-red-400 font-semibold">作れるカクテル一覧</a>
+      <div className="grid fixed bottom-0 grid-cols-2 place-self-center p-2 w-full rounded-t-2xl border-t-4 border-r-0 border-b-0 border-l-0 border-gray-400 border-opacity-20 divide-x divide-gray-400">
+        <a
+          href="/"
+          className="text-base font-semibold text-center text-red-600"
+        >
+          My酒蔵
+        </a>
+        <a
+          href="/"
+          className="text-base font-semibold text-center text-red-400"
+        >
+          作れるカクテル一覧
+        </a>
       </div>
     );
- }else if (tab==1){
+  } else if (tab == 1) {
     return (
-      <div className="place-self-center fixed bottom-0 grid grid-cols-2 w-full divide-x rounded-t-2xl divide-gray-400 p-2 border-t-4 border-r-0 border-b-0 border-l-0 border-gray-400 border-opacity-20">
-        <a href="#" className="text-base text-center text-currently font-semibold">My酒蔵</a>
-        <a href="#" className="text-base text-center text-red-600 font-semibold">作れるカクテル一覧</a>
+      <div className="grid fixed bottom-0 grid-cols-2 place-self-center p-2 w-full rounded-t-2xl border-t-4 border-r-0 border-b-0 border-l-0 border-gray-400 border-opacity-20 divide-x divide-gray-400">
+        <a
+          href="/"
+          className="text-base font-semibold text-center text-current"
+        >
+          My酒蔵
+        </a>
+        <a
+          href="/"
+          className="text-base font-semibold text-center text-red-600"
+        >
+          作れるカクテル一覧
+        </a>
       </div>
     );
-  }else{
+  } else {
     return (
-      <div className="place-self-center fixed bottom-0 grid grid-cols-2 w-full divide-x rounded-t-2xl divide-gray-400 p-2 border-t-4 border-r-0 border-b-0 border-l-0 border-gray-400 border-opacity-20">
-        <a href="#" className="text-base text-center text-currently font-semibold">My酒蔵</a>
-        <a href="#" className="text-base text-center text-red-400 font-semibold">作れるカクテル一覧</a>
+      <div className="grid fixed bottom-0 grid-cols-2 place-self-center p-2 w-full rounded-t-2xl border-t-4 border-r-0 border-b-0 border-l-0 border-gray-400 border-opacity-20 divide-x divide-gray-400">
+        <a
+          href="/"
+          className="text-base font-semibold text-center text-current"
+        >
+          My酒蔵
+        </a>
+        <a
+          href="/"
+          className="text-base font-semibold text-center text-red-400"
+        >
+          作れるカクテル一覧
+        </a>
       </div>
     );
   }
 };
-
-export default Footer;
