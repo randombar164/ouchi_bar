@@ -1,19 +1,16 @@
 //mochikun用
 import type { VFC } from "react";
-import { useContext } from "react";
 import { useEffect } from "react";
 import { CocktailCards } from "src/components/cocktailCard";
-import { Context } from "src/utils/contexts/provider";
-// import { sampleCocktailsRes } from "src/utils/hooks/useGetCocktails";
+import { sampleCocktailsRes } from "src/utils/hooks/useGetCocktails";
 import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
 
 const CocktailPage: VFC = () => {
-  const { uuid } = useContext(Context);
-  const { loading, error, response, getCocktailsFn } = useGetCocktails();
+  const { getCocktailsFn } = useGetCocktails();
 
   useEffect(() => {
     getCocktailsFn();
-  }, [uuid]);
+  }, [getCocktailsFn]);
 
   return (
     <>
