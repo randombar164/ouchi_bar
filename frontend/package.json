@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "type": "commonjs",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,16 +10,19 @@
   },
   "dependencies": {
     "camelcase-keys": "^7.0.0",
-    "next": "11.0.1",
+    "gray-matter": "^4.0.3",
+    "next": "^11.1.0",
+    "raw-loader": "^4.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-markdown": "^7.0.1",
+    "react-markdown": "^7.0.0",
     "rehype-raw": "^6.1.0"
   },
   "devDependencies": {
     "@tailwindcss/jit": "^0.1.18",
     "@types/camelcase-keys": "^5.1.1",
     "@types/react": "17.0.15",
+    "@types/webpack-env": "^1.16.3",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "autoprefixer": "^10.3.2",
