@@ -2,17 +2,17 @@ import { useState } from "react";
 
 export const RegisterField = () => {
   const [current, setCurrent] = useState(true); //left -> true, right -> false
-  const handleClick_left = () => {
+  const handleClickLeft = () => {
     return setCurrent(true);
   };
-  const handleClick_right = () => {
+  const handleClickRight = () => {
     return setCurrent(false);
   };
   return (
     <div id="registerField">
       <div className="flex items-center">
-        <div
-          onClick={handleClick_left}
+        <button
+          onClick={handleClickLeft}
           className={`w-1/2 py-4 text-center ${
             current
               ? "bg-gradient-to-br from-barOrange-2 to-barOrange-3 text-white"
@@ -20,9 +20,9 @@ export const RegisterField = () => {
           }`}
         >
           材料名から登録
-        </div>
-        <div
-          onClick={handleClick_right}
+        </button>
+        <button
+          onClick={handleClickRight}
           className={`w-1/2 py-4 text-center ${
             !current
               ? "bg-gradient-to-br from-barOrange-3 to-barOrange-4 text-white"
@@ -30,7 +30,7 @@ export const RegisterField = () => {
           }`}
         >
           バーコードから登録
-        </div>
+        </button>
       </div>
       <div className="flex items-center py-8 px-4 bg-gradient-to-br from-barOrange-2 to-barOrange-4">
         <input

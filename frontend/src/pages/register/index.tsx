@@ -1,7 +1,6 @@
 //mochikun用
 import type { VFC } from "react";
-import { useEffect } from "react";
-import { IngredientCard } from "src/components/molecules/IngredientCard";
+import { IngredientCard } from "src/components/IngredientCard";
 import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
 
 import { RegisterField } from "./RegisterFiels";
@@ -11,12 +10,8 @@ const concreteIngredientIds = [
 ];
 
 const RegiterPage: VFC = () => {
-  const { loading, response, registerFn } = useRegisterIngredients(
-    concreteIngredientIds
-  );
+  const { registerFn } = useRegisterIngredients(concreteIngredientIds);
 
-  console.log(response);
-  console.log(loading);
   return (
     <>
       <div className=" py-8 px-4 md:px-10 lg:px-16 mt-0 w-full lg:w-3/4">
