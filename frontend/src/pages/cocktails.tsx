@@ -13,9 +13,15 @@ const CocktailPage: VFC = () => {
   }, [getCocktailsFn]);
 
   return (
-    <div className="container">
-      <CocktailCards cocktails={sampleCocktailsRes.cocktails} />
-    </div>
+    <>
+      {loading && <p>ローディング中です</p>}
+      {error && <p>エラーが発生しました</p>}
+      {response &&
+        <div className="container">
+          <CocktailCards cocktails={response.cocktails} />
+        </div>
+      }
+    </>
   );
 };
 
