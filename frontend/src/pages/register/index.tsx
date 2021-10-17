@@ -1,6 +1,5 @@
 //mochikun用
 import type { VFC } from "react";
-import { IngredientCard } from "src/components/IngredientCard";
 import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
 
 import { RegisterField } from "./RegisterFiels";
@@ -27,7 +26,6 @@ const RegiterPage: VFC = () => {
         <RegisterField />
         <div id="cardsField" className="grid grid-cols-1 gap-4 py-6">
           {/* 検索して選択した材料を表示 -> 登録ボタンで一気に登録 */}
-          <IngredientCard />
           <IngredientCard />
         </div>
       </div>
