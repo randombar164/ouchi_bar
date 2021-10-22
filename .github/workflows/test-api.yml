@@ -1,0 +1,36 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will download a prebuilt Ruby version, install dependencies, and  run linters
+name: Test api
+
+defaults:
+  run:
+    working-directory: api
+
+on:
+  push:
+    branches: [ develop ]
+    paths:
+      - 'api/**'
+      - '.github/workflows/test-api.yml'
+  pull_request:
+    branches: [ develop ]
+    paths:
+      - 'api/**'
+      - '.github/workflows/test-api.yml'
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby 2.7
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.2
+        bundler-cache: true
+    - name: run rubocop
+      run: |
+        gem install rubocop rubocop-rails
+        rubocop

@@ -1,0 +1,105 @@
+# Railsのチェックを有効にする
+require: rubocop-rails
+
+# === Style系
+
+# 日本語でのコメントを許可
+Style/AsciiComments:
+  Enabled: false
+
+# モジュール名::クラス名の定義を許可
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+# 「and」「or」の使用を許可
+Style/AndOr:
+  Enabled: false
+
+# ドキュメント用のコメントは不要
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Style/HashAsLastArrayItem:
+  Enabled: false
+
+Style/RedundantSelf:
+  Enabled: false
+
+# returnがなくてもいい場所で書いてもいい設定
+Style/RedundantReturn:
+  Enabled: false
+
+Style/BlockComments:
+  Enabled: false
+
+# array.map(&:somemethod)みたいな書き方ができる場所でしなくてもいい設定
+# Style/SymbolProc:
+#   Enabled: false
+
+# Max length in one line
+Layout/LineLength:
+  Max: 120
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+
+# メソッド名のprefixに「set_」「get_」を許可
+Naming/AccessorMethodName:
+  Enabled: false
+
+# === Lint系
+
+Lint/NonLocalExitFromIterator:
+  Enabled: false
+
+Lint/UnderscorePrefixedVariableName:
+  Enabled: false
+
+# === Metrics系
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/CyclomaticComplexity:
+  Max: 9
+
+Metrics/MethodLength:
+  Max: 35
+
+Metrics/PerceivedComplexity:
+  Max: 11
+
+# === 共通設定
+
+AllCops:
+  # target ruby version
+  TargetRubyVersion: 2.7
+  NewCops: enable
+
+  # Include:
+  #   - '**/Rakefile'
+  #   - '**/config.ru'
+
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'tmp/**/*'
+    - 'bin/*'
+    - 'script/**/*'
+    - 'vendor/**/*'
+    - 'lib/**/*'
+    - '**/Gemfile'
+    - !ruby/regexp /old_and_unused\.rb$/
