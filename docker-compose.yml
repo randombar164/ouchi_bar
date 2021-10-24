@@ -4,10 +4,11 @@ services:
   frontend:
     build:
       context: ./frontend
+      target: "deps"
     ports:
       - '3000:3000'
     volumes:
-      - './frontend:/myapp'
+      - './frontend:/app'
     command: /bin/sh -c "yarn dev"
     tty: true
     stdin_open: true
