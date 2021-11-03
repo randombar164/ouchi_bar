@@ -94,6 +94,8 @@ AllCops:
   #   - '**/config.ru'
 
   Exclude:
+    - 'app/controllers/commands/**/*'
+    - 'app/controllers/queries/**/*'
     - 'db/**/*'
     - 'config/**/*'
     - 'tmp/**/*'
