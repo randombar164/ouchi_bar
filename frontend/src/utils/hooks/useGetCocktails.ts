@@ -7,7 +7,7 @@ export const useGetCocktails = () => {
 	// const uuid = "31c7027e-6755-42e0-ba0e-5d10ac3e192d";
 	const { uuid } = useContext(Context);
 	const { loading, error, response, getFn } = useGetApi(
-		`/users/${uuid}/cocktails`,
+		`/queries/get_cocktails?uuid=${uuid}`,
 	);
 
 	const getCocktailsFn = () => {
@@ -15,7 +15,14 @@ export const useGetCocktails = () => {
 		getFn();
 	};
 
-	return { loading, error, response, getCocktailsFn };
+	const cocktails = response?.cocktails?.map((cocktail: any) => ({
+		id: cocktail?.id,
+		name: cocktail?.name,
+		strength: cocktail?.strength,
+		explanation: cocktail?.cookExplanation
+	}))
+
+	return { cocktails, loading, error, getCocktailsFn };
 }
 
 export const sampleCocktailsRes = {

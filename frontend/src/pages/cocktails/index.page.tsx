@@ -5,7 +5,7 @@ import { CocktailCards } from "src/components/cocktailCard";
 import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
 
 const CocktailPage: VFC = () => {
-  const { response, loading, error, getCocktailsFn } = useGetCocktails();
+  const { cocktails, loading, error, getCocktailsFn } = useGetCocktails();
 
   useEffect(() => {
     getCocktailsFn();
@@ -15,9 +15,9 @@ const CocktailPage: VFC = () => {
     <>
       {loading && <p>ローディング中です</p>}
       {error && <p>エラーが発生しました</p>}
-      {response && (
+      {cocktails && (
         <div className="container">
-          <CocktailCards cocktails={response.cocktails} />
+          <CocktailCards cocktails={cocktails} />
         </div>
       )}
     </>
