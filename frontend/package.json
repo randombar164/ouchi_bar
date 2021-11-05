@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ericblade/quagga2": "^1.4.2",
     "camelcase-keys": "^7.0.0",
     "gray-matter": "^4.0.3",
     "next": "^11.1.0",
