@@ -4,7 +4,7 @@ type Props = {
 
 const Header: React.VFC = () => {
   return (
-    <div className="fixed top-0 z-50 place-self-center p-2 w-full text-2xl font-semibold text-center text-red-600 bg-white">
+    <div className="fixed top-0 z-50 place-self-center h-12 p-2 w-full text-2xl font-semibold text-center text-red-600 bg-white">
       お家Bar
     </div>
   );
@@ -23,7 +23,7 @@ export const Layout: React.VFC<Props> = ({ children }) => {
   return (
     <>
       <Header />
-      {children}
+      <div className="pt-12">{children}</div>
     </>
   );
 };
