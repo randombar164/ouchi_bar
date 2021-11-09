@@ -1,4 +1,75 @@
-//import Quagga from '@ericblade/quagga2';
+import Quagga from '@ericblade/quagga2';
+import PropTypes from 'prop-types';
+import { useLayoutEffect } from 'react';
+/*
+Quagga.init({
+    inputStream : {
+      name : "Live",
+      type : "LiveStream",
+      target: document.querySelector('#yourElement')
+    },
+    
+    decoder : {
+      readers : ["code_128_reader"]
+    }
+  }, (err) => {
+    if(err){
+      return
+    }
+    
+      Quagga.start();
+  });
+
+const defaultConstraints = {
+    width: 640,
+    height: 480,
+};
+
+const defaultLocatorSettings = {
+    patchSize: 'medium',
+    halfSample: true,
+};
+*/
+export const Scanner = ({onDetected}) => {
+  useLayoutEffect(() => {
+      Quagga.init({
+          inputStream: {
+              type: 'LiveStream',
+              constraints: {
+                  width: 640,
+                  height: 480,
+                  //facing: 'environment' // or user
+              },
+          },
+          locator: {
+              patchSize: 'medium',
+              halfSample: true,
+          },
+          numOfWorkers: 2,
+          decoder: {
+              readers: [ 'code_128_reader' ],
+          },
+          locate: true,
+      }, (err) => {
+          if (err) {
+              return
+          }
+          Quagga.start();
+      });
+      Quagga.onDetected(onDetected);
+      return () => {
+          Quagga.offDetected(onDetected);
+          Quagga.stop();
+      };
+  });
+  return (
+      <div id="interactive" className="viewport" />
+  )
+}
+
+Scanner.propTypes = {
+  onDetected: PropTypes.func.isRequired
+};
 
 const ScanPage: React.VFC = (): JSX.Element => {
     return (
