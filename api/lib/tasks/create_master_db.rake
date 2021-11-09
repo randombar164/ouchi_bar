@@ -87,9 +87,9 @@ namespace :dbm do
     concrete_ingredients = []
     CSV.read("./lib/tasks/master_data/concrete_ingredients.csv").each_with_index do |row, ri|
       p ri
-      base_ingredient_id, name, tag = row[0].to_i, row[1], row[2]
+      base_ingredient_id, name, tag, img_src = row[0].to_i, row[1], row[2], row[3]
       p row
-      concrete_ingredients << ConcreteIngredient.new(base_ingredient_id: base_ingredient_id, name: name, tag: tag)
+      concrete_ingredients << ConcreteIngredient.new(base_ingredient_id: base_ingredient_id, name: name, tag: tag, img_src: img_src)
     end
     begin
       p "ConcreteIngredient import開始"
