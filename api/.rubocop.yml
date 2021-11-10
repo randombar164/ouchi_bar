@@ -41,6 +41,9 @@ Style/RedundantReturn:
 Style/BlockComments:
   Enabled: false
 
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyle: no_space
+
 # array.map(&:somemethod)みたいな書き方ができる場所でしなくてもいい設定
 # Style/SymbolProc:
 #   Enabled: false
