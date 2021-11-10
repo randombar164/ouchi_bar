@@ -1,8 +1,9 @@
+import type {QuaggaJSResultObject,QuaggaJSResultObject_CodeResult} from '@ericblade/quagga2';
 import Quagga from '@ericblade/quagga2';
 import PropTypes from 'prop-types';
 import { useCallback, useLayoutEffect } from 'react';
 
-const getMedian=(arr)=> {
+const getMedian=(arr:number[]):number=> {
     arr.sort((a, b) => {return a - b});
     const half = Math.floor(arr.length / 2);
     if (arr.length % 2 === 1) {
@@ -11,7 +12,7 @@ const getMedian=(arr)=> {
     return (arr[half - 1] + arr[half]) / 2;
 }
 
-const getMedianOfCodeErrors=(decodedCodes)=> {
+const getMedianOfCodeErrors=(decodedCodes:QuaggaJSResultObject_CodeResult["decodedCodes"])=> {
     const errors = decodedCodes.filter(x => {return x.error !== undefined}).map(x => {return x.error});
     const medianOfErrors = getMedian(errors);
     return medianOfErrors;
@@ -29,7 +30,7 @@ const defaultLocatorSettings = {
 
 const defaultDecoders = ['ean_reader'];
 
-export const Scanner = ({
+export const Scanner= ({
     onDetected,
     scannerRef,
     onScannerReady,
@@ -52,7 +53,7 @@ export const Scanner = ({
         }
     }, [onDetected]);
 
-    const handleProcessed = (result) => {
+    const handleProcessed = (result:QuaggaJSResultObject) => {
         const drawingCtx = Quagga.canvas.ctx.overlay;
         const drawingCanvas = Quagga.canvas.dom.overlay;
         drawingCtx.font = "24px Arial";
@@ -65,6 +66,7 @@ export const Scanner = ({
                 result.boxes.filter((box) => {return box !== result.box}).forEach((box) => {
                     Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: 'purple', lineWidth: 2 });
                 });
+                //このfilterも同様にJS特有の書き方の為エラー
             }
             if (result.box) {
                 Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: 'blue', lineWidth: 2 });
@@ -134,3 +136,21 @@ Scanner.propTypes = {
     decoders: PropTypes.array,
     locate: PropTypes.bool,
 };
+const ScanPage: React.VFC = (): JSX.Element => {
+    return (
+        
+    <div>
+        <div className="place-self-start w-auto h-8 bg-gray-800"></div>
+        <div className="place-self-end w-auto h-8 bg-gray-800">
+            <p className = "text-white">
+                バーコード検索
+            </p>
+        </div>
+        <button className="py-2 px-4 text-red-500 bg-white rounded-full border-2 border-white">＜ 登録画面に戻る</button>
+    </div>
+    
+    )
+    }
+//ここに、カメラ起動中のUIも書いてOK
+
+export default ScanPage;
