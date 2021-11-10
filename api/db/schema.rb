@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_063819) do
+ActiveRecord::Schema.define(version: 2021_11_10_093320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,31 @@ ActiveRecord::Schema.define(version: 2021_11_10_063819) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["parent_category_id"], name: "index_categories_on_parent_category_id"
+  end
+
+  create_table "cocktails", force: :cascade do |t|
+    t.string "name"
+    t.float "strength"
+    t.text "cook_explanation"
+    t.bigint "drink_method_id", null: false
+    t.bigint "glass_type_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["drink_method_id"], name: "index_cocktails_on_drink_method_id"
+    t.index ["glass_type_id"], name: "index_cocktails_on_glass_type_id"
+  end
+
+  create_table "cocktails_concrete_ingredients", force: :cascade do |t|
+    t.bigint "concrete_ingredient_id", null: false
+    t.bigint "cocktail_id", null: false
+    t.string "amount"
+    t.string "additional_explanation"
+    t.bigint "unit_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cocktail_id"], name: "cocktails_concrete_ingredients_index_2"
+    t.index ["concrete_ingredient_id"], name: "cocktails_concrete_ingredients_index_1"
+    t.index ["unit_id"], name: "index_cocktails_concrete_ingredients_on_unit_id"
   end
 
   create_table "concrete_ingredients", force: :cascade do |t|
@@ -143,6 +168,11 @@ ActiveRecord::Schema.define(version: 2021_11_10_063819) do
   add_foreign_key "base_drinks_base_ingredients", "base_ingredients"
   add_foreign_key "base_drinks_base_ingredients", "units"
   add_foreign_key "categories", "categories", column: "parent_category_id"
+  add_foreign_key "cocktails", "drink_methods"
+  add_foreign_key "cocktails", "glass_types"
+  add_foreign_key "cocktails_concrete_ingredients", "cocktails"
+  add_foreign_key "cocktails_concrete_ingredients", "concrete_ingredients"
+  add_foreign_key "cocktails_concrete_ingredients", "units"
   add_foreign_key "concrete_ingredients", "base_ingredients"
   add_foreign_key "concrete_ingredients_handling_stores", "concrete_ingredients"
   add_foreign_key "concrete_ingredients_handling_stores", "handling_stores"
