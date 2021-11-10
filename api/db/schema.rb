@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_05_105437) do
+ActiveRecord::Schema.define(version: 2021_11_10_063819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 2021_11_05_105437) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_base_ingredients_on_category_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -63,7 +65,9 @@ ActiveRecord::Schema.define(version: 2021_11_05_105437) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "img_src"
+    t.bigint "category_id"
     t.index ["base_ingredient_id"], name: "index_concrete_ingredients_on_base_ingredient_id"
+    t.index ["category_id"], name: "index_concrete_ingredients_on_category_id"
   end
 
   create_table "concrete_ingredients_handling_stores", force: :cascade do |t|
