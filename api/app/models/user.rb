@@ -27,4 +27,10 @@ class User < ApplicationRecord
     concrete_ingredients = ConcreteIngredient.where(id: concrete_ingredient_ids)
     self.concrete_ingredients << concrete_ingredients
   end
+
+  def delete_concrete_ingredients!(concrete_ingredient_ids)
+    concrete_ingredient_ids.each do |ci_id|
+      self.users_concrete_ingredients.destroy_by(concrete_ingredient_id: ci_id)
+    end
+  end
 end
