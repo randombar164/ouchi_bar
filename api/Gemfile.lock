@@ -217,6 +217,9 @@ GEM
       unf_ext
     unf_ext (0.0.8)
     unicode-display_width (2.1.0)
+    vacuum (4.0.0)
+      aws-sigv4 (~> 1.0)
+      http (>= 4.0, < 6.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -235,12 +238,14 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-cors
   rails (~> 6.1.4, >= 6.1.4.1)
+  redis (~> 4.0)
   rspec-rails
   rubocop
   rubocop-rails
   sidekiq
   spring
   tzinfo-data
+  vacuum
 
 RUBY VERSION
    ruby 2.7.2p137
