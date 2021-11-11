@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :concrete_ingredients, through: :users_concrete_ingredients
   has_many :users_base_drinks, dependent: :destroy
   has_many :base_drinks, through: :users_base_drinks
-  has_many :v1_cocktails, through: :users_base_drinks, class_name: 'V1::Cocktail'
+  has_many :v1_cocktails, through: :users_base_drinks, source: :base_drink, class_name: 'V1::Cocktail'
 
   def set_uuid
     self.uuid = SecureRandom.uuid
