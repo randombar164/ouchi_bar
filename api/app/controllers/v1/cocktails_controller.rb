@@ -1,4 +1,4 @@
-class CocktailsController < ApplicationController
+class V1::CocktailsController < ApplicationController
   def index
     user = User.find_by(uuid: params[:user_uuid])
     return response_not_found('User') if user.nil?
@@ -6,7 +6,7 @@ class CocktailsController < ApplicationController
   end
 
   def show
-    cocktail = Cocktail.with_recipe.find(params[:id])
+    cocktail = V1::Cocktail.with_recipe.find(params[:id])
     render json: { cocktail: cocktail }, include: [
       :drink_method,
       :glass_type,
