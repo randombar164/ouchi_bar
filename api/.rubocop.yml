@@ -41,6 +41,9 @@ Style/RedundantReturn:
 Style/BlockComments:
   Enabled: false
 
+Style/NegatedIf:
+  Enabled: false
+
 Layout/SpaceBeforeBlockBraces:
   Enabled: false
 
@@ -50,7 +53,11 @@ Layout/SpaceBeforeBlockBraces:
 
 # Max length in one line
 Layout/LineLength:
-  Max: 120
+  Max: 140
+
+Style/IfUnlessModifier:
+  Enabled: false
+
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
