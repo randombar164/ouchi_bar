@@ -4,7 +4,6 @@ RSpec.describe 'Queries::GetUsersConcreteIngredients', type: :request do
   let(:user) { User.create! }
   let(:concrete_ingredient_ids) { ConcreteIngredient.limit(10).map(&:id) }
 
-  # カクテルのデータを入れると動きます。
   describe 'GET /queries/get_users_concrete_ingredients' do
     it 'responds successfully returns a 200 response' do
       user.concrete_ingredients << ConcreteIngredient.where(id: concrete_ingredient_ids)
