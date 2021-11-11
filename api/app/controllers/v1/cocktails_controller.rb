@@ -1,4 +1,4 @@
-class CocktailsController < ApplicationController
+class V1::CocktailsController < ApplicationController
   def index
     user = User.find_by(uuid: params[:user_uuid])
     return response_not_found('User') if user.nil?

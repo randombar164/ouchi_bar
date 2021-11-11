@@ -9,12 +9,14 @@ end
 Rails.application.routes.draw do
   mount Sidekiq::Web, at: '/sidekiq' if ENV['RAILS_ENV'] == 'development'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :users, only: [:create], param: :uuid do
-    resources :concrete_ingredients, only: [:index]
-    resources :cocktails, only: [:index]
+  namespace :v1 do
+    resources :users, only: [:create], param: :uuid do
+      resources :concrete_ingredients, only: [:index]
+      resources :cocktails, only: [:index]
+    end
+    resources :users_concrete_ingredients, only: [:create]
+    resources :cocktails, only: [:show]
   end
-  resources :users_concrete_ingredients, only: [:create]
-  resources :cocktails, only: [:show]
 
   namespace :commands do
     # define api endpoints
@@ -26,11 +28,10 @@ Rails.application.routes.draw do
 
   namespace :queries do
     # define api endpoints
-    get 'get_cocktails' => 'get_cocktail#index'
+    get 'get_cocktails' => 'get_cocktails#execute'
     get 'show_cocktail' => 'show_cocktail#execute'
     get 'get_users_concrete_ingredients' => 'get_users_concrete_ingredients#execute'
     get 'search_concrete_ingredient_from_category' => 'search_concrete_ingredient_from_category#execute'
     get 'search_concrete_ingredient_from_jan_code' => 'search_concrete_ingredient_from_jan_code#execute'
   end
-
 end
