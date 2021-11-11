@@ -1,7 +1,6 @@
-import type {QuaggaJSResultObject} from '@ericblade/quagga2';
 import PropTypes from 'prop-types';
 
-const Result = (result:QuaggaJSResultObject) => {return (
+const Result = (result:any) => {return (
     <li>
         {result.codeResult.code} [{result.codeResult.format}]
     </li>

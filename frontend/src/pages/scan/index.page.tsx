@@ -30,7 +30,7 @@ const defaultLocatorSettings = {
 
 const defaultDecoders = ['ean_reader'];
 
-export const Scanner= ({
+export const Scanner= (
     onDetected,
     scannerRef,
     onScannerReady,
@@ -41,7 +41,7 @@ export const Scanner= ({
     numOfWorkers = navigator.hardwareConcurrency || 0,
     decoders = defaultDecoders,
     locate = true,
-}) => {
+) => {
     const errorCheck = useCallback((result) => {
         if (!onDetected) {
             return;
