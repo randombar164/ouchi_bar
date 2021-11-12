@@ -3,10 +3,10 @@ import { useState } from "react";
 export const RegisterField = () => {
   const [current, setCurrent] = useState(true); //left -> true, right -> false
   const handleClickLeft = () => {
-    return setCurrent(true);
+    return setCurrent(false);
   };
   const handleClickRight = () => {
-    return setCurrent(false);
+    return setCurrent(true);
   };
   return (
     <div id="registerField">
@@ -14,7 +14,7 @@ export const RegisterField = () => {
         <button
           onClick={handleClickLeft}
           className={`w-1/2 py-4 text-center ${
-            current
+            !current
               ? "bg-gradient-to-br from-barOrange-2 to-barOrange-3 text-white"
               : "bg-gray-200 text-gray-400"
           }`}
@@ -24,7 +24,7 @@ export const RegisterField = () => {
         <button
           onClick={handleClickRight}
           className={`w-1/2 py-4 text-center ${
-            !current
+            current
               ? "bg-gradient-to-br from-barOrange-3 to-barOrange-4 text-white"
               : "bg-gray-200 text-gray-400"
           }`}
