@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_12_204244) do
+ActiveRecord::Schema.define(version: 2021_11_12_214610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2021_11_12_204244) do
     t.string "asin"
     t.text "detail_page_url"
     t.boolean "registered_by_user"
+    t.index ["asin"], name: "index_concrete_ingredients_on_asin", unique: true
     t.index ["base_ingredient_id"], name: "index_concrete_ingredients_on_base_ingredient_id"
     t.index ["category_id"], name: "index_concrete_ingredients_on_category_id"
   end
