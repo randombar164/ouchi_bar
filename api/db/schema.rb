@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_10_093320) do
+ActiveRecord::Schema.define(version: 2021_11_11_201701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 2021_11_10_093320) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "img_src"
     t.bigint "category_id"
+    t.string "jan_code"
     t.index ["base_ingredient_id"], name: "index_concrete_ingredients_on_base_ingredient_id"
     t.index ["category_id"], name: "index_concrete_ingredients_on_category_id"
   end
