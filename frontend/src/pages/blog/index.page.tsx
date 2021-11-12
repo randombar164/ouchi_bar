@@ -2,6 +2,7 @@ import matter from "gray-matter";
 import type { GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Layout } from "src/components/Layout";
 
 export const getStaticProps: GetStaticProps = async () => {
   const blogs = ((context: __WebpackModuleApi.RequireContext) => {
@@ -32,7 +33,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const BlogList: React.VFC = (props: any) => {
   return (
-    <>
+    <Layout>
       <div className="relative w-full text-center">
         <div className="absolute inset-x-0 top-1/2 z-10 w-full text-base font-bold text-white transform -translate-y-1/2">
           <h1 className="text-xl leading-10">
@@ -66,7 +67,7 @@ const BlogList: React.VFC = (props: any) => {
           );
         })}
       </div>
-    </>
+    </Layout>
   );
 };
 
