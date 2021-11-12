@@ -8,7 +8,7 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     if Rails.env.development?
-      origins 'localhost:3000'
+      origins 'http://localhost:3000'
       resource(
         '*',
         headers: :any,
@@ -17,7 +17,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     end
 
     if Rails.env.production?
-      origins ['www.ouchi-bar.com']
+      origins ['http://www.ouchi-bar.com', 'https://www.ouchi-bar.com']
       resource(
         '*',
         headers: :any,
