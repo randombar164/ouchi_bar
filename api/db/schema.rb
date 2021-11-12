@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_11_201701) do
+ActiveRecord::Schema.define(version: 2021_11_12_204244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2021_11_11_201701) do
   end
 
   create_table "concrete_ingredients", force: :cascade do |t|
-    t.bigint "base_ingredient_id", null: false
+    t.bigint "base_ingredient_id"
     t.string "name"
     t.text "tag"
     t.datetime "created_at", precision: 6, null: false
@@ -92,6 +92,9 @@ ActiveRecord::Schema.define(version: 2021_11_11_201701) do
     t.text "img_src"
     t.bigint "category_id"
     t.string "jan_code"
+    t.string "asin"
+    t.text "detail_page_url"
+    t.boolean "registered_by_user"
     t.index ["base_ingredient_id"], name: "index_concrete_ingredients_on_base_ingredient_id"
     t.index ["category_id"], name: "index_concrete_ingredients_on_category_id"
   end
