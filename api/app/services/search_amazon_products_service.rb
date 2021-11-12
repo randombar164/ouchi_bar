@@ -13,11 +13,14 @@ class SearchAmazonProductsService
       response = client.search_items(keywords: @keyword, local: 'ja_JP', sort_by: 'Featured', Resources: @resources)
       searched_products = response.items
 
-      # request = Vacuum.new(marketplace: 'JP', access_key: ENV['PAAPI_ACCESS_KEY'], secret_key: ENV['PAAPI_SECRET_KEY'], partner_tag: ENV['PAAPI_PARTNER_TAG'])
+      # request = Vacuum.new(marketplace: 'JP',
+      #                      access_key: ENV['PAAPI_ACCESS_KEY'],
+      #                      secret_key: ENV['PAAPI_SECRET_KEY'],
+      #                      partner_tag: ENV['PAAPI_PARTNER_TAG'])
       # response = request.search_items(keywords: @keyword, local: "ja_JP", sort_by: "Featured", resources: @resources)
 
       # pa-apiの売り上げがなくて叩けない時、ログを出す。Want: Slackに通知したい。
-      p response.http_response if response.http_response.code == 429
+      Rails.logger.error response.http_response if response.http_response.code == 429
 
       searched_products
     end
