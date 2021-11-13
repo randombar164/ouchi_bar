@@ -1,10 +1,13 @@
-import type { ReactNode, VFC } from "react";
+import { ReactNode, useCallback, VFC } from "react";
 import { createContext, useEffect, useState } from "react";
+import type { concreteIngredientType } from "src/utils/types/type";
 
 type ContextProps = {
   uuid: string | null;
   setUuid: (u: string | null) => void;
   isVisited: boolean;
+  concreteIngredients: concreteIngredientType[];
+  setConcreteIngredients: (ingredient: concreteIngredientType[]) => void;
 };
 
 const defaultContext: ContextProps = {
@@ -13,6 +16,8 @@ const defaultContext: ContextProps = {
     /* do nothing */
   },
   isVisited: false,
+  concreteIngredients: [],
+  setConcreteIngredients: () => {},
 };
 
 export const Context = createContext<ContextProps>(defaultContext);
@@ -20,7 +25,9 @@ export const Context = createContext<ContextProps>(defaultContext);
 export const ContextProvider: VFC<{ children: ReactNode }> = (props) => {
   const [uuid, setUuid] = useState<string | null>(null);
   const [isVisited, setIsVisited] = useState<boolean>(false);
-
+  const [concreteIngredients, setConcreteIngredients] = useState<
+    concreteIngredientType[]
+  >([]);
   useEffect(() => {
     setUuid(localStorage.getItem("uuid"));
     setIsVisited(true);
@@ -39,6 +46,8 @@ export const ContextProvider: VFC<{ children: ReactNode }> = (props) => {
           localStorage.setItem("uuid", u);
         },
         isVisited,
+        concreteIngredients,
+        setConcreteIngredients,
       }}
     >
       {props.children}
