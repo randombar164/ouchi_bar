@@ -1,17 +1,30 @@
 //mochikun用
-import type { VFC } from "react";
 import { IngredientCard } from "src/components/IngredientCard";
 import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
 
 import { RegisterField } from "./RegisterField";
 import { Layout } from "src/components/Layout";
+import { Context } from "src/utils/contexts/provider";
+import { useCallback, useContext } from "react";
 
-const concreteIngredientIds = [
-  670, 671, 76, 587, 419, 262, 256, 189, 179, 494, 495, 496, 461,
-];
+const RegiterPage: React.VFC = (): JSX.Element => {
+  const { concreteIngredients, setConcreteIngredients } = useContext(Context);
+  const { registerFn } = useRegisterIngredients();
 
-const RegiterPage: VFC = () => {
-  const { registerFn } = useRegisterIngredients(concreteIngredientIds);
+  const handleDelete = useCallback(
+    (id: number) => {
+      const adjustedIngredients = concreteIngredients?.filter((value) => {
+        return value.id !== id;
+      });
+      setConcreteIngredients(adjustedIngredients);
+    },
+    [concreteIngredients]
+  );
+
+  const handleClick = useCallback(() => {
+    const ids = concreteIngredients?.map((value) => value.id);
+    registerFn(ids);
+  }, [concreteIngredients]);
 
   return (
     <Layout>
@@ -19,17 +32,28 @@ const RegiterPage: VFC = () => {
         <div id="registerPageTitle" className="py-6 font-bold">
           あなたが持っている材料を登録
         </div>
-        <button
-          className="h-[60px] text-white bg-barOrange-3"
-          onClick={registerFn}
-        >
-          登録します
-        </button>
         <RegisterField />
         <div id="cardsField" className="grid grid-cols-1 gap-4 py-6">
           {/* 検索して選択した材料を表示 -> 登録ボタンで一気に登録 */}
-          <IngredientCard />
         </div>
+        <div>
+          {concreteIngredients?.map((concreteIngredient, i) => {
+            return (
+              <IngredientCard
+                canDelete={true}
+                imgSrc={concreteIngredient.imgSrc}
+                name={concreteIngredient.name}
+                onClick={() => handleDelete(concreteIngredient.id)}
+              />
+            );
+          })}
+        </div>
+        <button
+          className="py-3 text-white bg-[#3BC808] rounded-3xl px-7 mx-auto block"
+          onClick={handleClick}
+        >
+          登録します
+        </button>
       </div>
     </Layout>
   );
