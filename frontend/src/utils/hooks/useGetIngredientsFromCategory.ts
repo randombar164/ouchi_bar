@@ -1,13 +1,17 @@
+import { useEffect, useState } from "react";
 import { useGetApi } from "src/utils/hooks/useApi";
-import { useState } from "react";
 
 export const useGetIngredientsFromCategory = () => {
   const [nodeId, setNodeId] = useState(0)
   const { loading, error, response, getFn } = useGetApi(
-    `/queries/search_concrete_ingredient_from_category?category=hogehoge`
+    `/queries/search_concrete_ingredient_from_category?category=${nodeId}`
   );
 
-  const getIngredientsFromCategory = () => {
+  const getIngredientsFromCategory = (id: number) => {
+    setNodeId(id);
+  };
+  
+  useEffect(() => {
     if (nodeId !== 0) {
       getFn();
       console.log("---API----------------");
@@ -16,7 +20,7 @@ export const useGetIngredientsFromCategory = () => {
       console.log("error: ", error);
       console.log("response: ", response);
     }
-  };
+  },[nodeId])
 
-  return { loading, error, response, getIngredientsFromCategory, setNodeId };
+  return { loading, error, response, getIngredientsFromCategory };
 };
