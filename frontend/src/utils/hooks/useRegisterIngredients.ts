@@ -8,23 +8,21 @@ import { usePostApi } from "src/utils/hooks/useApi";
 // GETで"/users/${uuid}/concrete_ingredients"から情報を取って、IDのみを抜き出すということ？
 
 // 上のrequestBodyの中のconcrete_ingredient_idsに、検索した（登録したい）酒のIDを追加して投げる？
-export const useRegisterIngredients = (ingredientIds: number[]) => {
+export const useRegisterIngredients = () => {
   const { uuid } = useContext(Context);
-  const requestBody = {
-    user_uuid: uuid,
-    concrete_ingredient_ids: ingredientIds,
-  };
 
   // このあたりでrequestBodyのidsを更新する？
   const { loading, error, response, postFn } = usePostApi(
-    `/commands/add_users_concrete_ingredients`,
-    {},
-    requestBody
+    `/commands/add_users_concrete_ingredients`
   );
 
-  const registerFn = () => {
+  const registerFn = (ingredientIds: number[]) => {
     if (!uuid) return;
-    postFn();
+    const requestBody = {
+      user_uuid: uuid,
+      concrete_ingredient_ids: ingredientIds,
+    };
+    postFn(requestBody);
   };
 
   return { loading, error, response, registerFn };
