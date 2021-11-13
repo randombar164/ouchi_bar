@@ -3,7 +3,7 @@ module.exports = {
     return [{ source: "/", destination: "/blog" }];
   },
   pageExtensions: ["page.tsx", "page.ts"],
-  webpack: function (config,{dev}) {
+  webpack: function (config, { dev }) {
     config.module.rules.push({
       test: /\.md$/,
       use: "raw-loader",
@@ -19,6 +19,6 @@ module.exports = {
   reactStrictMode: true,
   experimental: { esmExternals: true },
   images: {
-    domains: ["ws-fe.amazon-adsystem.com"],
+    domains: ["ws-fe.amazon-adsystem.com", "m.media-amazon.com"],
   },
 };

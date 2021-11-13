@@ -1,5 +1,6 @@
 import type { VFC } from "react";
 import { useEffect } from "react";
+import { Layout } from "src/components/Layout";
 import { SingleShelf } from "src/pages/sakagura/SingleShelf";
 import { useGetIngredients } from "src/utils/hooks/useGetIngredients";
 
@@ -13,16 +14,18 @@ const sliceByNumber = (array: any[], number: number) => {
 };
 
 export const SakaguraPage: VFC = () => {
-  const { sakaguraIngredients, loading, error, getIngredientsFn } = useGetIngredients();
+  const { sakaguraIngredients, loading, error, getIngredientsFn } =
+    useGetIngredients();
 
   const slicedIngredients = sliceByNumber(sakaguraIngredients, 4);
 
   useEffect(() => {
     getIngredientsFn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getIngredientsFn]);
 
   return (
-    <div>
+    <Layout>
       {loading && <p>ローディング中です</p>}
 
       {slicedIngredients &&
@@ -31,7 +34,7 @@ export const SakaguraPage: VFC = () => {
         })}
 
       {error && <p>エラーが発生しました</p>}
-    </div>
+    </Layout>
   );
   //<div className="text-sm">{uuid}</div>;
 };

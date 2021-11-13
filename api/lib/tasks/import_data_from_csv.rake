@@ -1,4 +1,5 @@
 namespace :import_data_from_csv do
+  OUTPUT_DIR = "./lib/tasks/master_data/outputs/"
   desc 'CSVからimportします。'
   task all_data: :environment do
     # Rails.application.eager_load!
