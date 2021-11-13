@@ -15,11 +15,7 @@ export const Modal: React.VFC<Props> = ({
 }) => {
   return (
     <Transition appear show={isShow} as="div">
-      <Dialog
-        as="div"
-        className="overflow-y-auto fixed inset-0 z-50"
-        onClose={onClose}
-      >
+      <Dialog as="div" className="fixed inset-0 z-50" onClose={onClose}>
         <div className="py-7 h-screen">
           <Transition.Child
             // as="div"
