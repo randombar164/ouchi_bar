@@ -8,7 +8,7 @@ import { useCallback, useLayoutEffect } from "react";
 import type { PickType } from "src/utils/types/type";
 
 type ScanType = {
-  onDetected?: (result: QuaggaJSResultObject) => void;
+  onDetected?: (result: string) => void;
   scannerRef?: React.MutableRefObject<HTMLDivElement | null> | null;
   onScannerReady?: () => void;
   cameraId?: string;
@@ -78,6 +78,9 @@ export const Scanner: React.VFC<ScanType> = ({
       // if Quagga is at least 75% certain that it read correctly, then accept the code.
       if (err < 0.25) {
         onDetected(result.codeResult.code);
+        Quagga.offDetected(errorCheck);
+        Quagga.offProcessed(handleProcessed);
+        Quagga.stop();
       }
     },
     [onDetected]
@@ -117,7 +120,6 @@ export const Scanner: React.VFC<ScanType> = ({
       }
       console.log(result);
       if (result.codeResult && result.codeResult.code) {
-        console.log(result.codeResult);
         // const validated = barcodeValidator(result.codeResult.code);
         // const validated = validateBarcode(result.codeResult.code);
         // Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: validated ? 'green' : 'red', lineWidth: 3 });
@@ -131,55 +133,54 @@ export const Scanner: React.VFC<ScanType> = ({
       }
     }
   };
-  typeof window !== "undefined" &&
-    useLayoutEffect(() => {
-      console.log("quagga called");
-      Quagga.init(
-        {
-          inputStream: {
-            type: "LiveStream",
-            constraints: {
-              ...constraints,
-              ...(cameraId && { deviceId: cameraId }),
-              ...(!cameraId && { facingMode }),
-            },
-            target: scannerRef?.current,
+  useLayoutEffect(() => {
+    console.log("quagga called");
+    Quagga.init(
+      {
+        inputStream: {
+          type: "LiveStream",
+          constraints: {
+            ...constraints,
+            ...(cameraId && { deviceId: cameraId }),
+            ...(!cameraId && { facingMode }),
           },
-          locator,
-          decoder: { readers: decoders },
-          locate,
+          target: scannerRef?.current,
         },
-        (err) => {
-          Quagga.onProcessed(handleProcessed);
+        locator,
+        decoder: { readers: decoders },
+        locate,
+      },
+      (err) => {
+        Quagga.onProcessed(handleProcessed);
 
-          if (err) {
-            return console.log("Error starting Quagga:", err);
-          }
-          if (scannerRef && scannerRef.current) {
-            Quagga.start();
-            if (onScannerReady) {
-              onScannerReady();
-            }
+        if (err) {
+          return console.log("Error starting Quagga:", err);
+        }
+        if (scannerRef && scannerRef.current) {
+          Quagga.start();
+          if (onScannerReady) {
+            onScannerReady();
           }
         }
-      );
-      Quagga.onDetected(errorCheck);
-      return () => {
-        Quagga.offDetected(errorCheck);
-        Quagga.offProcessed(handleProcessed);
-        Quagga.stop();
-      };
-    }, [
-      cameraId,
-      onDetected,
-      onScannerReady,
-      scannerRef,
-      errorCheck,
-      constraints,
-      locator,
-      decoders,
-      locate,
-    ]);
+      }
+    );
+    Quagga.onDetected(errorCheck);
+    return () => {
+      Quagga.offDetected(errorCheck);
+      Quagga.offProcessed(handleProcessed);
+      Quagga.stop();
+    };
+  }, [
+    cameraId,
+    onDetected,
+    onScannerReady,
+    scannerRef,
+    errorCheck,
+    constraints,
+    locator,
+    decoders,
+    locate,
+  ]);
 
   return <div />;
 };
