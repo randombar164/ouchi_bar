@@ -1,9 +1,10 @@
 import React, { useCallback } from "react";
 import { useState } from "react";
+import { Layout } from "src/components/Layout";
+import data from "src/static/category_tree.json";
+import { IngredientCard } from "src/components/IngredientCard";
 
 import { useGetIngredientsFromCategory } from "../../utils/hooks/useGetIngredientsFromCategory";
-import data from "src/static/category_tree.json";
-import { Layout } from "src/components/Layout";
 
 type NodeProps = {
   id: number;
@@ -20,8 +21,10 @@ const CategoryButton: React.VFC<CategoryButtonProps> = React.memo(
   ({ toNext, child }) => {
     return (
       <button
-        onClick={() => toNext(child)}
-        className="w-full py-1 border-b border-solid border-gray-100"
+        onClick={() => {
+          return toNext(child);
+        }}
+        className="py-1 w-full border-b border-gray-100 border-solid"
       >
         <div className="py-1 ml-3 text-left">{child.name}</div>
       </button>
@@ -34,7 +37,7 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
   const [current, setCurrent] = useState<NodeProps>(data.category);
   const [hasChild, setHasChild] = useState(true);
 
-  const { loading, error, response, getIngredientsFromCategory, setNodeId } =
+  const { loading, error, response, getIngredientsFromCategory } =
     useGetIngredientsFromCategory();
 
   const back = useCallback(() => {
@@ -60,8 +63,7 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
         console.log("-----CLICKED---------------------");
         console.log("name: ", child.name);
         console.log("NodeId: ", child.id);
-        setNodeId(child.id);
-        getIngredientsFromCategory(); //api呼び出し
+        getIngredientsFromCategory(child.id); //api呼び出し
       }
     },
     [current, hasChild, routeIds]
@@ -70,17 +72,17 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
   return (
     <Layout>
       {hasChild && (
-        <div className="bg-barGray-1 h-screen">
-          <p className="text-barGray-2 pl-2 py-4 font-bold test-sm">
+        <div className="h-screen bg-barGray-1">
+          <p className="py-4 pl-2 font-bold text-barGray-2 test-sm">
             カテゴリを選択
           </p>
-          <div className="h-4/5 overflow-scroll bg-white">
+          <div className="overflow-scroll h-auto max-h-4/5 bg-white">
             {current.children.map((child: NodeProps, i: number) => {
               return <CategoryButton key={i} toNext={toNext} child={child} />;
             })}
           </div>
           <button
-            className="pl-2 py-4 outline-none text-barGray-2 font-bold text-base"
+            className="py-4 pl-2 text-base font-bold outline-none text-barGray-2"
             onClick={back}
           >
             ←戻る
@@ -88,10 +90,21 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
         </div>
       )}
       {!hasChild && (
-        <div>
-          <p className="text-barGray-2 pl-2 py-4 font-bold test-sm">
-            商品を選択
+        <div className="px-3">
+          <p className="py-4 font-bold text-barGray-2 test-sm">
+            商品を選択(1つ選んでタップしてください)
           </p>
+          {response?.concreteIngredients?.map((ingredient: any, i: any) => {
+            return (
+              <div className="my-3" key={i}>
+                <IngredientCard
+                  canDelete={false}
+                  imgSrc={ingredient.imgSrc}
+                  name={ingredient.name}
+                />
+              </div>
+            );
+          })}
         </div>
       )}
     </Layout>
