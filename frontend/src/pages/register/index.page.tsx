@@ -39,12 +39,14 @@ const RegiterPage: React.VFC = (): JSX.Element => {
         <div>
           {concreteIngredients?.map((concreteIngredient, i) => {
             return (
-              <IngredientCard
-                canDelete={true}
-                imgSrc={concreteIngredient.imgSrc}
-                name={concreteIngredient.name}
-                onClick={() => handleDelete(concreteIngredient.id)}
-              />
+              <div className="mb-6" key={i}>
+                <IngredientCard
+                  canDelete={true}
+                  imgSrc={concreteIngredient.imgSrc}
+                  name={concreteIngredient.name}
+                  onClick={() => handleDelete(concreteIngredient.id)}
+                />
+              </div>
             );
           })}
         </div>

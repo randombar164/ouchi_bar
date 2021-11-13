@@ -1,10 +1,13 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { useState } from "react";
 import { Layout } from "src/components/Layout";
 import data from "src/static/category_tree.json";
 import { IngredientCard } from "src/components/IngredientCard";
 
 import { useGetIngredientsFromCategory } from "../../utils/hooks/useGetIngredientsFromCategory";
+import { Context } from "src/utils/contexts/provider";
+import { useRouter } from "next/router";
+import type { concreteIngredientType } from "src/utils/types/type";
 
 type NodeProps = {
   id: number;
@@ -36,6 +39,13 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
   const [routeIds, setRouteIds] = useState<number[]>([data.category.id]);
   const [current, setCurrent] = useState<NodeProps>(data.category);
   const [hasChild, setHasChild] = useState(true);
+
+  const { concreteIngredients, setConcreteIngredients } = useContext(Context);
+  const router = useRouter();
+  const handleClick = useCallback((ingredient: concreteIngredientType) => {
+    setConcreteIngredients([...concreteIngredients, ingredient]);
+    router.push("/register");
+  }, []);
 
   const { loading, error, response, getIngredientsFromCategory } =
     useGetIngredientsFromCategory();
@@ -101,6 +111,7 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
                   canDelete={false}
                   imgSrc={ingredient.imgSrc}
                   name={ingredient.name}
+                  onClick={() => handleClick(ingredient)}
                 />
               </div>
             );
