@@ -4,6 +4,8 @@ namespace :import_data_from_csv do
     # Rails.application.eager_load!
     # models = ApplicationRecord.descendants.collect(&:name) - ['V1::Cocktail']
 
+    OUTPUT_DIR = "./lib/tasks/master_data/outputs/"
+
     models = %w[Unit UnitConversion HandlingStore GlassType DrinkMethod Category BaseDrink Cocktail BaseIngredient BaseDrinksBaseIngredient ConcreteIngredient CocktailsConcreteIngredient ConcreteIngredientsHandlingStore]
     
     models.each do |model|
