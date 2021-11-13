@@ -1,43 +1,88 @@
 import { useState } from "react";
+import Link from "next/link";
 
 export const RegisterField = () => {
-  const [current, setCurrent] = useState(true); //left -> true, right -> false
+  const [isLeft, setIsLeft] = useState(true); //left -> true, right -> false
   const handleClickLeft = () => {
-    return setCurrent(false);
+    return setIsLeft(true);
   };
   const handleClickRight = () => {
-    return setCurrent(true);
+    return setIsLeft(false);
   };
   return (
     <div id="registerField">
       <div className="flex items-center">
         <button
           onClick={handleClickLeft}
-          className={`w-1/2 py-4 text-center ${
-            !current
-              ? "bg-gradient-to-br from-barOrange-2 to-barOrange-3 text-white"
-              : "bg-gray-200 text-gray-400"
-          }`}
-        >
-          材料名から登録
-        </button>
-        <button
-          onClick={handleClickRight}
-          className={`w-1/2 py-4 text-center ${
-            current
+          className={`w-1/2 py-3 text-center ${
+            isLeft
               ? "bg-gradient-to-br from-barOrange-3 to-barOrange-4 text-white"
               : "bg-gray-200 text-gray-400"
           }`}
         >
           バーコードから登録
         </button>
+        <button
+          onClick={handleClickRight}
+          className={`w-1/2 py-3 text-center ${
+            !isLeft
+              ? "bg-gradient-to-br from-barOrange-2 to-barOrange-3 text-white"
+              : "bg-gray-200 text-gray-400"
+          }`}
+        >
+          材料名から登録
+        </button>
       </div>
-      <div className="flex items-center py-8 px-4 bg-gradient-to-br from-barOrange-2 to-barOrange-4">
-        <input
-          className="py-3 px-3 w-full rounded-lg"
-          type="text"
-          placeholder="材料の名前から登録"
-        />
+      <div className="flex items-center py-6 px-4 bg-gradient-to-br from-barOrange-2 to-barOrange-4">
+        {isLeft ? (
+          <Link href="/scan">
+            <div className="flex items-center justify-between py-3 px-3 w-full bg-white rounded-lg text-barGray-2">
+              <p className="font-semibold text-sm">
+                カメラを起動してバーコードを読み込む
+              </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </div>
+          </Link>
+        ) : (
+          <Link href="/search-category">
+            <div className="flex items-center justify-between py-3 px-3 w-full bg-white rounded-lg text-barGray-2">
+              <p className="font-semibold text-sm">カテゴリを選択する</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+          </Link>
+        )}
       </div>
     </div>
   );
