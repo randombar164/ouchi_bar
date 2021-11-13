@@ -19,7 +19,7 @@ export const useGetApi = (url: string, params: any = {}) => {
           console.error("サーバーエラー");
         }
         const jsonedRes = await res.json();
-        setResponse(camelcaseKeys(jsonedRes));
+        setResponse(camelcaseKeys(jsonedRes, {deep: true}));
       })
       .catch((e) => {
         console.error(e);
@@ -33,11 +33,11 @@ export const useGetApi = (url: string, params: any = {}) => {
   return { loading, error, response, getFn };
 };
 
-export const usePostApi = (url: string, params: any = {}, body: any = {}) => {
+export const usePostApi = (url: string, params: any = {} ) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
-  const postFn = useCallback(async () => {
+  const postFn = useCallback(async (body: any = {}) => {
     setLoading(true);
     await fetch(hostname + url, {
       method: "POST",
@@ -58,7 +58,7 @@ export const usePostApi = (url: string, params: any = {}, body: any = {}) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [url, params, body]);
+  }, [url, params]);
 
   return { loading, error, response, postFn };
 };
