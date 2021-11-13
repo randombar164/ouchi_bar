@@ -1,0 +1,154 @@
+Table "categories" {
+  "id" varchar
+  "name" string
+  "amazon_browse_node_id" bigint
+  "category_full_path" string
+  "parent_category_id" bigint [ref: > categories.id]
+}
+
+// カクテルデータ周り
+Table "base_drinks" {
+  "id" varchar
+  "name" string
+  "strength" float
+  "cook_explanation" text
+  "drink_method_id" bigint  [ref: > drink_methods.id]
+  "glass_type_id" bigint  [ref: > glass_types.id]
+  "created_at" datetime
+  "updated_at" datetime
+  Note: "使用しないがデータとしては残しておきたい"
+}
+
+Table "base_drinks_base_ingredients" {
+  "id" varchar
+  "base_ingredient_id" bigint  [ref: > base_ingredients.id]
+  "base_drink_id" bigint  [ref: > base_drinks.id]
+  "amount" string
+  "additional_explanation" string
+  "unit_id" bigint  [ref: > units.id]
+  "created_at" datetime
+  "updated_at" datetime
+  Note: "使用しないがデータとしては残しておきたい"
+}
+
+Table "base_ingredients" {
+  "id" varchar
+  "name" string
+  "category_id" bigint [ref: > categories.id, note: "データの移行のための一時データ"]
+  "created_at" datetime
+  "updated_at" datetime
+  Note: "使用しないがデータとしては残しておきたい"
+}
+
+Table "cocktails" {
+  "id" varchar
+  "name" string
+  "strength" float
+  "cook_explanation" text
+  "drink_method_id" bigint  [ref: > drink_methods.id]
+  "glass_type_id" bigint  [ref: > glass_types.id]
+  "created_at" datetime
+  "updated_at" datetime
+}
+
+Table "concrete_ingredients_cocktails" {
+  "id" varchar
+  "concrete_ingredient_id" bigint  [ref: > concrete_ingredients.id]
+  "cocktail_id" bigint  [ref: > cocktails.id]
+  "amount" string
+  "additional_explanation" string
+  "unit_id" bigint  [ref: > units.id]
+  "created_at" datetime
+  "updated_at" datetime
+  Note: "使用しないがデータとしては残しておきたい"
+}
+
+Table "concrete_ingredients" {
+  "id" varchar
+  "base_ingredient_id" bigint  [ref: > base_ingredients.id]
+  "category_id" bigint [ref: > categories.id]
+  "name" string
+  "tag" text
+  "created_at" datetime
+  "updated_at" datetime
+  "img_src" text
+}
+
+Table "handling_stores" {
+  "id" varchar
+  "name" string
+  "created_at" datetime
+  "updated_at" datetime
+}
+
+Table "concrete_ingredients_handling_stores" {
+  "id" varchar
+  "concrete_ingredient_id" bigint  [ref: > concrete_ingredients.id]
+  "handling_store_id" bigint  [ref: > handling_stores.id]
+  "created_at" datetime
+  "updated_at" datetime
+}
+
+Table "drink_methods" {
+  "id" varchar
+  "name" string
+  "created_at" datetime
+  "updated_at" datetime
+}
+
+Table "glass_types" {
+  "id" varchar
+  "name" string
+  "created_at" datetime
+  "updated_at" datetime
+}
+
+Table "units" {
+  "id" varchar
+  "name" string
+  "created_at" datetime
+  "updated_at" datetime
+}
+
+Table "unit_conversions" {
+  "id" varchar
+  "unit_id" bigint  [ref: > units.id]
+  "amount" float
+  "created_at" datetime
+  "updated_at" datetime
+}
+
+// ユーザー(User)周り
+Table "users" {
+  "id" varchar
+  "uuid" string
+  "created_at" datetime
+  "updated_at" datetime
+}
+
+Table "users_concrete_ingredients" {
+  "id" varchar
+  "user_id" bigint [ref: > users.id]
+  "concrete_ingredient_id" bigint [ref: > concrete_ingredients.id]
+  "created_at" datetime
+  "updated_at" datetime
+}
+
+Table "users_base_drinks" {
+  "id" varchar
+  "user_id" bigint  [ref: > users.id]
+  "base_drink_id" bigint  [ref: > base_drinks.id]
+  "created_at" datetime
+  "updated_at" datetime
+  Note: "使用しないがデータとしては残しておきたい"
+}
+
+Table "users_cocktails" {
+  "id" varchar
+  "user_id" bigint  [ref: > users.id]
+  "cocktail_id" bigint  [ref: > cocktails.id]
+  "created_at" datetime
+  "updated_at" datetime
+  Note: "使用しないがデータとしては残しておきたい"
+}
+

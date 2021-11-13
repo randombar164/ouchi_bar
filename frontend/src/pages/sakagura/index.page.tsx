@@ -13,9 +13,9 @@ const sliceByNumber = (array: any[], number: number) => {
 };
 
 export const SakaguraPage: VFC = () => {
-  const { loading, error, response, getIngredientsFn } = useGetIngredients();
+  const { sakaguraIngredients, loading, error, getIngredientsFn } = useGetIngredients();
 
-  const slicedIngredients = sliceByNumber(response?.concreteIngredients, 4);
+  const slicedIngredients = sliceByNumber(sakaguraIngredients, 4);
 
   useEffect(() => {
     getIngredientsFn();

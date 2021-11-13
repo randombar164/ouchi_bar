@@ -4,7 +4,7 @@ import { usePostApi } from "src/utils/hooks/useApi";
 
 export const useGetUser = () => {
   const { setUuid } = useContext(Context);
-  const { loading, response, postFn } = usePostApi("/users", {}, {});
+  const { loading, response, postFn } = usePostApi("/commands/register_user", {}, {});
   const getUserFn = () => {
     const uuid = localStorage.getItem("uuid");
     if (uuid) {

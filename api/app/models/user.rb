@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :concrete_ingredients, through: :users_concrete_ingredients
   has_many :users_base_drinks, dependent: :destroy
   has_many :base_drinks, through: :users_base_drinks
-  has_many :cocktails, through: :users_base_drinks, class_name: 'Cocktail'
+  has_many :v1_cocktails, through: :users_base_drinks, source: :base_drink, class_name: 'V1::Cocktail'
 
   def set_uuid
     self.uuid = SecureRandom.uuid
@@ -16,31 +16,33 @@ class User < ApplicationRecord
     return BaseIngredient.where(id: base_ingredient_ids)
   end
 
+  def cocktails
+    return Cocktail.where_cookable_cocktails(self.concrete_ingredient_ids)
+  end
+
   # ============
   # mutation methods
   # ============
   def add_concrete_ingredients!(concrete_ingredient_ids)
     concrete_ingredients = ConcreteIngredient.where(id: concrete_ingredient_ids)
-    concrete_ingredients.each do |ci|
-      UsersConcreteIngredient.create!(user_id: self.id, concrete_ingredient_id: ci.id)
-    end
-    CalculateCookableCocktailsWorker.perform_async(self.id)
+    self.concrete_ingredients << concrete_ingredients
   end
 
-  # def delete_concrete_ingredients!(concrete_ingredient_ids)
-  #   concrete_ingredients = ConcreteIngredient.where(id: concrete_ingredient_ids)
-  #   concrete_ingredients.each do |ci|
-  #     UsersConcreteIngredient.create!(user_id: self.id, concrete_ingredient_id: ci.id)
+  def delete_concrete_ingredients!(concrete_ingredient_ids)
+    concrete_ingredient_ids.each do |ci_id|
+      self.users_concrete_ingredients.destroy_by(concrete_ingredient_id: ci_id)
+    end
+  end
+
+  # ==========
+  # v1 methods
+  # ==========
+  # def update_cookable_cocktails
+  #   cocktail_ids = []
+  #   base_ingredient_ids = self.base_ingredients.pluck(:id)
+  #   V1::Cocktail.includes(:base_drinks_base_ingredients).find_each do |cocktail|
+  #     cocktail_ids.push(cocktail.id) if cocktail.check_enough_base_ingredients?(base_ingredient_ids)
   #   end
-  #   CalculateCookableCocktailsWorker.perform_async(self.id)
+  #   self.v1_cocktails = V1::Cocktail.where(id: cocktail_ids)
   # end
-
-  def update_cookable_cocktails
-    cocktail_ids = []
-    base_ingredient_ids = self.base_ingredients.pluck(:id)
-    Cocktail.includes(:base_drinks_base_ingredients).find_each do |cocktail|
-      cocktail_ids.push(cocktail.id) if cocktail.check_enough_base_ingredients?(base_ingredient_ids)
-    end
-    self.cocktails = Cocktail.where(id: cocktail_ids)
-  end
 end

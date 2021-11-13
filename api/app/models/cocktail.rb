@@ -1,12 +1,13 @@
-class Cocktail < BaseDrink
-  has_many :ingredients, class_name: 'BaseDrinksBaseIngredient',
-                         foreign_key: 'base_drink_id',
-                         inverse_of: 'base_drink',
+class Cocktail < ApplicationRecord
+  belongs_to :drink_method
+  belongs_to :glass_type
+
+  has_many :cocktails_concrete_ingredients, dependent: :destroy
+  has_many :concrete_ingredients, through: :cocktails_concrete_ingredients
+
+  has_many :ingredients, class_name: 'CocktailsConcreteIngredient',
+                         inverse_of: 'cocktail',
                          dependent: :destroy
-  has_many :users_cocktails, class_name: 'UsersBaseDrink',
-                             foreign_key: 'base_drink_id',
-                             inverse_of: 'base_drink',
-                             dependent: :destroy
 
   scope :with_recipe, -> do
     includes(
@@ -14,11 +15,23 @@ class Cocktail < BaseDrink
       :glass_type,
       {
         ingredients: [
-          :base_ingredient,
-          :concrete_ingredients,
+          :concrete_ingredient,
           { unit: [:unit_conversion] }
         ]
       }
     )
+  end
+
+  def self.where_cookable_cocktails(concrete_ingredient_ids)
+    cookable_cocktails_candidate_having_ci_counts = CocktailsConcreteIngredient
+                                                    .where(concrete_ingredient_id: concrete_ingredient_ids)
+                                                    .group(:cocktail_id)
+                                                    .count
+    cocktails_enough_ci_counts = CocktailsConcreteIngredient.group(:cocktail_id).count
+    cookable_cocktail_ids = []
+    cookable_cocktails_candidate_having_ci_counts.each do |cocktail_id, having_ci_count|
+      cookable_cocktail_ids << cocktail_id if having_ci_count == cocktails_enough_ci_counts[cocktail_id]
+    end
+    return self.where(id: cookable_cocktail_ids)
   end
 end

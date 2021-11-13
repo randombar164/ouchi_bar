@@ -41,13 +41,23 @@ Style/RedundantReturn:
 Style/BlockComments:
   Enabled: false
 
+Style/NegatedIf:
+  Enabled: false
+
+Layout/SpaceBeforeBlockBraces:
+  Enabled: false
+
 # array.map(&:somemethod)みたいな書き方ができる場所でしなくてもいい設定
 # Style/SymbolProc:
 #   Enabled: false
 
 # Max length in one line
 Layout/LineLength:
-  Max: 120
+  Max: 140
+
+Style/IfUnlessModifier:
+  Enabled: false
+
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
@@ -94,6 +104,8 @@ AllCops:
   #   - '**/config.ru'
 
   Exclude:
+    - 'app/controllers/commands/**/*'
+    - 'app/controllers/queries/**/*'
     - 'db/**/*'
     - 'config/**/*'
     - 'tmp/**/*'

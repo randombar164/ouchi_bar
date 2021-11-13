@@ -3,11 +3,17 @@ module.exports = {
     return [{ source: "/", destination: "/blog" }];
   },
   pageExtensions: ["page.tsx", "page.ts"],
-  webpack: function (config) {
+  webpack: function (config,{dev}) {
     config.module.rules.push({
       test: /\.md$/,
       use: "raw-loader",
     });
+    if (dev) {
+      config.watchOptions = {
+        poll: 1000,
+        aggregateTimeout: 200,
+      };
+    }
     return config;
   },
   reactStrictMode: true,

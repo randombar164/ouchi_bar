@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  nginx-proxy:
+      image: nginx
+      container_name: nginx-proxy
+      ports:
+        - 80:80
+        - 443:443
+      volumes: # ここは適当に今のうちは書いている
+        - ./nginx/certs:/etc/nginx/certs
+        - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+        - ./nginx/html:/var/www/html
+      networks:
+        - service-network
+
+  next-prod:
+      build:
+        context: ./frontend
+        target: 'runner'
+      container_name: next-prod
+      ports:
+        - '127.0.0.1:3000:3000'
+      networks:
+        service-network:
+
+  certbot:
+      image: certbot/certbot:v1.7.0
+      volumes:
+        - ./nginx/certs:/etc/letsencrypt
+        - ./nginx/html:/var/www/html
+      command: ["--version"]
+
+volumes:
+    nginx-certs:
+    nginx-conf:
+    nginx-vhost:
+    nginx-html:
+
+networks:
+    service-network:

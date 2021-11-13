@@ -6,7 +6,7 @@ import { Context } from "../contexts/provider";
 export const useGetIngredients = () => {
   const { uuid } = useContext(Context);
   const { loading, error, response, getFn } = useGetApi(
-    `/users/${uuid}/concrete_ingredients`
+    `/queries/get_users_concrete_ingredients?uuid=${uuid}`
   );
 
   const getIngredientsFn = () => {
@@ -14,5 +14,13 @@ export const useGetIngredients = () => {
     getFn();
   };
 
-  return { loading, error, response, getIngredientsFn };
+  const ingredients = response?.concreteIngredients;
+
+  const sakaguraIngredients = ingredients?.map((ingredient: any) => ({
+    id: ingredient.id,
+    name: ingredient.name,
+    tag: ingredient.tag
+  }))
+
+  return { sakaguraIngredients, loading, error, getIngredientsFn };
 };

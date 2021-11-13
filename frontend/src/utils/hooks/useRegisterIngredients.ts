@@ -17,7 +17,7 @@ export const useRegisterIngredients = (ingredientIds: number[]) => {
 
   // このあたりでrequestBodyのidsを更新する？
   const { loading, error, response, postFn } = usePostApi(
-    `/users_concrete_ingredients`,
+    `/commands/add_users_concrete_ingredients`,
     {},
     requestBody
   );
