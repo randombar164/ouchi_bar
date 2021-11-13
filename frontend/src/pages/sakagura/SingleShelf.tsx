@@ -14,7 +14,7 @@ export const SingleShelf: VFC<Props> = ({ items }) => {
             <div key={i} className="w-[40px]">
               <Image
                 src={item.img_src}
-                alt="適当なaltタグを設置してください"
+                alt="お酒の画像"
                 width={40}
                 height={110}
                 layout={"responsive"}
