@@ -13,7 +13,7 @@ export const SingleShelf: VFC<Props> = ({ items }) => {
           return (
             <div key={i} className="w-[40px]">
               <Image
-                src={item.img_src}
+                src={item.imgSrc}
                 alt="お酒の画像"
                 width={40}
                 height={110}

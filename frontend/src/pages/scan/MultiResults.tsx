@@ -1,10 +1,10 @@
+import { useRouter } from "next/router";
+import { useCallback, useContext, useEffect } from "react";
 import { Modal } from "src/components/Modal";
-import type { ModalProps } from "src/utils/types/type";
 import { ResultCard } from "src/pages/scan/ResultCard";
 import { Context } from "src/utils/contexts/provider";
-import { useCallback, useContext, useEffect } from "react";
-import { useRouter } from "next/router";
 import { useRegisterCode } from "src/utils/hooks/useRegisterCode";
+import type { ModalProps } from "src/utils/types/type";
 
 type Props = {
   ingredients: any[];
@@ -14,7 +14,7 @@ export const MultiResults: React.VFC<Props> = (prop): JSX.Element => {
   const { concreteIngredients, setConcreteIngredients } = useContext(Context);
   const router = useRouter();
 
-  const { loading, response, registerCode } = useRegisterCode();
+  const { response, registerCode } = useRegisterCode();
   const handleClick = useCallback(
     (asin: string) => {
       registerCode({
@@ -22,7 +22,7 @@ export const MultiResults: React.VFC<Props> = (prop): JSX.Element => {
         asin: asin,
       });
     },
-    [prop]
+    [prop, registerCode]
   );
 
   useEffect(() => {
@@ -35,15 +35,15 @@ export const MultiResults: React.VFC<Props> = (prop): JSX.Element => {
       response.concreteIngredients,
     ]);
     router.push("/register");
-  }, [response]);
+  }, [response, router, concreteIngredients, setConcreteIngredients]);
   return (
     <Modal
       isShow={prop.isShow}
       onClose={prop.onClose}
-      className="overflow-scroll h-5/6 my-auto max-h-[700px]"
+      className="overflow-scroll my-auto h-5/6 max-h-[700px]"
     >
       <div className="py-8 px-6">
-        <p className="text-barGray-3 font-bold text-sm">
+        <p className="text-sm font-bold text-barGray-3">
           どれか一つをタップして追加してください
         </p>
         {prop.ingredients &&
@@ -53,7 +53,9 @@ export const MultiResults: React.VFC<Props> = (prop): JSX.Element => {
                 <ResultCard
                   imgSrc={ingredient.images.primary.medium.url}
                   name={ingredient.itemInfo.title.displayValue}
-                  onClick={() => handleClick(ingredient.asin)}
+                  onClick={() => {
+                    return handleClick(ingredient.asin);
+                  }}
                 />
               </div>
             );

@@ -1,14 +1,16 @@
 //mochikun用
+import { useRouter } from "next/router";
+import { useCallback, useContext } from "react";
 import { IngredientCard } from "src/components/IngredientCard";
+import { Layout } from "src/components/Layout";
+import { Context } from "src/utils/contexts/provider";
 import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
 
 import { RegisterField } from "./RegisterField";
-import { Layout } from "src/components/Layout";
-import { Context } from "src/utils/contexts/provider";
-import { useCallback, useContext } from "react";
 
 const RegiterPage: React.VFC = (): JSX.Element => {
   const { concreteIngredients, setConcreteIngredients } = useContext(Context);
+  const router = useRouter();
   const { registerFn } = useRegisterIngredients();
 
   const handleDelete = useCallback(
@@ -18,13 +20,16 @@ const RegiterPage: React.VFC = (): JSX.Element => {
       });
       setConcreteIngredients(adjustedIngredients);
     },
-    [concreteIngredients]
+    [concreteIngredients, setConcreteIngredients]
   );
 
   const handleClick = useCallback(() => {
-    const ids = concreteIngredients?.map((value) => value.id);
+    const ids = concreteIngredients?.map((value) => {
+      return value.id;
+    });
     registerFn(ids);
-  }, [concreteIngredients]);
+    router.push("/sakagura");
+  }, [concreteIngredients, registerFn, router]);
 
   return (
     <Layout>
@@ -44,14 +49,16 @@ const RegiterPage: React.VFC = (): JSX.Element => {
                   canDelete={true}
                   imgSrc={concreteIngredient.imgSrc}
                   name={concreteIngredient.name}
-                  onClick={() => handleDelete(concreteIngredient.id)}
+                  onClick={() => {
+                    return handleDelete(concreteIngredient.id);
+                  }}
                 />
               </div>
             );
           })}
         </div>
         <button
-          className="py-3 text-white bg-[#3BC808] rounded-3xl px-7 mx-auto block"
+          className="block py-3 px-7 mx-auto text-white bg-[#3BC808] rounded-3xl"
           onClick={handleClick}
         >
           登録します

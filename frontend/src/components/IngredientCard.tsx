@@ -1,6 +1,4 @@
-import type { VFC } from "react";
 import type { IngredientCardProps } from "src/utils/types/type";
-import Image from "next/image";
 
 type Props = {
   canDelete: boolean;
@@ -12,9 +10,9 @@ export const IngredientCard: React.VFC<Props> = (prop) => {
     <button
       id="card"
       onClick={prop.onClick}
-      className="flex w-full justify-between items-center py-3 px-8 bg-white rounded-lg shadow-xl drop-shadow-md"
+      className="flex justify-between items-center py-3 px-8 w-full bg-white rounded-lg shadow-xl drop-shadow-md"
     >
-      <div className="flex justify-center gap-1 items-center">
+      <div className="flex gap-1 justify-center items-center">
         <div className="mr-8 h-24">
           <img
             src={prop.imgSrc}
@@ -24,13 +22,12 @@ export const IngredientCard: React.VFC<Props> = (prop) => {
         </div>
         <div>
           <h1 className="text-base font-medium text-gray-700">{prop.name}</h1>
-          <p className="text-gray-600 text-sm">商品の説明を書く？</p>
         </div>
       </div>
       {prop.canDelete && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-9 w-9 text-barOrange-3"
+          className="w-9 h-9 text-barOrange-3"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

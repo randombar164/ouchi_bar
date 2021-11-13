@@ -1,6 +1,9 @@
-import Quagga, {QuaggaJSResultObject, QuaggaJSResultObject_CodeResult, QuaggaJSStatic, QuaggaJSConfigObject} from "@ericblade/quagga2";
-import React, { useLayoutEffect, useCallback } from "react";
-import { PickType } from "../types/type";
+import type {QuaggaJSConfigObject,QuaggaJSResultObject, QuaggaJSResultObject_CodeResult, QuaggaJSStatic} from "@ericblade/quagga2";
+import Quagga from "@ericblade/quagga2";
+import type React from "react";
+import { useCallback,useLayoutEffect } from "react";
+
+import type { PickType } from "../types/type";
 
 type ScanType = {
   onDetected: PickType<QuaggaJSStatic, 'onDetected'>;
@@ -16,7 +19,7 @@ type ScanType = {
 }
 
 const getMedian = (arr: number[]) => {
-  arr.sort((a, b) => a - b);
+  arr.sort((a, b) => {return a - b});
   const half = Math.floor(arr.length / 2);
   if (arr.length % 2 === 1) {
       return arr[half];
@@ -25,7 +28,7 @@ const getMedian = (arr: number[]) => {
 }
 
 const getMedianOfCodeErrors = (decodedCodes: PickType<QuaggaJSResultObject_CodeResult, 'decodedCodes'>) => {
-  const errors = decodedCodes.filter(x => x.error !== undefined).map(x => x.error) as number[];
+  const errors = decodedCodes.filter(x => {return x.error !== undefined}).map(x => {return x.error}) as number[];
   const medianOfErrors = getMedian(errors);
   return medianOfErrors;
 }
@@ -75,7 +78,7 @@ const handleProcessed = (result: QuaggaJSResultObject) => {
         // console.warn('* quagga onProcessed', result);
         if (result.boxes) {
             drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute('width') as string), parseInt(drawingCanvas.getAttribute('height') as string));
-            result.boxes.filter((box) => box !== result.box).forEach((box) => {
+            result.boxes.filter((box) => {return box !== result.box}).forEach((box) => {
                 Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: 'purple', lineWidth: 2 });
             });
         }
@@ -115,6 +118,7 @@ const handleProcessed = (result: QuaggaJSResultObject) => {
         Quagga.onProcessed(handleProcessed);
   
         if (err) {
+          // eslint-disable-next-line no-console
             return console.log('Error starting Quagga:', err);
         }
         if (scannerRef && scannerRef.current) {

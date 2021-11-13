@@ -15,12 +15,12 @@ export const useGetCocktails = () => {
 		getFn();
 	};
 
-	const cocktails = response?.cocktails?.map((cocktail: any) => ({
+	const cocktails = response?.cocktails?.map((cocktail: any) => {return {
 		id: cocktail?.id,
 		name: cocktail?.name,
 		strength: cocktail?.strength,
 		explanation: cocktail?.cookExplanation
-	}))
+	}})
 
 	return { cocktails, loading, error, getCocktailsFn };
 }

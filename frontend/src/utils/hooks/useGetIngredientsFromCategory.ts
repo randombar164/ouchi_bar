@@ -14,11 +14,6 @@ export const useGetIngredientsFromCategory = () => {
   useEffect(() => {
     if (nodeId !== 0) {
       getFn();
-      console.log("---API----------------");
-      console.log(`NodeId=${nodeId}でAPIがたたかれました`);
-      console.log("loading: ", loading);
-      console.log("error: ", error);
-      console.log("response: ", response);
     }
   },[nodeId])
 

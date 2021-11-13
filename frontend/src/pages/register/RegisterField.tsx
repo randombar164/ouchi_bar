@@ -1,5 +1,5 @@
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 
 export const RegisterField = () => {
   const [isLeft, setIsLeft] = useState(true); //left -> true, right -> false
@@ -9,6 +9,7 @@ export const RegisterField = () => {
   const handleClickRight = () => {
     return setIsLeft(false);
   };
+
   return (
     <div id="registerField">
       <div className="flex items-center">
@@ -36,13 +37,13 @@ export const RegisterField = () => {
       <div className="flex items-center py-6 px-4 bg-gradient-to-br from-barOrange-2 to-barOrange-4">
         {isLeft ? (
           <Link href="/scan">
-            <div className="flex items-center justify-between py-3 px-3 w-full bg-white rounded-lg text-barGray-2">
-              <p className="font-semibold text-sm">
+            <div className="flex justify-between items-center py-3 px-3 w-full text-barGray-2 bg-white rounded-lg">
+              <p className="text-sm font-semibold">
                 カメラを起動してバーコードを読み込む
               </p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className="w-6 h-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -64,11 +65,11 @@ export const RegisterField = () => {
           </Link>
         ) : (
           <Link href="/search-category">
-            <div className="flex items-center justify-between py-3 px-3 w-full bg-white rounded-lg text-barGray-2">
-              <p className="font-semibold text-sm">カテゴリを選択する</p>
+            <div className="flex justify-between items-center py-3 px-3 w-full text-barGray-2 bg-white rounded-lg">
+              <p className="text-sm font-semibold">カテゴリを選択する</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className="w-6 h-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

@@ -11,8 +11,8 @@ export const NoResult: React.VFC<ModalProps> = (prop): JSX.Element => {
   }, [router]);
   return (
     <Modal isShow={prop.isShow} onClose={prop.onClose} className="mt-48">
-      <div className="text-center py-6">
-        <p className="text-sm font-bold mb-4">材料が見つかりませんでした</p>
+      <div className="py-6 text-center">
+        <p className="mb-4 text-sm font-bold">材料が見つかりませんでした</p>
         <BgOrangeButton onClick={handleClick} text={"材料名から検索する"} />
       </div>
     </Modal>

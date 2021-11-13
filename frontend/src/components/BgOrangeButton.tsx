@@ -3,7 +3,7 @@ export const BgOrangeButton: React.VFC<{ text: string; onClick: () => void }> =
     return (
       <button
         onClick={onClick}
-        className="bg-barOrange-2 mx-auto rounded-3xl font-bold text-white px-5 py-2 flex justify-center items-center"
+        className="flex justify-center items-center py-2 px-5 mx-auto font-bold text-white bg-barOrange-2 rounded-3xl"
       >
         {text}
       </button>

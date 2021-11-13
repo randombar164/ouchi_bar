@@ -41,6 +41,11 @@ const BlogList: React.VFC = (props: any) => {
             <br />
             作れるカクテルを見つけよう
           </h1>
+          <Link href="/sakagura">
+            <div className="py-3 px-5 mx-auto mt-8 w-60 font-bold text-white bg-barOrange-2 rounded-2xl">
+              お家barに行く
+            </div>
+          </Link>
         </div>
         <Image
           src="/bar-top.png"

@@ -1,13 +1,13 @@
-import React, { useCallback, useContext } from "react";
+import { useRouter } from "next/router";
+import { memo, useCallback, useContext } from "react";
 import { useState } from "react";
+import { IngredientCard } from "src/components/IngredientCard";
 import { Layout } from "src/components/Layout";
 import data from "src/static/category_tree.json";
-import { IngredientCard } from "src/components/IngredientCard";
+import { Context } from "src/utils/contexts/provider";
+import type { concreteIngredientType } from "src/utils/types/type";
 
 import { useGetIngredientsFromCategory } from "../../utils/hooks/useGetIngredientsFromCategory";
-import { Context } from "src/utils/contexts/provider";
-import { useRouter } from "next/router";
-import type { concreteIngredientType } from "src/utils/types/type";
 
 type NodeProps = {
   id: number;
@@ -20,7 +20,7 @@ type CategoryButtonProps = {
   child: NodeProps;
 };
 
-const CategoryButton: React.VFC<CategoryButtonProps> = React.memo(
+const CategoryButton: React.VFC<CategoryButtonProps> = memo(
   ({ toNext, child }) => {
     return (
       <button
@@ -34,6 +34,7 @@ const CategoryButton: React.VFC<CategoryButtonProps> = React.memo(
     );
   }
 );
+CategoryButton.displayName = "CategoryButton";
 
 const SearchCategoryPage: React.VFC = (): JSX.Element => {
   const [routeIds, setRouteIds] = useState<number[]>([data.category.id]);
@@ -42,12 +43,15 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
 
   const { concreteIngredients, setConcreteIngredients } = useContext(Context);
   const router = useRouter();
-  const handleClick = useCallback((ingredient: concreteIngredientType) => {
-    setConcreteIngredients([...concreteIngredients, ingredient]);
-    router.push("/register");
-  }, []);
+  const handleClick = useCallback(
+    (ingredient: concreteIngredientType) => {
+      setConcreteIngredients([...concreteIngredients, ingredient]);
+      router.push("/register");
+    },
+    [concreteIngredients, router, setConcreteIngredients]
+  );
 
-  const { loading, error, response, getIngredientsFromCategory } =
+  const { response, getIngredientsFromCategory } =
     useGetIngredientsFromCategory();
 
   const back = useCallback(() => {
@@ -58,7 +62,7 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
     if (parent != undefined) {
       setCurrent(parent);
     }
-  }, [current]);
+  }, [routeIds]);
 
   const toNext = useCallback(
     (child: NodeProps) => {
@@ -70,29 +74,26 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
       } else {
         setHasChild(false);
         //子要素を持たないとき
-        console.log("-----CLICKED---------------------");
-        console.log("name: ", child.name);
-        console.log("NodeId: ", child.id);
         getIngredientsFromCategory(child.id); //api呼び出し
       }
     },
-    [current, hasChild, routeIds]
+    [routeIds, getIngredientsFromCategory]
   );
-  console.log(response);
+
   return (
     <Layout>
       {hasChild && (
         <div className="h-screen bg-barGray-1">
-          <p className="py-4 pl-2 font-bold text-barGray-2 test-sm">
+          <p className="py-4 pl-2 text-sm font-bold text-barGray-2">
             カテゴリを選択
           </p>
-          <div className="overflow-scroll h-auto max-h-4/5 bg-white">
+          <div className="overflow-scroll h-auto max-h-[80%] bg-white">
             {current.children.map((child: NodeProps, i: number) => {
               return <CategoryButton key={i} toNext={toNext} child={child} />;
             })}
           </div>
           <button
-            className="py-4 pl-2 text-base font-bold outline-none text-barGray-2"
+            className="py-4 pl-2 text-base font-bold text-barGray-2 outline-none"
             onClick={back}
           >
             ←戻る
@@ -101,7 +102,7 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
       )}
       {!hasChild && (
         <div className="px-3">
-          <p className="py-4 font-bold text-barGray-2 test-sm">
+          <p className="py-4 font-bold text-barGray-2">
             商品を選択(1つ選んでタップしてください)
           </p>
           {response?.concreteIngredients?.map((ingredient: any, i: any) => {
@@ -111,7 +112,9 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
                   canDelete={false}
                   imgSrc={ingredient.imgSrc}
                   name={ingredient.name}
-                  onClick={() => handleClick(ingredient)}
+                  onClick={() => {
+                    return handleClick(ingredient);
+                  }}
                 />
               </div>
             );

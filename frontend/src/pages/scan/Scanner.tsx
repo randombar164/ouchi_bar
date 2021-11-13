@@ -33,7 +33,6 @@ const getMedian = (arr: number[]) => {
 const getMedianOfCodeErrors = (
   decodedCodes: PickType<QuaggaJSResultObject_CodeResult, "decodedCodes">
 ) => {
-  console.log("errors");
   const errors = decodedCodes
     .filter((x) => {
       return x.error !== undefined;
@@ -71,7 +70,6 @@ export const Scanner: React.VFC<ScanType> = ({
   const errorCheck = useCallback(
     (result) => {
       if (!onDetected) {
-        console.log("!onDetected");
         return;
       }
       const err = getMedianOfCodeErrors(result.codeResult.decodedCodes);
@@ -118,7 +116,6 @@ export const Scanner: React.VFC<ScanType> = ({
           lineWidth: 2,
         });
       }
-      console.log(result);
       if (result.codeResult && result.codeResult.code) {
         // const validated = barcodeValidator(result.codeResult.code);
         // const validated = validateBarcode(result.codeResult.code);
@@ -134,7 +131,6 @@ export const Scanner: React.VFC<ScanType> = ({
     }
   };
   useLayoutEffect(() => {
-    console.log("quagga called");
     Quagga.init(
       {
         inputStream: {
@@ -144,7 +140,7 @@ export const Scanner: React.VFC<ScanType> = ({
             ...(cameraId && { deviceId: cameraId }),
             ...(!cameraId && { facingMode }),
           },
-          target: scannerRef?.current,
+          target: document.querySelector("#scan-area") || "",
         },
         locator,
         decoder: { readers: decoders },
@@ -154,6 +150,7 @@ export const Scanner: React.VFC<ScanType> = ({
         Quagga.onProcessed(handleProcessed);
 
         if (err) {
+          // eslint-disable-next-line no-console
           return console.log("Error starting Quagga:", err);
         }
         if (scannerRef && scannerRef.current) {
@@ -176,6 +173,7 @@ export const Scanner: React.VFC<ScanType> = ({
     onScannerReady,
     scannerRef,
     errorCheck,
+    facingMode,
     constraints,
     locator,
     decoders,

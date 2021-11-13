@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+
 import { useGetApi } from "./useApi";
 
 export const useSearchByCode = () => {
@@ -17,6 +18,5 @@ export const useSearchByCode = () => {
         }
         getFn();
     },[barcode])
-    console.log(response);
     return { loading, response, searchByCode};
 }
