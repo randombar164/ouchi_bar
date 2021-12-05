@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_12_214610) do
+ActiveRecord::Schema.define(version: 2021_12_05_135728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 2021_11_12_214610) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "category_id"
     t.index ["category_id"], name: "index_base_ingredients_on_category_id"
+  end
+
+  create_table "base_ingredients_concrete_ingredients", force: :cascade do |t|
+    t.bigint "base_ingredient_id", null: false
+    t.bigint "concrete_ingredient_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["base_ingredient_id"], name: "base_ingredients_concrete_ingredients_index_1"
+    t.index ["concrete_ingredient_id"], name: "base_ingredients_concrete_ingredients_index_2"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -172,6 +181,8 @@ ActiveRecord::Schema.define(version: 2021_11_12_214610) do
   add_foreign_key "base_drinks_base_ingredients", "base_drinks"
   add_foreign_key "base_drinks_base_ingredients", "base_ingredients"
   add_foreign_key "base_drinks_base_ingredients", "units"
+  add_foreign_key "base_ingredients_concrete_ingredients", "base_ingredients"
+  add_foreign_key "base_ingredients_concrete_ingredients", "concrete_ingredients"
   add_foreign_key "categories", "categories", column: "parent_category_id"
   add_foreign_key "cocktails", "drink_methods"
   add_foreign_key "cocktails", "glass_types"
