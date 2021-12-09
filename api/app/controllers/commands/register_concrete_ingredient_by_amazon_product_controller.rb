@@ -6,7 +6,7 @@ class Commands::RegisterConcreteIngredientByAmazonProductController < Applicatio
     # Amazon 商品を検索。
     s = SearchAmazonProductsService.new(jan_code)
     amazon_searched_products = s.call
-    selected_product = amazon_searched_products.find{ |asp| asp['ASIN'] == asin }
+    selected_product = amazon_searched_products.find{ |asp| asp.hash['ASIN'] == asin }
 
     category = Category.find_by(amazon_browse_node_id: selected_product['BrowseNodeInfo']['BrowseNodes'][0]['Id'])
     detail_page_url = selected_product['DetailPageURL']

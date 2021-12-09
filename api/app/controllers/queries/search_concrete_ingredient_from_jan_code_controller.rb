@@ -12,8 +12,9 @@ class Queries::SearchConcreteIngredientFromJanCodeController < ApplicationContro
 
     # マスターデータに Amazon 商品が含まれていないか検索
     amazon_searched_products.each do |asp|
-      concrete_ingredient = ConcreteIngredient.find_by(asin: asp['ASIN'])
+      concrete_ingredient = ConcreteIngredient.find_by(asin: asp.hash['ASIN'])
       if concrete_ingredient.present?
+        # マスターデータのやつには jan_code が当然付与されていないのでここで付与する。
         concrete_ingredient.update!(jan_code: jan_code)
         render json: { found_from_database: true, concrete_ingredient: concrete_ingredient } and return
       end

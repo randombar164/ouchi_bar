@@ -1,7 +1,9 @@
 class ConcreteIngredient < ApplicationRecord
   validates :asin, uniqueness: true, allow_nil: true
 
-  belongs_to :base_ingredient
+  has_many :base_ingredients_concrete_ingredients, dependent: :destroy
+  has_many :base_ingredients, through: :base_ingredients_concrete_ingredients
+
   belongs_to :category, optional: true
   has_many :concrete_ingredients_handling_stores, dependent: :destroy
   has_many :handling_stores, through: :concrete_ingredients_handling_stores
