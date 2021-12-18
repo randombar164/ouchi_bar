@@ -31,21 +31,25 @@ services:
     #   POSTGRES_USER: "${POSTGRES_USER}"
     #   REDIS_URL: "${REDIS_URL}"
     ports:
-      - '3010:3000'
+      - '127.0.0.1:3010:3000'
     tty: true
     stdin_open: true
     env_file:
       - .env
+    networks:
+      service-network:
 
   db:
     image: postgres:12.1
     ports:
-      - '5432:5432'
+      - '127.0.0.1:5432:5432'
     environment:
       POSTGRES_USER: '${POSTGRES_USER}'
       POSTGRES_PASSWORD: '${POSTGRES_PASSWORD}'
     volumes:
       - ./api/tmp/db:/var/lib/postgresql/data
+    networks:
+      service-network:
 
   redis:
     image: redis:6.2.5
@@ -66,3 +70,6 @@ services:
   #     - redis
   #   env_file:
   #     - .env
+networks:
+    service-network:
+

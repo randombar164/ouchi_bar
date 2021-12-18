@@ -12,7 +12,7 @@ services:
         - ./nginx/nginx.conf:/etc/nginx/nginx.conf
         - ./nginx/html:/var/www/html
       networks:
-        - service-network
+        service-network:
 
   next-prod:
       build:
@@ -21,6 +21,8 @@ services:
       container_name: next-prod
       ports:
         - '127.0.0.1:3000:3000'
+      env_file:
+        - .env
       networks:
         service-network:
 
@@ -39,3 +41,4 @@ volumes:
 
 networks:
     service-network:
+
