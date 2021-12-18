@@ -10,7 +10,11 @@ class SearchAmazonProductsService
   def call
     Rails.cache.fetch(@keyword, expires_in: 30.minutes) do
       client = Paapi::Client.new
-      response = client.search_items(keywords: @keyword, BrowseNodeId: '57240051', Local: 'ja_JP', SortBy: 'Featured', Resources: @resources)
+      response = client.search_items(keywords: @keyword,
+                                     BrowseNodeId: '57240051',
+                                     Local: 'ja_JP',
+                                     SortBy: 'Featured',
+                                     Resources: @resources)
       searched_products = response.items
 
       # pa-apiの売り上げがなくて叩けない時、ログを出す。Want: Slackに通知したい。
