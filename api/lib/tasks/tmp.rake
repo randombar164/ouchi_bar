@@ -11,13 +11,16 @@ namespace :tmp do
   desc 'base_ingredientから大量のアマゾン商品を見つけてきてそれをconcrete_ingredientに登録するタスク'
   task import_concrete_ingredients_from_amazon_products_by_base_ingredient_name: :environment do
     client = Paapi::Client.new
-    BaseIngredient.includes(:concrete_ingredients).all.each_with_index do |bi, i|
-      next if i < 365
+    BaseIngredient.includes(:concrete_ingredients, :category).all.each_with_index do |bi, i|
       p i, bi.name
+      # next if i < 524
 
-      response = client.search_items(keywords: bi.name, BrowseNodeId: '57240051', Local: 'ja_JP', SortBy: 'Featured', Resources: ['BrowseNodeInfo.BrowseNodes', 'Images.Primary.Medium', 'ItemInfo.Title'])
+      category = bi.category
+      next if category.nil?
+
+      response = client.search_items(keywords: bi.name, BrowseNodeId: category.amazon_browse_node_id.to_s, Local: 'ja_JP', SortBy: 'Featured', Resources: ['BrowseNodeInfo.BrowseNodes', 'Images.Primary.Medium', 'ItemInfo.Title'])
+      raise "#{response.http_response}" if response.http_response.code == 429
       searched_products = response.items
-      p searched_products
 
       searched_products.each do |asp|
         p asp
