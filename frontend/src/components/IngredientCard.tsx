@@ -1,24 +1,45 @@
-import type { VFC } from "react";
+import type { IngredientCardProps } from "src/utils/types/type";
 
-export const IngredientCard: VFC = () => {
+type Props = {
+  canDelete: boolean;
+  onClick?: () => void;
+} & IngredientCardProps;
+
+export const IngredientCard: React.VFC<Props> = (prop) => {
   return (
-    <div
+    <button
       id="card"
-      className="flex justify-between items-center py-6 px-8 bg-white rounded-lg shadow-lg"
+      onClick={prop.onClick}
+      className="flex justify-between items-center py-3 px-8 w-full bg-white rounded-lg shadow-xl drop-shadow-md"
     >
-      <div className="flex">
-        <div className="mr-8">
+      <div className="flex gap-1 justify-center items-center">
+        <div className="mr-8 h-24">
           <img
-            className="h-14 sm:h-12 rounded-full"
-            src="https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B01CXSRJHI&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP"
-            alt="drink_img"
+            src={prop.imgSrc}
+            alt={`${prop.name}の写真`}
+            className="h-full"
           />
         </div>
         <div>
-          <h1 className="text-lg font-medium text-gray-700">商品名</h1>
-          <p className="text-gray-600">商品の説明を書く？</p>
+          <h1 className="text-sm font-bold text-gray-700">{prop.name}</h1>
         </div>
       </div>
-    </div>
+      {prop.canDelete && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-9 h-9 text-barOrange-3"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      )}
+    </button>
   );
 };

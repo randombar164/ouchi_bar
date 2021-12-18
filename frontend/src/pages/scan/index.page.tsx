@@ -1,156 +1,92 @@
-import type {QuaggaJSResultObject,QuaggaJSResultObject_CodeResult} from '@ericblade/quagga2';
-import Quagga from '@ericblade/quagga2';
-import PropTypes from 'prop-types';
-import { useCallback, useLayoutEffect } from 'react';
+import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useSearchByCode } from "src/utils/hooks/useSearchByCode";
 
-const getMedian=(arr:number[]):number=> {
-    arr.sort((a, b) => {return a - b});
-    const half = Math.floor(arr.length / 2);
-    if (arr.length % 2 === 1) {
-        return arr[half];
-    }
-    return (arr[half - 1] + arr[half]) / 2;
-}
+import { MultiResults } from "./MultiResults";
+import { NoResult } from "./NoResult";
+import { Scanner } from "./Scanner";
+import { SingleResult } from "./SingleResult";
 
-const getMedianOfCodeErrors=(decodedCodes:QuaggaJSResultObject_CodeResult["decodedCodes"])=> {
-    const errors = decodedCodes.filter(x => {return x.error !== undefined}).map(x => {return x.error});
-    const medianOfErrors = getMedian(errors);
-    return medianOfErrors;
-}
-
-const defaultConstraints = {
-    width: 640,
-    height: 480,
-};
-
-const defaultLocatorSettings = {
-    patchSize: 'medium',
-    halfSample: true,
-};
-
-const defaultDecoders = ['ean_reader'];
-
-export const Scanner= (
-    onDetected,
-    scannerRef,
-    onScannerReady,
-    cameraId,
-    facingMode,
-    constraints = defaultConstraints,
-    locator = defaultLocatorSettings,
-    numOfWorkers = navigator.hardwareConcurrency || 0,
-    decoders = defaultDecoders,
-    locate = true,
-) => {
-    const errorCheck = useCallback((result) => {
-        if (!onDetected) {
-            return;
-        }
-        const err = getMedianOfCodeErrors(result.codeResult.decodedCodes);
-        // if Quagga is at least 75% certain that it read correctly, then accept the code.
-        if (err < 0.25) {
-            onDetected(result.codeResult.code);
-        }
-    }, [onDetected]);
-
-    const handleProcessed = (result:QuaggaJSResultObject) => {
-        const drawingCtx = Quagga.canvas.ctx.overlay;
-        const drawingCanvas = Quagga.canvas.dom.overlay;
-        drawingCtx.font = "24px Arial";
-        drawingCtx.fillStyle = 'green';
-
-        if (result) {
-            // console.warn('* quagga onProcessed', result);
-            if (result.boxes) {
-                drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute('width')), parseInt(drawingCanvas.getAttribute('height')));
-                result.boxes.filter((box) => {return box !== result.box}).forEach((box) => {
-                    Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: 'purple', lineWidth: 2 });
-                });
-                //このfilterも同様にJS特有の書き方の為エラー
-            }
-            if (result.box) {
-                Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: 'blue', lineWidth: 2 });
-            }
-            if (result.codeResult && result.codeResult.code) {
-                // const validated = barcodeValidator(result.codeResult.code);
-                // const validated = validateBarcode(result.codeResult.code);
-                // Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: validated ? 'green' : 'red', lineWidth: 3 });
-                drawingCtx.font = "24px Arial";
-                // drawingCtx.fillStyle = validated ? 'green' : 'red';
-                // drawingCtx.fillText(`${result.codeResult.code} valid: ${validated}`, 10, 50);
-                drawingCtx.fillText(result.codeResult.code, 10, 20);
-                // if (validated) {
-                //     onDetected(result);
-                // }
-            }
-        }
-    };
-
-    useLayoutEffect(() => {
-        Quagga.init({
-            inputStream: {
-                type: 'LiveStream',
-                constraints: {
-                    ...constraints,
-                    ...(cameraId && { deviceId: cameraId }),
-                    ...(!cameraId && { facingMode }),
-                },
-                target: scannerRef.current,
-            },
-            locator,
-            numOfWorkers,
-            decoder: { readers: decoders },
-            locate,
-        }, (err) => {
-            Quagga.onProcessed(handleProcessed);
-
-            if (err) {
-                return 
-            }
-            if (scannerRef && scannerRef.current) {
-                Quagga.start();
-                if (onScannerReady) {
-                    onScannerReady();
-                }
-            }
-        });
-        Quagga.onDetected(errorCheck);
-        return () => {
-            Quagga.offDetected(errorCheck);
-            Quagga.offProcessed(handleProcessed);
-            Quagga.stop();
-        };
-    }, [cameraId, onDetected, onScannerReady, scannerRef, errorCheck, constraints, locator, decoders, locate]);
-    return null;
-}
-
-Scanner.propTypes = {
-    onDetected: PropTypes.func.isRequired,
-    scannerRef: PropTypes.object.isRequired,
-    onScannerReady: PropTypes.func,
-    cameraId: PropTypes.string,
-    facingMode: PropTypes.string,
-    constraints: PropTypes.object,
-    locator: PropTypes.object,
-    numOfWorkers: PropTypes.number,
-    decoders: PropTypes.array,
-    locate: PropTypes.bool,
-};
 const ScanPage: React.VFC = (): JSX.Element => {
-    return (
-        
-    <div>
-        <div className="place-self-start w-auto h-8 bg-gray-800"></div>
-        <div className="place-self-end w-auto h-8 bg-gray-800">
-            <p className = "text-white">
-                バーコード検索
-            </p>
-        </div>
-        <button className="py-2 px-4 text-red-500 bg-white rounded-full border-2 border-white">＜ 登録画面に戻る</button>
-    </div>
-    
-    )
+  const [results, setResults] = useState<string[]>([]);
+  const [isShow, setIsShow] = useState(false);
+  const [isScan, setIsScan] = useState(true);
+  const scannerRef = useRef<any>(null);
+
+  const { loading, response, searchByCode } = useSearchByCode();
+
+  const handleClose = useCallback(() => {
+    setIsShow(false);
+    setIsScan(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isShow]);
+
+  useEffect(() => {
+    if (results.length < 1) {
+      return;
     }
-//ここに、カメラ起動中のUIも書いてOK
+    if (loading) {
+      return;
+    }
+    searchByCode(results[0]);
+    setIsShow(true);
+    setIsScan(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [results]);
+
+  return (
+    <>
+      <SingleResult
+        ingredient={response?.concreteIngredient}
+        isShow={isShow && !!response?.foundFromDatabase}
+        onClose={handleClose}
+      />
+      <MultiResults
+        ingredients={response?.result}
+        isShow={
+          isShow && !response?.foundFromDatabase && response?.result?.length > 0
+        }
+        onClose={handleClose}
+        code={results[0]}
+      />
+      <NoResult
+        isShow={
+          isShow &&
+          !response?.foundFromDatabase &&
+          response?.result?.length == 0
+        }
+        onClose={handleClose}
+      />
+      <div className="fixed top-0 z-30 py-4 w-full bg-gray-800">
+        <Link href="/register">
+          <div className="inline-block py-2 px-4 ml-3 text-sm font-bold text-red-500 bg-white rounded-full border-2 border-white">
+            &lt; 登録画面に戻る
+          </div>
+        </Link>
+      </div>
+      <div
+        ref={scannerRef}
+        id="scan-area"
+        className="relative mt-16 w-full h-screen"
+      >
+        <canvas
+          // eslint-disable-next-line tailwindcss/no-custom-classname
+          className="absolute top-0 drawingBuffer"
+          width="375"
+          height="800"
+        />
+        {isScan && (
+          <Scanner
+            scannerRef={scannerRef}
+            onDetected={(result: string) => {
+              return setResults([...results, result]);
+            }}
+          />
+        )}
+      </div>
+      <div className="fixed bottom-0 z-30 w-full h-12 bg-gray-800" />
+    </>
+  );
+};
 
 export default ScanPage;
