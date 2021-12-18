@@ -17,7 +17,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     end
 
     if Rails.env.production?
-      origins ['http://www.ouchi-bar.com', 'https://www.ouchi-bar.com']
+      origins ['http://www.ouchi-bar.com', 'https://www.ouchi-bar.com', 'http://ouchi-bar.com', 'https://ouchi-bar.com']
       resource(
         '*',
         headers: :any,
