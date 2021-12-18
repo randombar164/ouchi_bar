@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 
 const hostname = `${process.env.NEXT_PUBLIC_HOST_NAME}:${process.env.NEXT_PUBLIC_API_PORT}`;
 
-export const useGetApi = (url: string, params: any = {}) => {
+export const useGetApi = (url: string, params?: any) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<any | null>(null);
   const [error, setError] = useState<Error | null>(null);
@@ -64,6 +64,7 @@ export const usePostApi = (url: string) => {
         })
         .finally(() => {
           setLoading(false);
+          return;
         });
     },
     [url]

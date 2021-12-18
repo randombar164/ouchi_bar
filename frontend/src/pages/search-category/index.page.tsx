@@ -80,47 +80,66 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
     [routeIds, getIngredientsFromCategory]
   );
 
+  const onReload = useCallback(() => {
+    router.reload();
+  }, [router]);
+
   return (
     <Layout>
-      {hasChild && (
-        <div className="h-screen bg-barGray-1">
-          <p className="py-4 pl-2 text-sm font-bold text-barGray-2">
-            カテゴリを選択
-          </p>
-          <div className="overflow-scroll h-auto max-h-[80%] bg-white">
-            {current.children.map((child: NodeProps, i: number) => {
-              return <CategoryButton key={i} toNext={toNext} child={child} />;
+      <div className="h-full bg-barGray-1">
+        {hasChild && (
+          <div>
+            <p className="py-4 pl-2 text-sm font-bold text-barGray-2">
+              カテゴリを選択
+            </p>
+            <div className="overflow-scroll h-auto max-h-[80%] bg-white">
+              {current.children.map((child: NodeProps, i: number) => {
+                return <CategoryButton key={i} toNext={toNext} child={child} />;
+              })}
+            </div>
+            <button
+              className="py-4 pl-2 text-base font-bold text-barGray-2 outline-none"
+              onClick={back}
+            >
+              ←戻る
+            </button>
+          </div>
+        )}
+        {!hasChild && response?.concreteIngredients?.length > 0 && (
+          <div className="px-3">
+            <p className="py-4 font-bold text-barGray-2">
+              商品を選択(1つ選んでタップしてください)
+            </p>
+            {response?.concreteIngredients?.map((ingredient: any, i: any) => {
+              return (
+                <div className="my-3" key={i}>
+                  <IngredientCard
+                    canDelete={false}
+                    imgSrc={ingredient.imgSrc}
+                    name={ingredient.name}
+                    onClick={() => {
+                      return handleClick(ingredient);
+                    }}
+                  />
+                </div>
+              );
             })}
           </div>
-          <button
-            className="py-4 pl-2 text-base font-bold text-barGray-2 outline-none"
-            onClick={back}
-          >
-            ←戻る
-          </button>
-        </div>
-      )}
-      {!hasChild && (
-        <div className="px-3">
-          <p className="py-4 font-bold text-barGray-2">
-            商品を選択(1つ選んでタップしてください)
-          </p>
-          {response?.concreteIngredients?.map((ingredient: any, i: any) => {
-            return (
-              <div className="my-3" key={i}>
-                <IngredientCard
-                  canDelete={false}
-                  imgSrc={ingredient.imgSrc}
-                  name={ingredient.name}
-                  onClick={() => {
-                    return handleClick(ingredient);
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
-      )}
+        )}
+        {!hasChild && response?.concreteIngredients?.length == 0 && (
+          <div className="py-10">
+            <p className="font-bold text-center text-barGray-3">
+              検索結果が0件でした
+            </p>
+            <button
+              onClick={onReload}
+              className="py-4 pl-2 text-base font-bold text-barGray-2 outline-none"
+            >
+              ←戻る
+            </button>
+          </div>
+        )}
+      </div>
     </Layout>
   );
 };

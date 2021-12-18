@@ -1,6 +1,7 @@
 import type { VFC } from "react";
 import { useEffect } from "react";
 import { Layout } from "src/components/Layout";
+import { ToRegisterModal } from "src/components/ToRegisterModal";
 import { SingleShelf } from "src/pages/sakagura/SingleShelf";
 import { useGetIngredients } from "src/utils/hooks/useGetIngredients";
 
@@ -27,6 +28,9 @@ export const SakaguraPage: VFC = () => {
   return (
     <Layout>
       {loading && <p>ローディング中です</p>}
+      {sakaguraIngredients?.length == 0 && (
+        <ToRegisterModal name="酒蔵のお酒" />
+      )}
 
       {slicedIngredients &&
         slicedIngredients.map((ingredient: any, i: number) => {
@@ -36,7 +40,6 @@ export const SakaguraPage: VFC = () => {
       {error && <p>エラーが発生しました</p>}
     </Layout>
   );
-  //<div className="text-sm">{uuid}</div>;
 };
 
 export default SakaguraPage;

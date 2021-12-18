@@ -10,12 +10,14 @@ import { SingleResult } from "./SingleResult";
 const ScanPage: React.VFC = (): JSX.Element => {
   const [results, setResults] = useState<string[]>([]);
   const [isShow, setIsShow] = useState(false);
+  const [isScan, setIsScan] = useState(true);
   const scannerRef = useRef<any>(null);
 
   const { loading, response, searchByCode } = useSearchByCode();
 
   const handleClose = useCallback(() => {
     setIsShow(false);
+    setIsScan(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShow]);
 
@@ -28,6 +30,7 @@ const ScanPage: React.VFC = (): JSX.Element => {
     }
     searchByCode(results[0]);
     setIsShow(true);
+    setIsScan(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [results]);
 
@@ -72,12 +75,14 @@ const ScanPage: React.VFC = (): JSX.Element => {
           width="375"
           height="800"
         />
-        <Scanner
-          scannerRef={scannerRef}
-          onDetected={(result: string) => {
-            return setResults([...results, result]);
-          }}
-        />
+        {isScan && (
+          <Scanner
+            scannerRef={scannerRef}
+            onDetected={(result: string) => {
+              return setResults([...results, result]);
+            }}
+          />
+        )}
       </div>
       <div className="fixed bottom-0 z-30 w-full h-12 bg-gray-800" />
     </>

@@ -2,7 +2,11 @@ import matter from "gray-matter";
 import type { GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
 import { Layout } from "src/components/Layout";
+import { Context } from "src/utils/contexts/provider";
+import { useGetUser } from "src/utils/hooks/useGetUser";
 
 export const getStaticProps: GetStaticProps = async () => {
   const blogs = ((context: __WebpackModuleApi.RequireContext) => {
@@ -32,6 +36,17 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const BlogList: React.VFC = (props: any) => {
+  const { uuid } = useContext(Context);
+  const router = useRouter();
+  const { getUserFn } = useGetUser();
+
+  useEffect(() => {
+    if (!uuid) {
+      return;
+    }
+    router.push("/sakagura");
+  }, [uuid, router]);
+
   return (
     <Layout>
       <div className="relative w-full text-center">
@@ -41,11 +56,12 @@ const BlogList: React.VFC = (props: any) => {
             <br />
             作れるカクテルを見つけよう
           </h1>
-          <Link href="/sakagura">
-            <div className="py-3 px-5 mx-auto mt-8 w-60 font-bold text-white bg-barOrange-2 rounded-2xl">
-              お家barに行く
-            </div>
-          </Link>
+          <button
+            onClick={getUserFn}
+            className="py-3 px-5 mx-auto mt-8 w-60 font-bold text-white bg-barOrange-2 rounded-2xl"
+          >
+            お家barに行く
+          </button>
         </div>
         <Image
           src="/bar-top.png"

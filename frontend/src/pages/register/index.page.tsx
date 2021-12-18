@@ -23,13 +23,14 @@ const RegiterPage: React.VFC = (): JSX.Element => {
     [concreteIngredients, setConcreteIngredients]
   );
 
-  const handleClick = useCallback(() => {
+  const handleRegister = useCallback(() => {
     const ids = concreteIngredients?.map((value) => {
       return value.id;
     });
     registerFn(ids);
+    setConcreteIngredients([]);
     router.push("/sakagura");
-  }, [concreteIngredients, registerFn, router]);
+  }, [concreteIngredients, setConcreteIngredients, registerFn, router]);
 
   return (
     <Layout>
@@ -58,10 +59,15 @@ const RegiterPage: React.VFC = (): JSX.Element => {
           })}
         </div>
         <button
-          className="block py-3 px-7 mx-auto text-white bg-[#3BC808] rounded-3xl"
-          onClick={handleClick}
+          className={`block py-3 px-7 mx-auto text-white  rounded-3xl ${
+            concreteIngredients.length > 0
+              ? "bg-[#3BC808] shadow-lg"
+              : "bg-barGray-2"
+          }`}
+          onClick={handleRegister}
+          disabled={concreteIngredients.length == 0}
         >
-          登録します
+          酒蔵に並べる
         </button>
       </div>
     </Layout>

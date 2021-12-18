@@ -38,7 +38,7 @@ export const RegisterField = () => {
         {isLeft ? (
           <Link href="/scan">
             <div className="flex justify-between items-center py-3 px-3 w-full text-barGray-2 bg-white rounded-lg">
-              <p className="text-sm font-semibold">
+              <p className="text-xs font-semibold">
                 カメラを起動してバーコードを読み込む
               </p>
               <svg
