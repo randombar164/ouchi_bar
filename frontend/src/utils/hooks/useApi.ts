@@ -1,7 +1,7 @@
 import camelcaseKeys from "camelcase-keys";
 import { useCallback, useState } from "react";
 
-const hostname = `${process.env.NEXT_PUBLIC_HOST_NAME}:${process.env.NEXT_PUBLIC_API_PORT}`;
+const hostname = `${process.env.NEXT_PUBLIC_API_ORIGIN}`;
 
 export const useGetApi = (url: string, params?: any) => {
   const [loading, setLoading] = useState<boolean>(false);
