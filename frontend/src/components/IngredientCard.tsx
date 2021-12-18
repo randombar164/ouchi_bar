@@ -21,7 +21,7 @@ export const IngredientCard: React.VFC<Props> = (prop) => {
           />
         </div>
         <div>
-          <h1 className="text-base font-medium text-gray-700">{prop.name}</h1>
+          <h1 className="text-sm font-bold text-gray-700">{prop.name}</h1>
         </div>
       </div>
       {prop.canDelete && (
