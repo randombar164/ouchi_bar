@@ -54,7 +54,7 @@ const defaultLocatorSettings = {
   halfSample: true,
 };
 
-const defaultDecoders = ["ean_reader", "ean_8_reader"];
+const defaultDecoders = ["ean_reader"];
 
 export const Scanner: React.VFC<ScanType> = ({
   onDetected,
