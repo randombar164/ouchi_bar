@@ -19,6 +19,9 @@ Style/AndOr:
 Style/Documentation:
   Enabled: false
 
+Style/Next:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
@@ -104,8 +107,6 @@ AllCops:
   #   - '**/config.ru'
 
   Exclude:
-    - 'app/controllers/commands/**/*'
-    - 'app/controllers/queries/**/*'
     - 'db/**/*'
     - 'config/**/*'
     - 'tmp/**/*'
