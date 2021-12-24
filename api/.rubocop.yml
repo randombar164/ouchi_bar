@@ -19,6 +19,9 @@ Style/AndOr:
 Style/Documentation:
   Enabled: false
 
+Style/Next:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
