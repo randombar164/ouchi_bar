@@ -71,9 +71,7 @@ const ScanPage: React.VFC = (): JSX.Element => {
       >
         <canvas
           // eslint-disable-next-line tailwindcss/no-custom-classname
-          className="absolute top-0 drawingBuffer"
-          width="375"
-          height="800"
+          className="absolute top-0 w-full h-full drawingBuffer"
         />
         {isScan && (
           <Scanner

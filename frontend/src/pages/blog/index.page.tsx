@@ -1,6 +1,5 @@
 import matter from "gray-matter";
 import type { GetStaticProps } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
@@ -63,12 +62,12 @@ const BlogList: React.VFC = (props: any) => {
             お家barに行く
           </button>
         </div>
-        <Image
+        <img
           src="/bar-top.png"
           alt="お家barのイメージ"
+          className="w-full"
           width={750}
           height={856}
-          layout="responsive"
         />
       </div>
       <div className="mx-auto w-full max-w-[320px]">
