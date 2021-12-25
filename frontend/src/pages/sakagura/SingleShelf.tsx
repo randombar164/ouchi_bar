@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { VFC } from "react";
 import styles from "src/styles/SingleShelf.module.css";
 
@@ -12,14 +11,7 @@ export const SingleShelf: VFC<Props> = ({ items }) => {
         {items.map((item, i) => {
           return (
             <div key={i} className="w-[40px]">
-              <Image
-                src={item.imgSrc}
-                alt="お酒の画像"
-                width={40}
-                height={110}
-                layout={"responsive"}
-                objectFit="contain"
-              />
+              <img src={item.imgSrc} alt="お酒の画像" width={40} height={110} />
             </div>
           );
         })}

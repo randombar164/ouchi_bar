@@ -139,6 +139,8 @@ export const Scanner: React.VFC<ScanType> = ({
             ...constraints,
             ...(cameraId && { deviceId: cameraId }),
             ...(!cameraId && { facingMode }),
+            width: window.innerWidth,
+            height: window.innerHeight,
           },
           target: document.querySelector("#scan-area") || "",
         },
