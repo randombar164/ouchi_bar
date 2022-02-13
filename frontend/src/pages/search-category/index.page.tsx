@@ -92,7 +92,7 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
             <p className="py-4 pl-2 text-sm font-bold text-barGray-2">
               カテゴリを選択
             </p>
-            <div className="overflow-scroll h-auto max-h-[80%] bg-white">
+            <div style={ {height: '70vh'} } className="overflow-y-scroll bg-white"> 
               {current.children.map((child: NodeProps, i: number) => {
                 return <CategoryButton key={i} toNext={toNext} child={child} />;
               })}
