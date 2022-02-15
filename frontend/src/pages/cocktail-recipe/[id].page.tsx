@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { ContentWraper } from "src/components/ContentWrapper";
-import { Layout } from "src/components/Layout";
-import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ContentWraper } from 'src/components/ContentWrapper';
+import { Layout } from 'src/components/Layout';
+import { useGetRecipe } from 'src/utils/hooks/useGetRecipe';
 
 const ToCocktailsLink: React.VFC = () => {
   return (
@@ -29,12 +29,35 @@ export const CocktailRecipe: React.VFC = () => {
           ) : (
             <>
               <div className="flex p-2 m-4">
-                <img
+                {/* <img
                   src="https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00VPZRMAK&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP"
                   width={49}
                   height={177}
                   alt="カクテルの画像"
-                />
+                /> */}
+                <div className="">
+                  if ({recipe.drinkMethod}="Build"){' '}
+                  {
+                    <img
+                      src="/build.png"
+                      width={49}
+                      height={177}
+                      alt="ビルド"
+                    />
+                  }
+                  else if ({recipe.drinkMethod}="Stir"){' '}
+                  {<img src="/stir.png" width={49} height={177} alt="ステア" />}
+                  else
+                  {
+                    <img
+                      src="/shake.png"
+                      width={49}
+                      height={177}
+                      alt="シェイク"
+                    />
+                  }
+                </div>
+
                 <p className="place-self-center py-4 text-lg font-bold">
                   {recipe.name}
                 </p>
