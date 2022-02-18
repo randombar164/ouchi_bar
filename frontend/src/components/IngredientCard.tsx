@@ -7,9 +7,8 @@ type Props = {
 
 export const IngredientCard: React.VFC<Props> = (prop) => {
   return (
-    <button
+    <div
       id="card"
-      onClick={prop.onClick}
       className="flex justify-between items-center py-3 px-8 w-full bg-white rounded-lg shadow-xl drop-shadow-md"
     >
       <div className="flex gap-1 justify-center items-center">
@@ -26,6 +25,7 @@ export const IngredientCard: React.VFC<Props> = (prop) => {
       </div>
       {prop.canDelete && (
         <svg
+          onClick={prop.onClick}
           xmlns="http://www.w3.org/2000/svg"
           className="w-9 h-9 text-barOrange-3"
           fill="none"
@@ -40,6 +40,19 @@ export const IngredientCard: React.VFC<Props> = (prop) => {
           />
         </svg>
       )}
-    </button>
+    </div>
   );
 };
+//問題点
+/*
+  ×印以外の所を押しても、選択したものが消えてしまう
+*/
+//理由
+/*
+  onClickの場所が違う
+*/
+//解決策
+/*
+  まず、buttonのクラスをつける場所が違うんじゃないの？
+  svgのクラスに、onClickをつけることが出来ないかな？
+*/
