@@ -7,6 +7,7 @@ type Props = {
 
 export const IngredientCard: React.VFC<Props> = (prop) => {
   return (
+    
     <div
       id="card"
       className="flex justify-between items-center py-3 px-8 w-full bg-white rounded-lg shadow-xl drop-shadow-md"
