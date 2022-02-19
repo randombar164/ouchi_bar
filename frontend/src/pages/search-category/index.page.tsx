@@ -37,7 +37,7 @@ const CategoryButton: React.VFC<CategoryButtonProps> = memo(
 CategoryButton.displayName = "CategoryButton";
 
 const SearchCategoryPage: React.VFC = (): JSX.Element => {
-  const [routeIds, setRouteIds] = useState<number[]>([data.category.id]);
+  const [routeIds, setRouteIds] = useState<number[]>([]);
   const [current, setCurrent] = useState<NodeProps>(data.category);
   const [hasChild, setHasChild] = useState(true);
 
@@ -51,24 +51,27 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
     [concreteIngredients, router, setConcreteIngredients]
   );
 
-  const { response, getIngredientsFromCategory } =
+  const { response, getIngredientsFromCategory } = 
     useGetIngredientsFromCategory();
 
   const back = useCallback(() => {
-    const parentId = routeIds[routeIds.length - 2];
-    const parent = data.category.children.find((child) => {
-      return child.id === parentId;
-    });
-    if (parent != undefined) {
-      setCurrent(parent);
+    setRouteIds([...routeIds.slice(0, -1)]) //pop_back
+    let parent: NodeProps = data.category; 
+    if (routeIds.length) {
+      routeIds.slice(0,-1).forEach((id) => {
+        parent = parent.children.find((child) => {
+          return child.id === id;
+        });
+      });
     }
+    setCurrent(parent);
   }, [routeIds]);
 
   const toNext = useCallback(
     (child: NodeProps) => {
       if (child.children.length > 0) {
         //子要素を持つとき
-        setRouteIds([...routeIds, child.id]);
+        setRouteIds([...routeIds, child.id]); //push_back
         setCurrent(child);
         return;
       } else {
@@ -97,12 +100,12 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
                 return <CategoryButton key={i} toNext={toNext} child={child} />;
               })}
             </div>
-            <button
+            {routeIds.length >= 1 && <button
               className="py-4 pl-2 text-base font-bold text-barGray-2 outline-none"
               onClick={back}
             >
               ←戻る
-            </button>
+            </button>}
           </div>
         )}
         {!hasChild && response?.concreteIngredients?.length > 0 && (
