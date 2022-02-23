@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { memo, useEffect, useState } from "react";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { memo, useEffect, useState } from 'react';
 
 type MenuItemProps = {
   name: string;
@@ -13,7 +13,7 @@ const MenuItem: React.VFC<MenuItemProps> = ({ name, isActive, icon, path }) => {
     <Link href={path}>
       <button
         className={`flex flex-col items-center justify-center ${
-          isActive ? "text-barOrange-2" : "text-barGray-2"
+          isActive ? 'text-barOrange-2' : 'text-barGray-2'
         }`}
       >
         <div>{icon}</div>
@@ -39,13 +39,13 @@ export const Footer: React.VFC = memo(() => {
 
   useEffect(() => {
     switch (path) {
-      case "/sakagura":
+      case '/sakagura':
         setIsActives({ sakagura: true, register: false, cocktails: false });
         break;
-      case "/register":
+      case '/register':
         setIsActives({ sakagura: false, register: true, cocktails: false });
         break;
-      case "/cocktails":
+      case '/cocktails':
         setIsActives({ sakagura: false, register: false, cocktails: true });
         break;
       default:
@@ -54,7 +54,7 @@ export const Footer: React.VFC = memo(() => {
   }, [path]);
 
   return (
-    <div className="fixed bottom-0 z-30 w-full bg-white">
+    <div className="fixed bottom-0 z-30 w-full max-w-[320px] bg-white">
       <div className="flex justify-around items-center w-full h-16 rounded-t-lg shadow-md">
         <MenuItem
           name="My酒蔵"
@@ -125,4 +125,4 @@ export const Footer: React.VFC = memo(() => {
   );
 });
 
-Footer.displayName = "Footer";
+Footer.displayName = 'Footer';
