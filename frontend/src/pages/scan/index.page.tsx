@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useContext } from "react";
+import { Context } from "src/utils/contexts/provider";
+import { pushHome } from "src/utils/hooks/pushHome";
 import { useSearchByCode } from "src/utils/hooks/useSearchByCode";
 
 import { MultiResults } from "./MultiResults";
@@ -8,6 +10,9 @@ import { Scanner } from "./Scanner";
 import { SingleResult } from "./SingleResult";
 
 const ScanPage: React.VFC = (): JSX.Element => {
+  const { uuid } = useContext(Context);
+  if (!uuid) pushHome();
+  
   const [results, setResults] = useState<string[]>([]);
   const [isShow, setIsShow] = useState(false);
   const [isScan, setIsScan] = useState(true);
