@@ -54,8 +54,8 @@ export const Footer: React.VFC = memo(() => {
   }, [path]);
 
   return (
-    <div className="fixed bottom-0 z-30 w-full bg-white">
-      <div className="flex justify-around items-center w-full max-w-[320px] h-16 rounded-t-lg shadow-md">
+    <div className="fixed bottom-0 z-30 w-full max-w-[320px] bg-white">
+      <div className="flex justify-around items-center w-full h-16 rounded-t-lg shadow-md">
         <MenuItem
           name="My酒蔵"
           isActive={isActives.sakagura}
