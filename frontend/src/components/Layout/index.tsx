@@ -7,10 +7,12 @@ type Props = {
 
 export const Layout: React.VFC<Props> = ({ children }) => {
   return (
-    <>
+    <div className="flex overflow-y-auto bg-yellow-200 justify-center">
       <Header />
-      <div className="pt-12 pb-16 h-screen max-w-[320px]">{children}</div>
+      <div className="overflow-y-auto pt-12 pb-16 h-screen bg-white max-w-[320px]">
+        {children}
+      </div>
       <Footer />
-    </>
+    </div>
   );
 };

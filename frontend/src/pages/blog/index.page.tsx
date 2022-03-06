@@ -71,7 +71,7 @@ const BlogList: React.VFC = (props: any) => {
         />
       </div>
       <div className="mx-auto w-full max-w-[320px]">
-        <p className="py-2 my-4 w-full text-base font-bold text-gray-500 border-b border-gray-400 border-dashed">
+        <p className="p-2 my-4 w-full text-base font-bold text-gray-500 border-b border-gray-400 border-dashed">
           カクテル記事一覧
         </p>
         {props.blogs.map((v: any) => {
