@@ -2,18 +2,23 @@ type CocktailImgProps = {
   recipe: any;
 };
 
+type DrinkMethod = 'Build' | 'Shake' | 'Blend' | 'Stir';
+
 const CocktailImg: React.VFC<CocktailImgProps> = ({ recipe }) => {
+  const drinkMethod: DrinkMethod = recipe.drnkmethod;
+
   return (
-    <div className="">
-      if ({recipe.drinkMethod}="Build")
-      {<img src="/build.png" width={49} height={177} alt="ビルド" />}
-      else if ({recipe.drinkMethod}="Stir")
-      {<img src="/stir.png" width={49} height={177} alt="ステア" />}
-      else if ({recipe.drinkMethod}="Shake")
-      {<img src="/shake.png" width={49} height={177} alt="シェイク" />}
-      else
-      {<img src="/blend.png" width={49} height={177} alt="ブレンド" />}
-    </div>
+    <>
+      {drinkMethod === 'Build' ? (
+        <img src="/build.png" width={49} height={177} alt="ビルド" />
+      ) : drinkMethod === 'Shake' ? (
+        <img src="/shake.png" width={49} height={177} alt="シェイク" />
+      ) : drinkMethod === 'Blend' ? (
+        <img src="/blend.png" width={49} height={177} alt="ブレンド" />
+      ) : (
+        <img src="/stir.png" width={49} height={177} alt="ステア" />
+      )}
+    </>
   );
 };
 
