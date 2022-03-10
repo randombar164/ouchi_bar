@@ -3,10 +3,11 @@ namespace :usedb do
     task :delete_task => :environment do
       Cocktail.all.each do |ci|
         cocktails_list = ci.cocktails_concrete_ingredients
-        hash = ci.cocktails_concrete_ingredients.pluck(:id, :concrete_ingredient_id).to_h
-        cocktails_list.where(id: hash.keys).where.not(concrete_ingredient_id: hash.values).destroy_all
-        ci = cocktails_list
-        ci.save!
+        hash = cocktails_list.pluck(:id, :concrete_ingredient_id).to_h.invert
+        if !cocktails_list.where.not(id: hash.values).empty? then
+          p ci.id,cocktails_list.where.not(id: hash.values)
+        end
+        cocktails_list.where.not(id: hash.values).destroy_all
       end
     p "完了しました"
     end
