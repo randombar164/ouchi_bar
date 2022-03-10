@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, useContext } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Context } from "src/utils/contexts/provider";
 import { pushHome } from "src/utils/hooks/pushHome";
 import { useSearchByCode } from "src/utils/hooks/useSearchByCode";
@@ -12,11 +12,11 @@ import { SingleResult } from "./SingleResult";
 const ScanPage: React.VFC = (): JSX.Element => {
   const { uuid } = useContext(Context);
   if (!uuid) pushHome();
-  
-  const [results, setResults] = useState<string[]>([]);
+
+  const [code, setCode] = useState<string>("");
   const [isShow, setIsShow] = useState(false);
   const [isScan, setIsScan] = useState(true);
-  const scannerRef = useRef<any>(null);
+  const [error, setError] = useState<Error>();
 
   const { loading, response, searchByCode } = useSearchByCode();
 
@@ -27,17 +27,17 @@ const ScanPage: React.VFC = (): JSX.Element => {
   }, [isShow]);
 
   useEffect(() => {
-    if (results.length < 1) {
-      return;
-    }
     if (loading) {
       return;
     }
-    searchByCode(results[0]);
+    if (error) {
+      console.error(error);
+    }
+    searchByCode(code);
     setIsShow(true);
     setIsScan(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [results]);
+  }, [code]);
 
   return (
     <>
@@ -52,7 +52,7 @@ const ScanPage: React.VFC = (): JSX.Element => {
           isShow && !response?.foundFromDatabase && response?.result?.length > 0
         }
         onClose={handleClose}
-        code={results[0]}
+        code={code}
       />
       <NoResult
         isShow={
@@ -69,25 +69,7 @@ const ScanPage: React.VFC = (): JSX.Element => {
           </div>
         </Link>
       </div>
-      <div
-        ref={scannerRef}
-        id="scan-area"
-        className="relative mt-16 w-full h-screen"
-      >
-        <canvas
-          // eslint-disable-next-line tailwindcss/no-custom-classname
-          className="absolute top-0 w-full h-full drawingBuffer"
-        />
-        {isScan && (
-          <Scanner
-            scannerRef={scannerRef}
-            onDetected={(result: string) => {
-              return setResults([...results, result]);
-            }}
-          />
-        )}
-      </div>
-      <div className="fixed bottom-0 z-30 w-full h-12 bg-gray-800" />
+      <Scanner isScan={isScan} setCode={setCode} setError={setError} />
     </>
   );
 };
