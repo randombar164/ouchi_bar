@@ -4,8 +4,7 @@ namespace :usedb do
       Cocktail.all.each do |ci|
         cocktails_list = ci.cocktails_concrete_ingredients.select(:id, :concrete_ingredient_id)
         hash = ci.cocktails_concrete_ingredients.pluck(:id, :concrete_ingredient_id).to_h
-        ci.where(id: hash.keys).where.not(concrete_ingredient_id: hash.values).destroy_all
-        ci.save!
+        cocktails_list.where(id: hash.keys).where.not(concrete_ingredient_id: hash.values).destroy_all
       end
     p "完了しました"
     end
