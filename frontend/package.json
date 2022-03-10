@@ -10,8 +10,9 @@
     "lint:fix": "eslint src --ext .js,jsx,.ts,.tsx --fix"
   },
   "dependencies": {
-    "@headlessui/react": "^1.4.2",
     "@ericblade/quagga2": "^1.4.2",
+    "@headlessui/react": "^1.4.2",
+    "@zxing/library": "^0.19.1",
     "camelcase-keys": "^7.0.0",
     "gray-matter": "^4.0.3",
     "next": "^11.1.0",
@@ -19,16 +20,18 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-markdown": "^7.0.0",
-    "rehype-raw": "^6.1.0"
+    "rehype-raw": "^6.1.0",
+    "autoprefixer": "^10.3.2",
+    "tailwindcss": "^2.2.7",
+    "typescript": "4.3.5",
+    "postcss": "^8.3.6"
   },
   "devDependencies": {
-    "@tailwindcss/jit": "^0.1.18",
     "@types/camelcase-keys": "^5.1.1",
     "@types/react": "17.0.15",
     "@types/webpack-env": "^1.16.3",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
-    "autoprefixer": "^10.3.2",
     "eslint": "7.31.0",
     "eslint-config-next": "11.0.1",
     "eslint-config-prettier": "^8.3.0",
@@ -41,9 +44,6 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-tailwindcss": "^1.14.3",
     "next-transpile-modules": "^8.0.0",
-    "postcss": "^8.3.6",
-    "prettier": "^2.3.2",
-    "tailwindcss": "^2.2.7",
-    "typescript": "4.3.5"
+    "prettier": "^2.3.2"
   }
 }
