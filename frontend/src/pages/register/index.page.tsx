@@ -5,10 +5,13 @@ import { IngredientCard } from "src/components/IngredientCard";
 import { Layout } from "src/components/Layout";
 import { Context } from "src/utils/contexts/provider";
 import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
-
+import { pushHome } from "src/utils/hooks/pushHome";
 import { RegisterField } from "./RegisterField";
 
 const RegiterPage: React.VFC = (): JSX.Element => {
+  const { uuid } = useContext(Context);
+  if (!uuid) pushHome();
+
   const { concreteIngredients, setConcreteIngredients } = useContext(Context);
   const router = useRouter();
   const { registerFn } = useRegisterIngredients();

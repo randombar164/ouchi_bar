@@ -5,6 +5,7 @@ import { IngredientCard } from "src/components/IngredientCard";
 import { Layout } from "src/components/Layout";
 import data from "src/static/category_tree.json";
 import { Context } from "src/utils/contexts/provider";
+import { pushHome } from "src/utils/hooks/pushHome";
 import type { concreteIngredientType } from "src/utils/types/type";
 
 import { useGetIngredientsFromCategory } from "../../utils/hooks/useGetIngredientsFromCategory";
@@ -37,6 +38,9 @@ const CategoryButton: React.VFC<CategoryButtonProps> = memo(
 CategoryButton.displayName = "CategoryButton";
 
 const SearchCategoryPage: React.VFC = (): JSX.Element => {
+  const { uuid } = useContext(Context);
+  if (!uuid) pushHome();
+
   const [routeIds, setRouteIds] = useState<number[]>([]);
   const [current, setCurrent] = useState<NodeProps>(data.category);
   const [hasChild, setHasChild] = useState(true);
