@@ -1,9 +1,11 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import CocktailImg from 'src/components/CocktailImg';
-import { ContentWraper } from 'src/components/ContentWrapper';
-import { Layout } from 'src/components/Layout';
-import { useGetRecipe } from 'src/utils/hooks/useGetRecipe';
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { ContentWraper } from "src/components/ContentWrapper";
+import { Layout } from "src/components/Layout";
+import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
+import { useContext } from "react";
+import { Context } from "src/utils/contexts/provider";
+import { pushHome } from "src/utils/hooks/pushHome";
 
 const ToCocktailsLink: React.VFC = () => {
   return (
@@ -16,6 +18,9 @@ const ToCocktailsLink: React.VFC = () => {
 };
 
 export const CocktailRecipe: React.VFC = () => {
+  const { uuid } = useContext(Context);
+  if (!uuid) pushHome();
+
   const router = useRouter();
   const cocktailId = Number(router?.query.id);
   const { loading, recipe } = useGetRecipe(cocktailId);
@@ -30,14 +35,7 @@ export const CocktailRecipe: React.VFC = () => {
           ) : (
             <>
               <div className="flex p-2 m-4">
-                {/* <img
-                  src="https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00VPZRMAK&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP"
-                  width={49}
-                  height={177}
-                  alt="カクテルの画像"
-                /> */}
-                <CocktailImg recipe={useGetRecipe(cocktailId)} />
-
+                <CocktailImg recipe={recipe} />
                 <p className="place-self-center py-4 text-lg font-bold">
                   {recipe.name}
                 </p>
