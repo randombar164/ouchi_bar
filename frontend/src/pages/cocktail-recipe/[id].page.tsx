@@ -1,9 +1,11 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import CocktailImg from 'src/components/CocktailImg';
-import { ContentWraper } from 'src/components/ContentWrapper';
-import { Layout } from 'src/components/Layout';
-import { useGetRecipe } from 'src/utils/hooks/useGetRecipe';
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { ContentWraper } from "src/components/ContentWrapper";
+import { Layout } from "src/components/Layout";
+import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
+import { useContext } from "react";
+import { Context } from "src/utils/contexts/provider";
+import { pushHome } from "src/utils/hooks/pushHome";
 
 const ToCocktailsLink: React.VFC = () => {
   return (
@@ -16,6 +18,9 @@ const ToCocktailsLink: React.VFC = () => {
 };
 
 export const CocktailRecipe: React.VFC = () => {
+  const { uuid } = useContext(Context);
+  if (!uuid) pushHome();
+
   const router = useRouter();
   const cocktailId = Number(router?.query.id);
   const { loading, recipe } = useGetRecipe(cocktailId);

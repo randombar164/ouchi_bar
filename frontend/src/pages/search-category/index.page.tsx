@@ -5,6 +5,7 @@ import { IngredientCard } from "src/components/IngredientCard";
 import { Layout } from "src/components/Layout";
 import data from "src/static/category_tree.json";
 import { Context } from "src/utils/contexts/provider";
+import { pushHome } from "src/utils/hooks/pushHome";
 import type { concreteIngredientType } from "src/utils/types/type";
 
 import { useGetIngredientsFromCategory } from "../../utils/hooks/useGetIngredientsFromCategory";
@@ -37,6 +38,9 @@ const CategoryButton: React.VFC<CategoryButtonProps> = memo(
 CategoryButton.displayName = "CategoryButton";
 
 const SearchCategoryPage: React.VFC = (): JSX.Element => {
+  const { uuid } = useContext(Context);
+  if (!uuid) pushHome();
+  
   const [routeIds, setRouteIds] = useState<number[]>([data.category.id]);
   const [current, setCurrent] = useState<NodeProps>(data.category);
   const [hasChild, setHasChild] = useState(true);
@@ -92,7 +96,7 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
             <p className="py-4 pl-2 text-sm font-bold text-barGray-2">
               カテゴリを選択
             </p>
-            <div className="overflow-scroll h-auto max-h-[80%] bg-white">
+            <div className="overflow-scroll h-auto max-h-[70vh] bg-white"> 
               {current.children.map((child: NodeProps, i: number) => {
                 return <CategoryButton key={i} toNext={toNext} child={child} />;
               })}
