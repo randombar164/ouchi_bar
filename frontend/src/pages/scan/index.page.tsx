@@ -14,17 +14,17 @@ const ScanPage: React.VFC = (): JSX.Element => {
   if (!uuid) pushHome();
 
   const [code, setCode] = useState<string>("");
-  const [isShow, setIsShow] = useState(false);
+  const [resultVisible, setResultVisible] = useState(false);
   const [isScan, setIsScan] = useState(true);
   const [error, setError] = useState<Error>();
 
   const { loading, response, searchByCode } = useSearchByCode();
 
   const handleClose = useCallback(() => {
-    setIsShow(false);
+    setResultVisible(false);
     setIsScan(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isShow]);
+  }, [resultVisible]);
 
   useEffect(() => {
     if (loading) {
@@ -34,7 +34,7 @@ const ScanPage: React.VFC = (): JSX.Element => {
       console.error(error);
     }
     searchByCode(code);
-    setIsShow(true);
+    setResultVisible(true);
     setIsScan(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
@@ -43,20 +43,22 @@ const ScanPage: React.VFC = (): JSX.Element => {
     <>
       <SingleResult
         ingredient={response?.concreteIngredient}
-        isShow={isShow && !!response?.foundFromDatabase}
+        visible={resultVisible && !!response?.foundFromDatabase}
         onClose={handleClose}
       />
       <MultiResults
         ingredients={response?.result}
-        isShow={
-          isShow && !response?.foundFromDatabase && response?.result?.length > 0
+        visible={
+          resultVisible &&
+          !response?.foundFromDatabase &&
+          response?.result?.length > 0
         }
         onClose={handleClose}
         code={code}
       />
       <NoResult
-        isShow={
-          isShow &&
+        visible={
+          resultVisible &&
           !response?.foundFromDatabase &&
           response?.result?.length == 0
         }
