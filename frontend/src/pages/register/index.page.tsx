@@ -32,12 +32,12 @@ const RegiterPage: React.VFC = (): JSX.Element => {
     });
     registerFn(ids);
     setConcreteIngredients([]);
-    router.push("/sakagura");
+    router.push('/sakagura');
   }, [concreteIngredients, setConcreteIngredients, registerFn, router]);
 
   return (
     <Layout>
-      <div className=" py-8 px-4 md:px-10 lg:px-16 mt-0 w-full lg:w-3/4">
+      <div className=" py-8 px-4 mt-0 w-full ">
         <div id="registerPageTitle" className="py-6 font-bold">
           あなたが持っている材料を登録
         </div>
@@ -64,8 +64,8 @@ const RegiterPage: React.VFC = (): JSX.Element => {
         <button
           className={`block py-3 px-7 mx-auto text-white  rounded-3xl ${
             concreteIngredients.length > 0
-              ? "bg-[#3BC808] shadow-lg"
-              : "bg-barGray-2"
+              ? 'bg-[#3BC808] shadow-lg'
+              : 'bg-barGray-2'
           }`}
           onClick={handleRegister}
           disabled={concreteIngredients.length == 0}
