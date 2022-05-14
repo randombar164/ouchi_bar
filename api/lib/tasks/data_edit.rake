@@ -1,4 +1,4 @@
-namespace :usedb do
+namespace :data_edit do
     desc "重複idを削除するrakeタスク"
     task :delete_task => :environment do
       Cocktail.all.each do |ci|
