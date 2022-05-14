@@ -3,7 +3,7 @@ import type { GetStaticProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext, useEffect } from 'react';
-import { Layout } from 'src/components/Layout';
+import { NonFooterLayout } from 'src/components/Layout/nonFooter';
 import { Context } from 'src/utils/contexts/provider';
 import { useGetUser } from 'src/utils/hooks/useGetUser';
 
@@ -47,7 +47,7 @@ const BlogList: React.VFC = (props: any) => {
   }, [uuid, router]);
 
   return (
-    <Layout>
+    <NonFooterLayout>
       <div className="relative w-full max-w-[320px] text-center">
         <div className="absolute inset-x-0 top-1/2 z-10 w-full text-base font-bold text-white transform -translate-y-1/2">
           <h1 className="text-xl leading-10">
@@ -87,7 +87,7 @@ const BlogList: React.VFC = (props: any) => {
           );
         })}
       </div>
-    </Layout>
+    </NonFooterLayout>
   );
 };
 
