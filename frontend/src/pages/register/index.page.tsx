@@ -53,7 +53,7 @@ const RegiterPage: React.VFC = (): JSX.Element => {
                   canDelete={true}
                   imgSrc={concreteIngredient.imgSrc}
                   name={concreteIngredient.name}
-                  onClick={() => {
+                  delete={() => {
                     return handleDelete(concreteIngredient.id);
                   }}
                 />

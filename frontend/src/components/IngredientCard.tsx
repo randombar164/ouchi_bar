@@ -3,14 +3,15 @@ import type { IngredientCardProps } from "src/utils/types/type";
 type Props = {
   canDelete: boolean;
   onClick?: () => void;
+  delete?: () => void;
 } & IngredientCardProps;
 
 export const IngredientCard: React.VFC<Props> = (prop) => {
   return (
-    
     <div
       id="card"
       className="flex justify-between items-center py-3 px-8 w-full bg-white rounded-lg shadow-xl drop-shadow-md"
+      onClick={prop.onClick}
     >
       <div className="flex gap-1 justify-center items-center">
         <div className="mr-8 h-24">
@@ -26,7 +27,7 @@ export const IngredientCard: React.VFC<Props> = (prop) => {
       </div>
       {prop.canDelete && (
         <svg
-          onClick={prop.onClick}
+          onClick={prop.delete}
           xmlns="http://www.w3.org/2000/svg"
           className="w-9 h-9 text-barOrange-3"
           fill="none"
