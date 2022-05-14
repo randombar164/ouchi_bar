@@ -1,6 +1,6 @@
 namespace :data_edit do
-  desc "重複idを削除するrakeタスク"
-  task :delete_task => :environment do
+  desc "材料が重複する場合一方の材料を削除するrakeタスク"
+  task :delete_duplicate_cocktails_concrete_ingredients => :environment do
     Cocktail.all.each do |ci|
       cocktails_list = ci.cocktails_concrete_ingredients
       hash = cocktails_list.pluck(:id, :concrete_ingredient_id).to_h.invert
@@ -10,6 +10,17 @@ namespace :data_edit do
       cocktails_list.where.not(id: hash.values).destroy_all
     end
   p "完了しました"
+  end
+
+  desc '材料が一つしかないカクテルを削除するrakeタスク'
+  task delete_mono_cocktail: :environment do
+    Cocktail.all.each do |cocktail|
+      if cocktail.concrete_ingredients.count <= 1
+        p cocktail.id, cocktail.name
+        cocktail.destroy
+      end
+    end
+    p '完了しました'
   end
 
   desc "Unitのmlへの統合タスク"
