@@ -3,9 +3,8 @@ import {
   BarcodeFormat,
   BrowserMultiFormatReader,
   DecodeHintType,
-  NotFoundException,
 } from "@zxing/library";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 type Props = {
   isScan: boolean;
@@ -13,19 +12,22 @@ type Props = {
   setError: (error: Exception) => void;
 };
 
-const timeout = 1000;
-const scale = 0.5;
+const timeout = 2000;
+const scale = 0.9;
 
 let videoStream: MediaStream;
 
 export const Scanner: React.VFC<Props> = ({ isScan, setCode, setError }) => {
-  const barcodeReader = new BrowserMultiFormatReader();
+  const hints = new Map();
 
   const formats = [
     BarcodeFormat.DATA_MATRIX,
     BarcodeFormat.CODE_39,
     BarcodeFormat.CODE_128,
   ];
+
+  hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
+  const barcodeReader = new BrowserMultiFormatReader(hints);
 
   const constrains = { video: true };
   useEffect(() => {
@@ -34,99 +36,99 @@ export const Scanner: React.VFC<Props> = ({ isScan, setCode, setError }) => {
       "#scanner-canvas"
     ) as HTMLCanvasElement;
     const img = document.querySelector("#scanner-image") as HTMLImageElement;
-    const frame = document.querySelector("#scanner-frame") as HTMLDivElement;
+
     navigator.mediaDevices.getUserMedia(constrains).then((stream) => {
-      console.log(video);
       videoStream = stream;
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      video.srcObject = stream;
+      video.play();
 
-      frame.style.width = video.clientWidth * scale + "px";
-      frame.style.height = video.clientHeight * scale + "px";
-      frame.style.left = (window.innerWidth - video.clientWidth) / 2 + "px";
-      frame.style.top = (window.innerHeight - video.clientHeight) / 2 + "px";
-      console.log(video.clientHeight);
+      const canvasRect = canvas.getBoundingClientRect();
 
-      scanFrame(canvas, video, img);
-      // video?.addEventListener("play", () => {});
+      const scanFrame = () => {
+        if (videoStream) {
+          canvas.getContext("2d")?.drawImage(
+            video,
+
+            // source x, y, w, h
+            canvasRect.x,
+            canvasRect.y,
+            canvas.width,
+            canvas.height
+          );
+
+          canvas.toBlob((blob) => {
+            console.log(blob);
+            const url = URL.createObjectURL(blob);
+
+            img.onload = async () => {
+              console.log(url);
+              barcodeReader
+                .decodeFromImageUrl(url)
+                .then((res) => {
+                  found(res);
+                  // console.log("then");
+                })
+                .catch((err) => {
+                  notFound(err);
+                  // console.log("err");
+                })
+                .finally(() => {
+                  releaseMemory(img);
+                  // console.log("finally");
+                });
+              img.onload = null;
+              setTimeout(scanFrame, timeout);
+            };
+            console.log(img.src);
+            img.src = url;
+          });
+        }
+      };
+      scanFrame();
     });
   }, []);
 
-  const scanFrame = (
-    canvas: HTMLCanvasElement,
-    video: HTMLVideoElement,
-    img: HTMLImageElement
-  ) => {
-    if (videoStream) {
-      canvas.getContext("2d")?.drawImage(
-        video,
-
-        // source x, y, w, h
-        (video.videoWidth * (1 - scale)) / 2,
-        (video.videoHeight * (1 - scale)) / 2,
-        video.videoWidth * scale,
-        video.videoHeight * scale,
-
-        // dest x, y, w, h
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
-
-      canvas.toBlob((blob) => {
-        const url = URL.createObjectURL(blob);
-
-        img.onload = async () => {
-          barcodeReader
-            .decodeFromImage(undefined, url)
-            .then(found)
-            .catch(notFound)
-            .finally(() => {
-              releaseMemory(img);
-            });
-          img.onload = null;
-          setTimeout(scanFrame, timeout);
-        };
-        img.src = url;
-      });
-    }
-  };
-
   const found = (result: Result) => {
     setCode(result.getText());
+    console.log("-------------");
+    console.log(result.getText());
   };
 
   const notFound = (err: Exception) => {
     setError(err);
+    // console.error(err);
   };
 
   const releaseMemory = (img: HTMLImageElement) => {
     URL.revokeObjectURL(img.src);
-    img.src = "";
   };
 
   return (
-    <div className="relative h-screen">
-      <div className="absolute inset-0 z-10 m-auto bg-gray-700">
-        {/*eslint-disable-next-line jsx-a11y/media-has-caption*/}
-        <video
-          id="scanner-video"
-          className="absolute inset-0 z-20 m-auto w-auto h-screen"
-          style={{ border: "1px solid gray" }}
-        ></video>
+    <>
+      <div className="flex relative justify-center items-center h-screen">
+        <div className="absolute inset-0 z-10 m-auto bg-gray-700">
+          {/*eslint-disable-next-line jsx-a11y/media-has-caption*/}
+          <video
+            id="scanner-video"
+            className="object-cover absolute inset-0 z-20 m-auto w-full h-screen"
+          ></video>
+        </div>
+        <div className="z-40 w-full">
+          <p className="text-base font-bold text-center text-white">
+            枠内にバーコードを入れてください
+          </p>
+          <canvas
+            id="scanner-canvas"
+            className="z-40 m-auto w-11/12 h-32 border-4 border-white border-solid"
+          ></canvas>
+        </div>
       </div>
-      <div
-        id="scanner-frame"
-        className="absolute z-30 m-auto border-2 border-barOrange-3 border-solid shadow-md drop-shadow-md"
-      ></div>
-      <canvas id="scanner-canvas" className="z-40 m-auto w-full"></canvas>
       <img
         id="scanner-image"
         src=""
         alt="スキャナーイメージ"
-        className="z-10 m-auto w-full"
+        className="m-auto w-full"
       />
-    </div>
+    </>
   );
 };
