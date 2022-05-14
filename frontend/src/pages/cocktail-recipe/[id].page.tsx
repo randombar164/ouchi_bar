@@ -1,11 +1,12 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { ContentWraper } from "src/components/ContentWrapper";
-import { Layout } from "src/components/Layout";
-import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
-import { useContext } from "react";
-import { Context } from "src/utils/contexts/provider";
-import { pushHome } from "src/utils/hooks/pushHome";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { ContentWraper } from 'src/components/ContentWrapper';
+import { Layout } from 'src/components/Layout';
+import { useGetRecipe } from 'src/utils/hooks/useGetRecipe';
+import { useContext } from 'react';
+import { Context } from 'src/utils/contexts/provider';
+import { pushHome } from 'src/utils/hooks/pushHome';
+import CocktailImg from 'src/components/CocktailImg';
 
 const ToCocktailsLink: React.VFC = () => {
   return (
