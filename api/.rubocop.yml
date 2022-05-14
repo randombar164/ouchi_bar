@@ -1,6 +1,9 @@
 # Railsのチェックを有効にする
 require: rubocop-rails
 
+Rails/I18nLocaleTexts:
+  Enabled: false
+
 # === Style系
 
 # 日本語でのコメントを許可
