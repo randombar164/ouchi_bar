@@ -1,10 +1,14 @@
 import type { Exception, Result } from "@zxing/library";
+import { NotFoundException } from "@zxing/library";
 import {
   BarcodeFormat,
+  BinaryBitmap,
   BrowserMultiFormatReader,
   DecodeHintType,
+  HybridBinarizer,
+  RGBLuminanceSource,
 } from "@zxing/library";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   isScan: boolean;
@@ -18,6 +22,7 @@ const scale = 0.9;
 let videoStream: MediaStream;
 
 export const Scanner: React.VFC<Props> = ({ isScan, setCode, setError }) => {
+  const [image, setImage] = useState<string>("");
   const hints = new Map();
 
   const formats = [
@@ -35,7 +40,6 @@ export const Scanner: React.VFC<Props> = ({ isScan, setCode, setError }) => {
     const canvas = document.querySelector(
       "#scanner-canvas"
     ) as HTMLCanvasElement;
-    const img = document.querySelector("#scanner-image") as HTMLImageElement;
 
     navigator.mediaDevices.getUserMedia(constrains).then((stream) => {
       videoStream = stream;
@@ -46,41 +50,59 @@ export const Scanner: React.VFC<Props> = ({ isScan, setCode, setError }) => {
 
       const scanFrame = () => {
         if (videoStream) {
-          canvas.getContext("2d")?.drawImage(
+          const ctx = canvas.getContext("2d");
+          ctx?.drawImage(
             video,
 
             // source x, y, w, h
             canvasRect.x,
             canvasRect.y,
-            canvas.width,
-            canvas.height
+            canvas.width / 2,
+            canvas.height / 2
           );
 
           canvas.toBlob((blob) => {
-            console.log(blob);
             const url = URL.createObjectURL(blob);
-
-            img.onload = async () => {
-              console.log(url);
-              barcodeReader
-                .decodeFromImageUrl(url)
-                .then((res) => {
-                  found(res);
-                  // console.log("then");
-                })
-                .catch((err) => {
-                  notFound(err);
-                  // console.log("err");
-                })
-                .finally(() => {
-                  releaseMemory(img);
-                  // console.log("finally");
-                });
-              img.onload = null;
-              setTimeout(scanFrame, timeout);
-            };
-            console.log(img.src);
+            const img = document.createElement("img");
             img.src = url;
+            img.alt = "スキャンイメージ";
+            img.width = canvas.width;
+            img.height = canvas.height;
+
+            console.log(url);
+            console.log(img.complete);
+            console.log(img);
+            const binaryBitmap = barcodeReader.createBinaryBitmap(img);
+
+            try {
+              console.log(binaryBitmap);
+              const result = barcodeReader.decodeBitmap(binaryBitmap);
+              console.log("------------------------------");
+              console.log(result);
+            } catch (error) {
+              console.log("called err");
+              if (error && !(error instanceof NotFoundException)) {
+                console.error(error);
+              }
+            }
+            // barcodeReader
+            //   .decodeFromImage(img)
+            //   .then((res) => {
+            //     found(res);
+            //     // console.log("then");
+            //   })
+            //   .catch((err) => {
+            //     notFound(err);
+            //     // console.log(err);
+            //   })
+            //   .finally(() => {
+            //     releaseMemory(img);
+            //     // console.log("finally");
+            //   });
+            // img.addEventListener("load", () => {
+            //   console.log("img loaded");
+            // });
+            setTimeout(scanFrame, timeout);
           });
         }
       };
@@ -127,7 +149,7 @@ export const Scanner: React.VFC<Props> = ({ isScan, setCode, setError }) => {
         id="scanner-image"
         src=""
         alt="スキャナーイメージ"
-        className="m-auto w-full"
+        className="m-auto w-11/12 h-32"
       />
     </>
   );
