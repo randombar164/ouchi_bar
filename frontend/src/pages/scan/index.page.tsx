@@ -10,9 +10,6 @@ import { Scanner } from "./Scanner";
 import { SingleResult } from "./SingleResult";
 
 const ScanPage: React.VFC = (): JSX.Element => {
-  const { uuid } = useContext(Context);
-  if (!uuid) pushHome();
-
   const [code, setCode] = useState<string>("");
   const [resultVisible, setResultVisible] = useState(false);
   const [isScan, setIsScan] = useState(true);
