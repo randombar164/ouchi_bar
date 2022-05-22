@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { Context } from "src/utils/contexts/provider";
-import { pushHome } from "src/utils/hooks/pushHome";
 import { useSearchByCode } from "src/utils/hooks/useSearchByCode";
 
 import { MultiResults } from "./MultiResults";
@@ -68,7 +67,7 @@ const ScanPage: React.VFC = (): JSX.Element => {
           </div>
         </Link>
       </div>
-      <Scanner isScan={isScan} setCode={setCode} setError={setError} />
+      <Scanner setCode={setCode} setError={setError} />
     </>
   );
 };

@@ -1,9 +1,8 @@
 import type { Exception, Result } from "@zxing/library";
 import { BrowserMultiFormatReader } from "@zxing/library";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 type Props = {
-  isScan: boolean;
   setCode: (code: string) => void;
   setError: (error: Exception) => void;
 };
@@ -16,14 +15,22 @@ type RefProps = {
 
 let videoStream: MediaStream;
 
-export const Scanner: React.VFC<Props> = ({ isScan, setCode, setError }) => {
-  const [res, setRes] = useState<string>();
+export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
+  const [test, setTest] = useState<Date | null>(null);
+
+  const barcodeReader = new BrowserMultiFormatReader();
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
-  const barcodeReader = new BrowserMultiFormatReader();
-  console.log("aaa");
-  const scanFrame = ({ video, canvas, frame }: RefProps) => {
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const scanFrame = useCallback(() => {
+    const frame = frameRef.current as HTMLDivElement;
+    const canvas = canvasRef.current as HTMLCanvasElement;
+    const video = videoRef.current as HTMLVideoElement;
+    const img = imgRef.current as HTMLImageElement;
+
     const frameRect = frame.getBoundingClientRect();
     if (videoStream) {
       const ctx = canvas.getContext("2d");
@@ -36,92 +43,76 @@ export const Scanner: React.VFC<Props> = ({ isScan, setCode, setError }) => {
         frame.clientWidth,
         frame.clientHeight
       );
-
-      // dataURL
-      const url = canvas.toDataURL();
-      console.log(url);
-
-      barcodeReader
-        // .decodeFromImage(img) // decodes but doesn't show img
-        .decodeFromImage(undefined, url)
-        .then(found) // calls onFoundBarcode with the barcode string
-        .catch(notfound)
-        .finally(() => {
-          releaseMemory(url);
-        });
-
-      // requestAnimationFrame(() => {
-      //   scanFrame({ video, canvas, frame });
-      // }); // repeat
-      setTimeout(() => {
-        scanFrame({ video, canvas, frame });
-      }, 2000); // repeat
     }
 
-    // blob
-    // canvas.toBlob(async (blob) => {
-    //   const url = URL.createObjectURL(blob);
+    // stateが更新されるか確認
+    setTest(new Date());
+    console.log("--------");
+    console.log(test);
 
-    //   console.log(url);
-    //   img.setAttribute("src", url); // load the image blob
-    //   console.log(img);
+    // canvas→blob→解析
+    canvas.toBlob(async (blob) => {
+      const url = URL.createObjectURL(blob);
 
-    //   barcodeReader
-    //     // .decodeFromImage(img) // decodes but doesn't show img
-    //     .decodeFromImage(undefined, url)
-    //     .then(found) // calls onFoundBarcode with the barcode string
-    //     .catch(notfound)
-    //     .finally(releaseMemory);
+      img?.setAttribute("src", url);
+      console.log(img);
 
-    //   img.onload = null;
-    //   setTimeout(() => {
-    //     scanFrame({ video, canvas, frame, img });
-    //   }, timeout); // repeat
-    // });
-  };
+      barcodeReader
+        .decodeFromImage(img)
+        .then(found)
+        .catch(notfound)
+        .finally(() => {
+          releaseMemory(img);
+        });
+
+      img.onload = null;
+    });
+  }, [canvasRef, videoRef, frameRef, barcodeReader, test]);
 
   const found = (result: Result) => {
-    console.log("--------------------");
-    setRes(result.getText());
-    console.log(result.getText());
+    setCode(result.getText());
   };
 
-  const notfound = (err: Error) => {
-    setRes(err.message);
-    console.log("err");
+  const notfound = (err: Exception) => {
+    setError(err);
     if (err.name !== "NotFoundException") {
       console.error(err);
     }
   };
 
-  const releaseMemory = (url: string) => {
-    URL.revokeObjectURL(url); // release image blob memory
+  const releaseMemory = (img: HTMLImageElement) => {
+    URL.revokeObjectURL(img.src);
   };
+  const openScanner = useCallback(
+    ({ video, canvas, frame }: RefProps) => {
+      const constrains = {
+        video: true,
+        // 外カメラ使用時
+        // video: {
+        //   facingMode: {
+        //     exact: "environment",
+        //   },
+        // },
+      };
 
-  const openScanner = ({ video, canvas, frame }: RefProps) => {
-    const constrains = {
-      // video: {
-      //   facingMode: {
-      //     exact: "environment",
-      //   },
-      // },
-      video: true,
-    };
+      navigator.mediaDevices.getUserMedia(constrains).then((stream) => {
+        videoStream = stream;
+        video.srcObject = stream;
+        video.play();
+        canvas.width = frame.clientWidth;
+        canvas.height = frame.clientHeight;
 
-    navigator.mediaDevices.getUserMedia(constrains).then((stream) => {
-      videoStream = stream;
-      video.srcObject = stream;
-      video.play();
-      canvas.width = frame.clientWidth;
-      canvas.height = frame.clientHeight;
-
-      scanFrame({ video, canvas, frame });
-    });
-  };
+        setInterval(() => {
+          scanFrame();
+        }, 2000);
+      });
+    },
+    [scanFrame]
+  );
 
   useLayoutEffect(() => {
-    console.log("called frame");
     if (videoRef.current && canvasRef.current && frameRef.current) {
+      // MEMO ここで参照しているvideoRef変数が古いまま？
       openScanner({
         video: videoRef.current,
         canvas: canvasRef.current,
@@ -149,6 +140,13 @@ export const Scanner: React.VFC<Props> = ({ isScan, setCode, setError }) => {
         ></div>
       </div>
       <canvas id="scanner-canvas" ref={canvasRef} className="z-50"></canvas>
+      <img
+        id="scanner-image"
+        src=""
+        alt="スキャナーイメージ"
+        ref={imgRef}
+        className="hidden m-auto w-full"
+      />
     </div>
   );
 };
