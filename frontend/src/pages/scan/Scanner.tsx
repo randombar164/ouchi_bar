@@ -25,7 +25,7 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
   const frameRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
-  const scanFrame = useCallback(() => {
+  const scanFrame = () => {
     const frame = frameRef.current as HTMLDivElement;
     const canvas = canvasRef.current as HTMLCanvasElement;
     const video = videoRef.current as HTMLVideoElement;
@@ -67,7 +67,7 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
 
       img.onload = null;
     });
-  }, [canvasRef, videoRef, frameRef, barcodeReader, test]);
+  };
 
   const found = (result: Result) => {
     setCode(result.getText());
@@ -83,32 +83,29 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
   const releaseMemory = (img: HTMLImageElement) => {
     URL.revokeObjectURL(img.src);
   };
-  const openScanner = useCallback(
-    ({ video, canvas, frame }: RefProps) => {
-      const constrains = {
-        video: true,
-        // 外カメラ使用時
-        // video: {
-        //   facingMode: {
-        //     exact: "environment",
-        //   },
-        // },
-      };
+  const openScanner = ({ video, canvas, frame }: RefProps) => {
+    const constrains = {
+      video: true,
+      // 外カメラ使用時
+      // video: {
+      //   facingMode: {
+      //     exact: "environment",
+      //   },
+      // },
+    };
 
-      navigator.mediaDevices.getUserMedia(constrains).then((stream) => {
-        videoStream = stream;
-        video.srcObject = stream;
-        video.play();
-        canvas.width = frame.clientWidth;
-        canvas.height = frame.clientHeight;
+    navigator.mediaDevices.getUserMedia(constrains).then((stream) => {
+      videoStream = stream;
+      video.srcObject = stream;
+      video.play();
+      canvas.width = frame.clientWidth;
+      canvas.height = frame.clientHeight;
 
-        setInterval(() => {
-          scanFrame();
-        }, 2000);
-      });
-    },
-    [scanFrame]
-  );
+      setInterval(() => {
+        scanFrame();
+      }, 2000);
+    });
+  };
 
   useLayoutEffect(() => {
     if (videoRef.current && canvasRef.current && frameRef.current) {
