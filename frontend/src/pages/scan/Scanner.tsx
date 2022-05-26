@@ -1,6 +1,12 @@
 import type { Exception, Result } from "@zxing/library";
 import { BrowserMultiFormatReader } from "@zxing/library";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 
 type Props = {
   setCode: (code: string) => void;
@@ -52,13 +58,13 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
 
     // canvas→blob→解析
     canvas.toBlob(async (blob) => {
-      const url = URL.createObjectURL(blob);
+      const url = await URL.createObjectURL(blob);
 
       img?.setAttribute("src", url);
       console.log(img);
 
       barcodeReader
-        .decodeFromImage(img)
+        .decodeFromImage(undefined, url)
         .then(found)
         .catch(notfound)
         .finally(() => {
@@ -71,6 +77,7 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
 
   const found = (result: Result) => {
     setCode(result.getText());
+    console.log(result.getText());
   };
 
   const notfound = (err: Exception) => {
@@ -107,15 +114,43 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
     });
   };
 
-  useLayoutEffect(() => {
-    if (videoRef.current && canvasRef.current && frameRef.current) {
-      // MEMO ここで参照しているvideoRef変数が古いまま？
-      openScanner({
-        video: videoRef.current,
-        canvas: canvasRef.current,
-        frame: frameRef.current,
-      });
-    }
+  const refCallback = useRef<() => void>(scanFrame);
+
+  useEffect(() => {
+    refCallback.current = scanFrame;
+  }, [scanFrame]);
+
+  useEffect(() => {
+    // MEMO ここで参照しているvideoRef変数が古いまま？
+    const constrains = {
+      video: true,
+      // 外カメラ使用時
+      // video: {
+      //   facingMode: {
+      //     exact: "environment",
+      //   },
+      // },
+    };
+
+    const callback = () => {
+      refCallback.current();
+    };
+
+    navigator.mediaDevices.getUserMedia(constrains).then((stream) => {
+      if (videoRef.current && canvasRef.current && frameRef.current) {
+        videoStream = stream;
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
+        canvasRef.current.width = frameRef.current.clientWidth;
+        canvasRef.current.height = frameRef.current.clientHeight;
+      }
+
+      const scan = setInterval(callback, 2000);
+
+      return () => {
+        clearInterval(scan);
+      };
+    });
   }, []);
 
   return (
@@ -129,7 +164,6 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
         ></video>
       </div>
       <div className="z-40 w-full">
-        <p className="text-base font-bold text-center text-white">{res}</p>
         <div
           id="scanner-frame"
           ref={frameRef}
