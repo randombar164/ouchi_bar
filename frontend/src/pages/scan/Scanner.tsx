@@ -1,31 +1,31 @@
 import type { Exception, Result } from "@zxing/library";
+import { NotFoundException } from "@zxing/library";
 import { BarcodeFormat, DecodeHintType } from "@zxing/library";
 import { BrowserMultiFormatReader } from "@zxing/library";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
+import Webcam from "react-webcam";
 
 type Props = {
   setCode: (code: string) => void;
   setError: (error: Exception) => void;
+  setIsScan: (scanning: boolean) => void;
+  isScan: boolean;
 };
 
-type RefProps = {
-  video: HTMLVideoElement;
-  canvas: HTMLCanvasElement;
-  frame: HTMLDivElement;
+const videoConstraints = {
+  facingMode:
+    // "user",
+    { exact: "environment" },
 };
 
-let videoStream: MediaStream;
-
-export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
-  const [test, setTest] = useState<Date | null>(null);
-
-  const barcodeReader = new BrowserMultiFormatReader();
+export const Scanner: React.VFC<Props> = ({
+  setCode,
+  setError,
+  setIsScan,
+  isScan,
+}) => {
+  const [res, setRes] = useState("");
+  const codeReader = new BrowserMultiFormatReader();
   const formats = [
     BarcodeFormat.DATA_MATRIX,
     BarcodeFormat.CODE_39,
@@ -34,160 +34,78 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
   const hints = new Map();
   useEffect(() => {
     hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
-    barcodeReader.hints.set(hints);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hints]);
 
   const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const frameRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const scanFrame = () => {
-    const frame = frameRef.current as HTMLDivElement;
-    const canvas = canvasRef.current as HTMLCanvasElement;
-    const video = videoRef.current as HTMLVideoElement;
-    const img = imgRef.current as HTMLImageElement;
-
-    const frameRect = frame.getBoundingClientRect();
-    if (videoStream) {
-      const ctx = canvas.getContext("2d");
-      ctx?.drawImage(
-        video,
-
-        // source x, y, w, h
-        frameRect.x,
-        frameRect.y,
-        frame.clientWidth,
-        frame.clientHeight,
-
-        0,
-        0,
-        frame.clientWidth,
-        frame.clientHeight
-      );
-    }
-
-    // canvas→blob→解析
-    canvas.toBlob(async (blob) => {
-      const url = await URL.createObjectURL(blob);
-
-      img?.setAttribute("src", url);
-
-      await barcodeReader
-        .decodeFromImage(img, url)
-        .then(found)
-        .catch(notfound)
-        .finally(() => {
-          releaseMemory(img);
-        });
-
-      img.onload = null;
-    });
-  };
-
-  const found = (result: Result) => {
-    setCode(result.getText());
-    console.log(result.getText());
-  };
-
-  const notfound = (err: Exception) => {
-    setError(err);
-    if (err.name !== "NotFoundException") {
-      console.error(err);
-    }
-  };
-
-  const releaseMemory = (img: HTMLImageElement) => {
-    URL.revokeObjectURL(img.src);
-  };
-  const openScanner = ({ video, canvas, frame }: RefProps) => {
-    const constrains = {
-      video: true,
-      // 外カメラ使用時
-      // video: {
-      //   facingMode: {
-      //     exact: "environment",
-      //   },
-      // },
-    };
-
-    navigator.mediaDevices.getUserMedia(constrains).then((stream) => {
-      videoStream = stream;
-      video.srcObject = stream;
-      video.play();
-      canvas.width = frame.clientWidth;
-      canvas.height = frame.clientHeight;
-
-      setInterval(() => {
-        scanFrame();
-      }, 2000);
-    });
-  };
-
-  const refCallback = useRef<() => void>(scanFrame);
+  const webcamRef = useRef<Webcam>(null);
 
   useEffect(() => {
-    refCallback.current = scanFrame;
-  }, [scanFrame]);
+    if (isScan) {
+      captureStart((result, error) => {
+        if (error) {
+          setError(error);
+        }
+        setRes(result.getText());
+        setCode(result.getText());
+      });
+    } else {
+      captureStop();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isScan]);
 
-  useEffect(() => {
-    // MEMO ここで参照しているvideoRef変数が古いまま？
-    const constrains = {
-      video: true,
-      // 外カメラ使用時
-      // video: {
-      //   facingMode: {
-      //     exact: "environment",
-      //   },
-      // },
-    };
-
-    const callback = () => {
-      refCallback.current();
-    };
-
-    navigator.mediaDevices.getUserMedia(constrains).then((stream) => {
-      if (videoRef.current && canvasRef.current && frameRef.current) {
-        videoStream = stream;
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-        canvasRef.current.width = frameRef.current.clientWidth;
-        canvasRef.current.height = frameRef.current.clientHeight;
+  const captureStart = (
+    callback: (result: Result, error: Exception | undefined) => void,
+    stopOnCapture = true
+  ) => {
+    codeReader.decodeFromVideoDevice("", videoRef.current, (result, error) => {
+      if (result) {
+        // setScanResult(result);
+        if (stopOnCapture === true) {
+          captureStop();
+        }
+        callback(result, error);
       }
-
-      const scan = setInterval(callback, 2000);
-
-      return () => {
-        clearInterval(scan);
-      };
+      if (error && !(error instanceof NotFoundException)) {
+        console.error(error);
+      }
     });
-  }, []);
+  };
+  const captureStop = () => {
+    // setIsRunning(false);
+    codeReader.reset();
+  };
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-      <div className="absolute inset-0 z-10 m-auto bg-gray-700">
-        {/*eslint-disable-next-line jsx-a11y/media-has-caption*/}
-        <video
-          id="scanner-video"
-          ref={videoRef}
-          className="object-cover absolute inset-0 z-20 m-auto w-full h-screen"
-        ></video>
-      </div>
-      <div className="z-40 w-full">
-        <canvas id="scanner-canvas" ref={canvasRef} className="z-50"></canvas>
-        <div
-          id="scanner-frame"
-          ref={frameRef}
-          className="z-40 m-auto w-11/12 h-32 border-4 border-white border-solid"
-        ></div>
-        <img
-          id="scanner-image"
-          src=""
-          alt="スキャナーイメージ"
-          ref={imgRef}
-          className="m-auto w-full"
+      {!res ? (
+        <div className="z-10 -mt-10 w-full text-center">
+          <p className="py-2 font-bold text-white">
+            枠内にバーコードを入れてください
+          </p>
+          {/*eslint-disable-next-line jsx-a11y/media-has-caption*/}
+          <video
+            id="scanner-video"
+            ref={videoRef}
+            className="object-cover z-20 m-auto w-11/12 h-40 border-4 border-white border-dashed"
+          ></video>
+        </div>
+      ) : (
+        <div className="flex z-10 justify-center items-center py-4 w-11/12 text-center bg-white rounded-lg">
+          <p className="font-bold">
+            バーコードを認識しました
+            <br />
+            {res}
+          </p>
+        </div>
+      )}
+      <div className="absolute inset-0 m-auto w-full h-screen bg-black">
+        <Webcam
+          audio={false}
+          className="object-cover w-full h-full opacity-90 blur-sm"
+          ref={webcamRef}
+          videoConstraints={videoConstraints}
         />
       </div>
     </div>

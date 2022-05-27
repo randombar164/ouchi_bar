@@ -60,14 +60,19 @@ const ScanPage: React.VFC = (): JSX.Element => {
         }
         onClose={handleClose}
       />
-      <div className="fixed top-0 z-30 py-4 w-full bg-gray-800">
+      <div className="fixed top-0 z-30 py-4 w-full bg-black bg-opacity-75">
         <Link href="/register">
-          <div className="inline-block py-2 px-4 ml-3 text-sm font-bold text-red-500 bg-white rounded-full border-2 border-white">
+          <button className="inline-block py-3 px-6 ml-3 font-bold text-red-500 bg-white rounded-full border-2 border-white">
             &lt; 登録画面に戻る
-          </div>
+          </button>
         </Link>
       </div>
-      <Scanner setCode={setCode} setError={setError} />
+      <Scanner
+        isScan={isScan}
+        setIsScan={setIsScan}
+        setCode={setCode}
+        setError={setError}
+      />
     </>
   );
 };
