@@ -1,4 +1,5 @@
 import type { Exception, Result } from "@zxing/library";
+import { BarcodeFormat, DecodeHintType } from "@zxing/library";
 import { BrowserMultiFormatReader } from "@zxing/library";
 import {
   useCallback,
@@ -25,12 +26,24 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
   const [test, setTest] = useState<Date | null>(null);
 
   const barcodeReader = new BrowserMultiFormatReader();
+  const formats = [
+    BarcodeFormat.DATA_MATRIX,
+    BarcodeFormat.CODE_39,
+    BarcodeFormat.CODE_128,
+  ];
+  const hints = new Map();
+  useEffect(() => {
+    hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
+    barcodeReader.hints.set(hints);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hints]);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const scanFrame = () => {
     const frame = frameRef.current as HTMLDivElement;
     const canvas = canvasRef.current as HTMLCanvasElement;
@@ -47,24 +60,23 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
         frameRect.x,
         frameRect.y,
         frame.clientWidth,
+        frame.clientHeight,
+
+        0,
+        0,
+        frame.clientWidth,
         frame.clientHeight
       );
     }
-
-    // stateが更新されるか確認
-    setTest(new Date());
-    console.log("--------");
-    console.log(test);
 
     // canvas→blob→解析
     canvas.toBlob(async (blob) => {
       const url = await URL.createObjectURL(blob);
 
       img?.setAttribute("src", url);
-      console.log(img);
 
-      barcodeReader
-        .decodeFromImage(undefined, url)
+      await barcodeReader
+        .decodeFromImage(img, url)
         .then(found)
         .catch(notfound)
         .finally(() => {
@@ -164,20 +176,20 @@ export const Scanner: React.VFC<Props> = ({ setCode, setError }) => {
         ></video>
       </div>
       <div className="z-40 w-full">
+        <canvas id="scanner-canvas" ref={canvasRef} className="z-50"></canvas>
         <div
           id="scanner-frame"
           ref={frameRef}
           className="z-40 m-auto w-11/12 h-32 border-4 border-white border-solid"
         ></div>
+        <img
+          id="scanner-image"
+          src=""
+          alt="スキャナーイメージ"
+          ref={imgRef}
+          className="m-auto w-full"
+        />
       </div>
-      <canvas id="scanner-canvas" ref={canvasRef} className="z-50"></canvas>
-      <img
-        id="scanner-image"
-        src=""
-        alt="スキャナーイメージ"
-        ref={imgRef}
-        className="hidden m-auto w-full"
-      />
     </div>
   );
 };
