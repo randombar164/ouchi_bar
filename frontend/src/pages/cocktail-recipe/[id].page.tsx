@@ -86,6 +86,40 @@ export const CocktailRecipe: React.VFC = () => {
 								</Typography>
 							</div>
 						</>
+						//   <>
+						//   <div className="flex p-2 m-4">
+						//     <CocktailImg recipe={recipe} />
+						//     <p className="place-self-center py-4 text-lg font-bold">
+						//       {recipe.name}
+						//     </p>
+						//   </div>
+						//   <div id="cocktailIngredients" className="py-4">
+						//     <p className="p-2 text-xl font-semibold">材料</p>
+						//     <div className="mx-auto w-full max-w-[300px]">
+						//       {recipe?.ingredients?.map((ingredient: any, i: number) => {
+						//         return (
+						//           <div
+						//             key={i}
+						//             className="flex justify-between items-end pt-4 border-b border-gray-300 border-solid"
+						//           >
+						//             <p>{ingredient.name}</p>
+						//             <p className="text-base">
+						//               {ingredient.amount}
+						//               {ingredient.unit}
+						//             </p>
+						//           </div>
+						//         );
+						//       })}
+						//     </div>
+						//   </div>
+						//   <div id="cocktaildrinkmethod" className="py-4">
+						//     <p className="py-2 text-xl font-semibold">作り方</p>
+						//     <p className="text-lg font-bold">{recipe.drinkMethod}</p>
+						//     <div className="py-2 text-base">
+						//       <p>{recipe.explanation}</p>
+						//     </div>
+						//   </div>
+						// </>
 					)}
 				</div>
 				<ToCocktailsLink />
