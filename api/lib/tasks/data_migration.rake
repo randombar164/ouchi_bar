@@ -1,6 +1,6 @@
 namespace :data_migration do
 
-  desc "マスターデータを保存するrakeタスク"
+  desc "旧DBからv2DBにデータを移行するためのタスク"
   task :to_array => :environment do
   
     # Unit の登録
