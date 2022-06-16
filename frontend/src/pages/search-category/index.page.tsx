@@ -1,14 +1,14 @@
-import { useRouter } from 'next/router';
-import { memo, useCallback, useContext } from 'react';
-import { useState } from 'react';
-import { IngredientCard } from 'src/components/IngredientCard';
-import { Layout } from 'src/components/Layout';
-import data from 'src/static/category_tree.json';
-import { Context } from 'src/utils/contexts/provider';
-import { pushHome } from 'src/utils/hooks/pushHome';
-import type { concreteIngredientType } from 'src/utils/types/type';
+import { useRouter } from "next/router";
+import { memo, useCallback, useContext } from "react";
+import { useState } from "react";
+import { IngredientCard } from "src/components/IngredientCard";
+import { Layout } from "src/components/Layout";
+import data from "src/static/category_tree.json";
+import { Context } from "src/utils/contexts/provider";
+import { pushHome } from "src/utils/hooks/pushHome";
+import type { concreteIngredientType } from "src/utils/types/type";
 
-import { useGetIngredientsFromCategory } from '../../utils/hooks/useGetIngredientsFromCategory';
+import { useGetIngredientsFromCategory } from "../../utils/hooks/useGetIngredientsFromCategory";
 
 type NodeProps = {
   id: number;
@@ -35,9 +35,9 @@ const CategoryButton: React.VFC<CategoryButtonProps> = memo(
     );
   }
 );
-CategoryButton.displayName = 'CategoryButton';
+CategoryButton.displayName = "CategoryButton";
 
-const SearchCategoryPage: React.VFC = (): JSX.Element => {
+const SearchCategoryPage = (): JSX.Element => {
   const [routeIds, setRouteIds] = useState<number[]>([data.category.id]);
   const [current, setCurrent] = useState<NodeProps>(data.category);
   const [hasChild, setHasChild] = useState(true);
@@ -47,7 +47,7 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
   const handleClick = useCallback(
     (ingredient: concreteIngredientType) => {
       setConcreteIngredients([...concreteIngredients, ingredient]);
-      router.push('/register');
+      router.push("/register");
     },
     [concreteIngredients, router, setConcreteIngredients]
   );
@@ -148,6 +148,9 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
       </div>
     </Layout>
   );
+};
+SearchCategoryPage.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout>{page}</Layout>;
 };
 
 export default SearchCategoryPage;

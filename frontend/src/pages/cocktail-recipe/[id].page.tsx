@@ -1,12 +1,12 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { ContentWraper } from 'src/components/ContentWrapper';
-import { Layout } from 'src/components/Layout';
-import { useGetRecipe } from 'src/utils/hooks/useGetRecipe';
-import { useContext } from 'react';
-import { Context } from 'src/utils/contexts/provider';
-import { pushHome } from 'src/utils/hooks/pushHome';
-import CocktailImg from 'src/components/CocktailImg';
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import CocktailImg from "src/components/CocktailImg";
+import { ContentWraper } from "src/components/ContentWrapper";
+import { Layout } from "src/components/Layout";
+import { Context } from "src/utils/contexts/provider";
+import { pushHome } from "src/utils/hooks/pushHome";
+import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
 
 const ToCocktailsLink: React.VFC = () => {
   return (
@@ -18,7 +18,7 @@ const ToCocktailsLink: React.VFC = () => {
   );
 };
 
-export const CocktailRecipe: React.VFC = () => {
+export const CocktailRecipePage = () => {
   const { uuid } = useContext(Context);
   if (!uuid) pushHome();
 
@@ -75,4 +75,9 @@ export const CocktailRecipe: React.VFC = () => {
     </Layout>
   );
 };
-export default CocktailRecipe;
+
+CocktailRecipePage.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout>{page}</Layout>;
+};
+
+export default CocktailRecipePage;
