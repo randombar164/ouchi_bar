@@ -6,6 +6,8 @@ import { useContext, useEffect } from 'react';
 import { Layout } from 'src/components/Layout';
 import { Context } from 'src/utils/contexts/provider';
 import { useGetUser } from 'src/utils/hooks/useGetUser';
+import Button from '@mui/material/Button';
+import createTheme from '@mui/material/styles/createTheme';
 
 export const getStaticProps: GetStaticProps = async () => {
   const blogs = ((context: __WebpackModuleApi.RequireContext) => {
@@ -46,12 +48,10 @@ const BlogList: React.VFC = (props: any) => {
             <br />
             作れるカクテルを見つけよう
           </h1>
-          <button
-            onClick={getUserFn}
-            className="py-3 px-5 mx-auto mt-8 w-60 font-bold text-white bg-barOrange-2 rounded-2xl"
-          >
+
+          <Button variant="contained" onClick={getUserFn} color="primary">
             お家barに行く
-          </button>
+          </Button>
         </div>
         <img
           src="/bar-top.png"

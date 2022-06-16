@@ -8,12 +8,12 @@ export type concreteIngredientType = {
   createdAt: string;
   updatedAt: string;
   imgSrc: string;
-}
+};
 
 export type ModalProps = {
-  isShow: boolean;
-  onClose: ()=>void;
-}
+  visible: boolean;
+  onClose: () => void;
+};
 
 export type IngredientCardProps = {
   imgSrc: string;
