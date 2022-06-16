@@ -1,4 +1,6 @@
 class ConcreteIngredient < ApplicationRecord
+  self.table_name = "v2_concrete_ingredients"
+
   validates :asin, uniqueness: true, allow_nil: true
 
   has_many :base_ingredients_concrete_ingredients, dependent: :destroy

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  self.table_name = "v2_users"
+
   before_create :set_uuid
 
   has_many :users_concrete_ingredients, dependent: :destroy

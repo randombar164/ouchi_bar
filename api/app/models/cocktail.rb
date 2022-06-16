@@ -1,4 +1,6 @@
 class Cocktail < ApplicationRecord
+  self.table_name = "v2_cocktails"
+
   belongs_to :drink_method
   belongs_to :glass_type
 
