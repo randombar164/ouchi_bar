@@ -1,13 +1,14 @@
 //mochikun用
-import { useRouter } from 'next/router';
-import { useCallback, useContext } from 'react';
-import { IngredientCard } from 'src/components/IngredientCard';
-import { Layout } from 'src/components/Layout';
-import { Context } from 'src/utils/contexts/provider';
-import { useRegisterIngredients } from 'src/utils/hooks/useRegisterIngredients';
-import { RegisterField } from './RegisterField';
+import { useRouter } from "next/router";
+import { useCallback, useContext } from "react";
+import { IngredientCard } from "src/components/IngredientCard";
+import { Layout } from "src/components/Layout";
+import { Context } from "src/utils/contexts/provider";
+import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
 
-const RegiterPage: React.VFC = (): JSX.Element => {
+import { RegisterField } from "./RegisterField";
+
+const RegisterPage = (): JSX.Element => {
   const { concreteIngredients, setConcreteIngredients } = useContext(Context);
   const router = useRouter();
   const { registerFn } = useRegisterIngredients();
@@ -28,12 +29,12 @@ const RegiterPage: React.VFC = (): JSX.Element => {
     });
     registerFn(ids);
     setConcreteIngredients([]);
-    router.push('/sakagura');
+    router.push("/sakagura");
   }, [concreteIngredients, setConcreteIngredients, registerFn, router]);
 
   return (
     <Layout>
-      <div className=" py-8 px-4 mt-0 w-full ">
+      <div className=" py-8 px-4 mt-0 w-full">
         <div id="registerPageTitle" className="py-6 font-bold">
           あなたが持っている材料を登録
         </div>
@@ -60,8 +61,8 @@ const RegiterPage: React.VFC = (): JSX.Element => {
         <button
           className={`block py-3 px-7 mx-auto text-white  rounded-3xl ${
             concreteIngredients.length > 0
-              ? 'bg-[#3BC808] shadow-lg'
-              : 'bg-barGray-2'
+              ? "bg-[#3BC808] shadow-lg"
+              : "bg-barGray-2"
           }`}
           onClick={handleRegister}
           disabled={concreteIngredients.length == 0}
@@ -72,5 +73,8 @@ const RegiterPage: React.VFC = (): JSX.Element => {
     </Layout>
   );
 };
+RegisterPage.getLayout = function getLayout(page: React.ReactElement) {
+  return <Layout>{page}</Layout>;
+};
 
-export default RegiterPage;
+export default RegisterPage;

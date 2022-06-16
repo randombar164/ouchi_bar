@@ -1,12 +1,26 @@
 import "src/styles/globals.css";
 
+import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { ContextProvider } from "src/utils/contexts/provider";
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  return (
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const getLayout =
+    Component.getLayout ??
+    ((page) => {
+      return page;
+    });
+  return getLayout(
     <ContextProvider>
-        <Component {...pageProps} />
+      <Component {...pageProps} />
     </ContextProvider>
   );
 };
