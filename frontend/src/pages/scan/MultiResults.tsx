@@ -38,7 +38,7 @@ export const MultiResults: React.VFC<Props> = (prop): JSX.Element => {
   }, [response, router, concreteIngredients, setConcreteIngredients]);
   return (
     <Modal
-      isShow={prop.isShow}
+      isShow={prop.visible}
       onClose={prop.onClose}
       className="overflow-scroll my-auto h-5/6 max-h-[700px]"
     >

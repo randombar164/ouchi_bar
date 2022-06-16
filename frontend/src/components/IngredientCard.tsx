@@ -1,4 +1,4 @@
-import type { IngredientCardProps } from "src/utils/types/type";
+import type { IngredientCardProps } from 'src/utils/types/type';
 
 type Props = {
   canDelete: boolean;
@@ -13,7 +13,10 @@ export const IngredientCard: React.VFC<Props> = (prop) => {
       className="flex justify-between items-center py-3 px-8 w-full bg-white rounded-lg shadow-xl drop-shadow-md"
       onClick={prop.onClick}
     >
-      <div className="flex gap-1 justify-center items-center">
+      <div
+        className="flex gap-1 justify-center items-center"
+        onClick={prop.onClick}
+      >
         <div className="mr-8 h-24">
           <img
             src={prop.imgSrc}

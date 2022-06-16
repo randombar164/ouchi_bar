@@ -1,4 +1,3 @@
-//mochikun用
 import type { VFC } from "react";
 import { useContext,useEffect } from "react";
 import { CocktailCards } from "src/components/cocktailCard";
@@ -7,10 +6,8 @@ import { ToRegisterModal } from "src/components/ToRegisterModal";
 import { Context } from "src/utils/contexts/provider";
 import { pushHome } from "src/utils/hooks/pushHome";
 import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
-
+        
 const CocktailPage: VFC = () => {
-  const { uuid } = useContext(Context);
-  if (!uuid) pushHome();
   const { cocktails, loading, error, getCocktailsFn } = useGetCocktails();
 
   useEffect(() => {
