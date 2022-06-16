@@ -1,3 +1,4 @@
+import Modal from "@mui/material/Modal";
 import type { Exception, Result } from "@zxing/library";
 import { NotFoundException } from "@zxing/library";
 import { BarcodeFormat, DecodeHintType } from "@zxing/library";
