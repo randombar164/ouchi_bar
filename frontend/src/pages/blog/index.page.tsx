@@ -1,3 +1,5 @@
+import Button from '@mui/material/Button';
+//import createTheme from '@mui/material/styles/createTheme';
 import matter from 'gray-matter';
 import type { GetStaticProps } from 'next';
 import Link from 'next/link';
@@ -6,8 +8,6 @@ import { useContext, useEffect } from 'react';
 import { Layout } from 'src/components/Layout';
 import { Context } from 'src/utils/contexts/provider';
 import { useGetUser } from 'src/utils/hooks/useGetUser';
-import Button from '@mui/material/Button';
-import createTheme from '@mui/material/styles/createTheme';
 
 export const getStaticProps: GetStaticProps = async () => {
   const blogs = ((context: __WebpackModuleApi.RequireContext) => {
@@ -50,7 +50,7 @@ const BlogList: React.VFC = (props: any) => {
 
   return (
     <Layout>
-      <div className="relative w-full max-w-[320px] text-center">
+      <div className="relative w-full text-center max-w-[320px]">
         <div className="absolute inset-x-0 top-1/2 z-10 w-full text-base font-bold text-white transform -translate-y-1/2">
           <h1 className="text-xl leading-10">
             持ってるお酒をコレクション
@@ -77,7 +77,7 @@ const BlogList: React.VFC = (props: any) => {
         {props.blogs.map((v: any) => {
           return (
             <Link key={v.frontmatter.id} href={`/blog/${v.slug}`}>
-              <div className="p-4 w-full hover:text-barOrange-4 rounded border-b border-gray-400 border-solid">
+              <div className="p-4 w-full rounded border-b border-gray-400 border-solid hover:text-barOrange-4">
                 <p className="text-sm font-bold">{v.frontmatter.title}</p>
                 <p className="pt-2 text-xs text-right">
                   投稿日: {v.frontmatter.date}
