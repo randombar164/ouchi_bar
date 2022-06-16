@@ -1,4 +1,4 @@
-namespace :tmp do
+namespace :paapi do
   desc 'base_ingredientとconcrete_ingredientの間のリレーションを書き換えるタスク'
   task change_relation_within_ingredient: :environment do
     ConcreteIngredient.all.each_with_index do |ci, i|

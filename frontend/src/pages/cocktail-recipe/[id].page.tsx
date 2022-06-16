@@ -35,12 +35,7 @@ export const CocktailRecipe: React.VFC = () => {
           ) : (
             <>
               <div className="flex p-2 m-4">
-                <img
-                  src="https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00VPZRMAK&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=c6tower-22&language=ja_JP"
-                  width={49}
-                  height={177}
-                  alt="カクテルの画像"
-                />
+                <CocktailImg recipe={recipe} />
                 <p className="place-self-center py-4 text-lg font-bold">
                   {recipe.name}
                 </p>

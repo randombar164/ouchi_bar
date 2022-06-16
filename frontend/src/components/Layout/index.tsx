@@ -1,5 +1,5 @@
-import { Footer } from "src/components/Layout/Footer";
-import { Header } from "src/components/Layout/Header";
+import { Footer } from 'src/components/Layout/Footer';
+import { Header } from 'src/components/Layout/Header';
 
 type Props = {
   children: React.ReactNode;
@@ -7,10 +7,12 @@ type Props = {
 
 export const Layout: React.VFC<Props> = ({ children }) => {
   return (
-    <>
+    <div className="flex overflow-y-auto bg-yellow-200 justify-center">
       <Header />
-      <div className="pt-12 pb-16 h-screen">{children}</div>
+      <div className="overflow-y-auto pt-12 pb-16 h-screen bg-white max-w-[320px]">
+        {children}
+      </div>
       <Footer />
-    </>
+    </div>
   );
 };
