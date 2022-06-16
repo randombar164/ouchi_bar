@@ -17,7 +17,7 @@ export const SingleResult: React.VFC<Props> = (prop): JSX.Element => {
     router.push("/register");
   }, [prop, concreteIngredients, setConcreteIngredients, router]);
   return (
-    <Modal isShow={prop.isShow} onClose={prop.onClose} className="mt-48">
+    <Modal isShow={prop.visible} onClose={prop.onClose} className="mt-48">
       <div className="py-8 px-6">
         {prop.ingredient && (
           <ResultCard
