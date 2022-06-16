@@ -7,14 +7,14 @@ RSpec.describe 'Queries::SearchConcreteIngredientFromJanCode', type: :request do
   describe 'GET /queries/search_concrete_ingredient_from_jan_code' do
     context 'responds successfully returns a 200 response' do
       it 'found from database' do
-        get queries_search_concrete_ingredient_from_jan_code_path, params: { jan_code: concrete_ingredient.jan_code }
+        get v2_queries_search_concrete_ingredient_from_jan_code_path, params: { jan_code: concrete_ingredient.jan_code }
         expect(response).to be_successful
         expect(JSON.parse(response.body)['concrete_ingredient']['name']).to eq concrete_ingredient.name
         expect(JSON.parse(response.body)['found_from_database']).to eq true
       end
 
       it 'found from amazon' do
-        get queries_search_concrete_ingredient_from_jan_code_path, params: { jan_code: 'wrong_jan_code' }
+        get v2_queries_search_concrete_ingredient_from_jan_code_path, params: { jan_code: 'wrong_jan_code' }
         expect(response).to be_successful
         expect(JSON.parse(response.body)['result']).not_to eq nil
         expect(JSON.parse(response.body)['found_from_database']).to eq false
