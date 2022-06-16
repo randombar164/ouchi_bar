@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Queries::SearchConcreteIngredientFromJanCode', type: :request do
-  let(:base_ingredient) { BaseIngredient.first }
-  let(:concrete_ingredient) { ConcreteIngredient.create!(name: 'sample', base_ingredient_id: base_ingredient.id, jan_code: 'sample') }
+  let(:base_ingredient) { V2::BaseIngredient.first }
+  let(:concrete_ingredient) { V2::ConcreteIngredient.create!(name: 'sample', base_ingredient_id: base_ingredient.id, jan_code: 'sample') }
 
   describe 'GET /queries/search_concrete_ingredient_from_jan_code' do
     context 'responds successfully returns a 200 response' do

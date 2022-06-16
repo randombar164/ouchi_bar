@@ -1,4 +1,4 @@
-class BaseIngredient < ApplicationRecord
+class V2::BaseIngredient < ApplicationRecord
   self.table_name = "v2_base_ingredients"
   
   has_many :base_drinks_base_ingredients, dependent: :destroy

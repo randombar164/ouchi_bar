@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Commands::AddUsersConcreteIngredients', type: :request do
-  let(:user) { User.create! }
-  let(:concrete_ingredient_ids) { ConcreteIngredient.limit(5).map(&:id) }
+  let(:user) { V2::User.create! }
+  let(:concrete_ingredient_ids) { V2::ConcreteIngredient.limit(5).map(&:id) }
 
   describe 'POST /commands/add_users_concrete_ingredients' do
     it 'responds successfully returns a 200 response' do

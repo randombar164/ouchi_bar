@@ -1,4 +1,4 @@
-class Cocktail < ApplicationRecord
+class V2::Cocktail < ApplicationRecord
   self.table_name = "v2_cocktails"
 
   belongs_to :drink_method
@@ -7,7 +7,7 @@ class Cocktail < ApplicationRecord
   has_many :cocktails_concrete_ingredients, dependent: :destroy
   has_many :concrete_ingredients, through: :cocktails_concrete_ingredients
 
-  has_many :ingredients, class_name: 'CocktailsConcreteIngredient',
+  has_many :ingredients, class_name: 'V2::CocktailsConcreteIngredient',
                          inverse_of: 'cocktail',
                          dependent: :destroy
 
@@ -25,11 +25,11 @@ class Cocktail < ApplicationRecord
   end
 
   def self.where_cookable_cocktails(concrete_ingredient_ids)
-    cookable_cocktails_candidate_having_ci_counts = CocktailsConcreteIngredient
+    cookable_cocktails_candidate_having_ci_counts = V2::CocktailsConcreteIngredient
                                                     .where(concrete_ingredient_id: concrete_ingredient_ids)
                                                     .group(:cocktail_id)
                                                     .count
-    cocktails_enough_ci_counts = CocktailsConcreteIngredient.group(:cocktail_id).count
+    cocktails_enough_ci_counts = V2::CocktailsConcreteIngredient.group(:cocktail_id).count
     cookable_cocktail_ids = []
     cookable_cocktails_candidate_having_ci_counts.each do |cocktail_id, having_ci_count|
       cookable_cocktail_ids << cocktail_id if having_ci_count == cocktails_enough_ci_counts[cocktail_id]

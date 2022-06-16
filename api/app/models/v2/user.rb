@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+class V2::User < ApplicationRecord
   self.table_name = "v2_users"
 
   before_create :set_uuid
@@ -15,18 +15,18 @@ class User < ApplicationRecord
 
   def base_ingredients
     base_ingredient_ids = self.concrete_ingredients.pluck(:base_ingredient_id).uniq
-    return BaseIngredient.where(id: base_ingredient_ids)
+    return V2::BaseIngredient.where(id: base_ingredient_ids)
   end
 
   def cocktails
-    return Cocktail.where_cookable_cocktails(self.concrete_ingredient_ids)
+    return V2::Cocktail.where_cookable_cocktails(self.concrete_ingredient_ids)
   end
 
   # ============
   # mutation methods
   # ============
   def add_concrete_ingredients!(concrete_ingredient_ids)
-    concrete_ingredients = ConcreteIngredient.where(id: concrete_ingredient_ids)
+    concrete_ingredients = V2::ConcreteIngredient.where(id: concrete_ingredient_ids)
     self.concrete_ingredients << concrete_ingredients
   end
 

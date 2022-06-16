@@ -1,4 +1,4 @@
-class BaseDrink < ApplicationRecord
+class V2::BaseDrink < ApplicationRecord
   self.table_name = "v2_base_drinks"
 
   belongs_to :drink_method

@@ -8,7 +8,7 @@ class Commands::RegisterConcreteIngredientByAmazonProductController < Applicatio
     amazon_searched_products = s.call
     selected_product = amazon_searched_products.find{ |asp| asp.hash['ASIN'] == asin }
 
-    category = Category.find_by(amazon_browse_node_id: selected_product['BrowseNodeInfo']['BrowseNodes'][0]['Id'])
+    category = V2::Category.find_by(amazon_browse_node_id: selected_product['BrowseNodeInfo']['BrowseNodes'][0]['Id'])
     detail_page_url = selected_product['DetailPageURL']
     img_src = selected_product['Images']['Primary']['Medium']['URL']
     name = selected_product['ItemInfo']['Title']['DisplayValue']
