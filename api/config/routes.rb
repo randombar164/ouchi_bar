@@ -18,20 +18,22 @@ Rails.application.routes.draw do
     resources :cocktails, only: [:show]
   end
 
-  namespace :commands do
-    # define api endpoints
-    post 'add_users_concrete_ingredients' => 'add_users_concrete_ingredients#execute'
-    post 'delete_users_concrete_ingredients' => 'delete_users_concrete_ingredients#execute'
-    post 'register_user' => 'register_user#execute'
-    post 'register_concrete_ingredient_by_amazon_product' => 'register_concrete_ingredient_by_amazon_product#execute'
-  end
+  namespace :v2 do
+    namespace :commands do
+      # define api endpoints
+      post 'add_users_concrete_ingredients' => 'add_users_concrete_ingredients#execute'
+      post 'delete_users_concrete_ingredients' => 'delete_users_concrete_ingredients#execute'
+      post 'register_user' => 'register_user#execute'
+      post 'register_concrete_ingredient_by_amazon_product' => 'register_concrete_ingredient_by_amazon_product#execute'
+    end
 
-  namespace :queries do
-    # define api endpoints
-    get 'get_cocktails' => 'get_cocktails#execute'
-    get 'show_cocktail' => 'show_cocktail#execute'
-    get 'get_users_concrete_ingredients' => 'get_users_concrete_ingredients#execute'
-    get 'search_concrete_ingredient_from_category' => 'search_concrete_ingredient_from_category#execute'
-    get 'search_concrete_ingredient_from_jan_code' => 'search_concrete_ingredient_from_jan_code#execute'
+    namespace :queries do
+      # define api endpoints
+      get 'get_cocktails' => 'get_cocktails#execute'
+      get 'show_cocktail' => 'show_cocktail#execute'
+      get 'get_users_concrete_ingredients' => 'get_users_concrete_ingredients#execute'
+      get 'search_concrete_ingredient_from_category' => 'search_concrete_ingredient_from_category#execute'
+      get 'search_concrete_ingredient_from_jan_code' => 'search_concrete_ingredient_from_jan_code#execute'
+    end
   end
 end

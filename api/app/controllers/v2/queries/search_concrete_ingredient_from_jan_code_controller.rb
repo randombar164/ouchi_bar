@@ -1,4 +1,4 @@
-class Queries::SearchConcreteIngredientFromJanCodeController < ApplicationController
+class V2::Queries::SearchConcreteIngredientFromJanCodeController < ApplicationController
   def execute
     jan_code = params[:jan_code]
 

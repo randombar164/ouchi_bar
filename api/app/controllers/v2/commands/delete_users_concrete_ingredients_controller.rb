@@ -1,4 +1,4 @@
-class Commands::DeleteUsersConcreteIngredientsController < ApplicationController
+class V2::Commands::DeleteUsersConcreteIngredientsController < ApplicationController
   def execute
     user = V2::User.find_by(uuid: params[:user_uuid])
     response_not_found('User') and return if user.nil?

@@ -1,4 +1,4 @@
-class Commands::RegisterConcreteIngredientByAmazonProductController < ApplicationController
+class V2::Commands::RegisterConcreteIngredientByAmazonProductController < ApplicationController
   def execute
     jan_code = params[:jan_code]
     asin = params[:asin]

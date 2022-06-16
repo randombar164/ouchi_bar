@@ -1,4 +1,4 @@
-class Queries::ShowCocktailController < ApplicationController
+class V2::Queries::ShowCocktailController < ApplicationController
   def execute
     cocktail = V2::Cocktail.with_recipe.find(params[:id])
     render json: { cocktail: cocktail }, include: [
