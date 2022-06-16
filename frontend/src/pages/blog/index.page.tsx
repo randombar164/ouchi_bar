@@ -37,16 +37,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const BlogList: React.VFC = (props: any) => {
-  const { uuid } = useContext(Context);
-  const router = useRouter();
   const { getUserFn } = useGetUser();
-
-  useEffect(() => {
-    if (!uuid) {
-      return;
-    }
-    router.push('/sakagura');
-  }, [uuid, router]);
 
   return (
     <Layout>

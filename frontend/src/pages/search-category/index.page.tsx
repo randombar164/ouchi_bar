@@ -1,14 +1,14 @@
-import { useRouter } from "next/router";
-import { memo, useCallback, useContext } from "react";
-import { useState } from "react";
-import { IngredientCard } from "src/components/IngredientCard";
-import { Layout } from "src/components/Layout";
-import data from "src/static/category_tree.json";
-import { Context } from "src/utils/contexts/provider";
-import { pushHome } from "src/utils/hooks/pushHome";
-import type { concreteIngredientType } from "src/utils/types/type";
+import { useRouter } from 'next/router';
+import { memo, useCallback, useContext } from 'react';
+import { useState } from 'react';
+import { IngredientCard } from 'src/components/IngredientCard';
+import { Layout } from 'src/components/Layout';
+import data from 'src/static/category_tree.json';
+import { Context } from 'src/utils/contexts/provider';
+import { pushHome } from 'src/utils/hooks/pushHome';
+import type { concreteIngredientType } from 'src/utils/types/type';
 
-import { useGetIngredientsFromCategory } from "../../utils/hooks/useGetIngredientsFromCategory";
+import { useGetIngredientsFromCategory } from '../../utils/hooks/useGetIngredientsFromCategory';
 
 type NodeProps = {
   id: number;
@@ -35,13 +35,10 @@ const CategoryButton: React.VFC<CategoryButtonProps> = memo(
     );
   }
 );
-CategoryButton.displayName = "CategoryButton";
+CategoryButton.displayName = 'CategoryButton';
 
 const SearchCategoryPage: React.VFC = (): JSX.Element => {
-  const { uuid } = useContext(Context);
-  if (!uuid) pushHome();
-
-  const [routeIds, setRouteIds] = useState<number[]>([]);
+  const [routeIds, setRouteIds] = useState<number[]>([data.category.id]);
   const [current, setCurrent] = useState<NodeProps>(data.category);
   const [hasChild, setHasChild] = useState(true);
 
@@ -50,19 +47,19 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
   const handleClick = useCallback(
     (ingredient: concreteIngredientType) => {
       setConcreteIngredients([...concreteIngredients, ingredient]);
-      router.push("/register");
+      router.push('/register');
     },
     [concreteIngredients, router, setConcreteIngredients]
   );
 
-  const { response, getIngredientsFromCategory } = 
+  const { response, getIngredientsFromCategory } =
     useGetIngredientsFromCategory();
 
   const back = useCallback(() => {
-    setRouteIds([...routeIds.slice(0, -1)]) //pop_back
-    let parent: NodeProps = data.category; 
+    setRouteIds([...routeIds.slice(0, -1)]); //pop_back
+    let parent: NodeProps = data.category;
     if (routeIds.length) {
-      routeIds.slice(0,-1).forEach((id) => {
+      routeIds.slice(0, -1).forEach((id) => {
         parent = parent.children.find((child) => {
           return child.id === id;
         });
@@ -99,17 +96,19 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
             <p className="py-4 pl-2 text-sm font-bold text-barGray-2">
               カテゴリを選択
             </p>
-            <div className="overflow-scroll h-auto max-h-[70vh] bg-white"> 
+            <div className="overflow-scroll h-auto max-h-[70vh] bg-white">
               {current.children.map((child: NodeProps, i: number) => {
                 return <CategoryButton key={i} toNext={toNext} child={child} />;
               })}
             </div>
-            {routeIds.length >= 1 && <button
-              className="py-4 pl-2 text-base font-bold text-barGray-2 outline-none"
-              onClick={back}
-            >
-              ←戻る
-            </button>}
+            {routeIds.length >= 1 && (
+              <button
+                className="py-4 pl-2 text-base font-bold text-barGray-2 outline-none"
+                onClick={back}
+              >
+                ←戻る
+              </button>
+            )}
           </div>
         )}
         {!hasChild && response?.concreteIngredients?.length > 0 && (

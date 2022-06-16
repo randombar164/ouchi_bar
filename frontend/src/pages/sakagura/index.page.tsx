@@ -1,11 +1,11 @@
-import type { VFC } from "react";
-import { Layout } from "src/components/Layout";
-import { ToRegisterModal } from "src/components/ToRegisterModal";
-import { SingleShelf } from "src/pages/sakagura/SingleShelf";
-import { useGetIngredients } from "src/utils/hooks/useGetIngredients";
-import { useContext, useEffect } from "react";
-import { Context } from "src/utils/contexts/provider";
-import { pushHome } from "src/utils/hooks/pushHome";
+import type { VFC } from 'react';
+import { Layout } from 'src/components/Layout';
+import { ToRegisterModal } from 'src/components/ToRegisterModal';
+import { SingleShelf } from 'src/pages/sakagura/SingleShelf';
+import { useGetIngredients } from 'src/utils/hooks/useGetIngredients';
+import { useContext, useEffect } from 'react';
+import { Context } from 'src/utils/contexts/provider';
+import { pushHome } from 'src/utils/hooks/pushHome';
 
 const sliceByNumber = (array: any[], number: number) => {
   if (!array) return;
@@ -17,9 +17,6 @@ const sliceByNumber = (array: any[], number: number) => {
 };
 
 export const SakaguraPage: VFC = () => {
-  const { uuid } = useContext(Context);
-  if (!uuid) { pushHome(); }
-
   const { sakaguraIngredients, loading, error, getIngredientsFn } =
     useGetIngredients();
 
