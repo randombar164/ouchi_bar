@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
@@ -39,83 +40,81 @@ export const CocktailRecipe: React.VFC = () => {
           {loading || !recipe ? (
             <p>ローディング中です</p>
           ) : (
-            <div style={{ margin: "1rem" }}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  paddingTop: "1rem",
-                }}
-              >
-                <CocktailImg recipe={recipe} />
-                <Typography
-                  variant="h5"
-                  component="p"
+            <>
+              <Box margin={"1rem"}>
+                <Grid
+                  container
                   style={{
-                    fontWeight: "bold",
-                    background: "linear-gradient(transparent 70%, #fce7e3 0)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingTop: "2rem",
                   }}
                 >
-                  {recipe.name}
-                </Typography>
-              </div>
-              <div id="cocktailIngredients" style={{ paddingTop: "2rem" }}>
-                <Typography
-                  variant="h6"
-                  component="p"
-                  style={{
-                    background: "linear-gradient(transparent 90%, #e3e3e3 0)",
-                  }}
-                >
-                  材料
-                </Typography>
-                <div>
-                  {recipe?.ingredients?.map((ingredient: any, i: number) => {
-                    return (
-                      <Box
-                        key={i}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          paddingTop: "0.75rem",
-                        }}
-                      >
-                        <Typography variant="body2" gutterBottom>
-                          {ingredient.name}
-                        </Typography>
-                        <Typography variant="body2" gutterBottom>
-                          {ingredient.amount}
-                          {ingredient.unit}
-                        </Typography>
-                      </Box>
-                    );
-                  })}
+                  <Grid item xs={6}>
+                    <CocktailImg recipe={recipe} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <p style={{ fontSize: "16px"}}>{recipe.name}</p>
+                  </Grid>
+                </Grid>
+                <div id="cocktailIngredients" style={{ paddingTop: "3rem" }}>
+                  <Typography
+                    variant="h6"
+                    component="p"
+                    style={{
+                      background: "linear-gradient(transparent 90%, #e3e3e3 0)",
+                    }}
+                  >
+                    材料
+                  </Typography>
+                  <div>
+                    {recipe?.ingredients?.map((ingredient: any, i: number) => {
+                      return (
+                        <Box
+                          key={i}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            paddingTop: "0.75rem",
+                          }}
+                        >
+                          <Typography variant="body2" gutterBottom>
+                            {ingredient.name}
+                          </Typography>
+                          <Typography variant="body2" gutterBottom>
+                            {ingredient.amount}
+                            {ingredient.unit}
+                          </Typography>
+                        </Box>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-              <div id="cocktaildrinkmethod" style={{ paddingTop: "2rem" }}>
-                <Typography
-                  variant="h6"
-                  component="p"
-                  style={{
-                    background: "linear-gradient(transparent 90%, #e3e3e3 0)",
-                  }}
-                >
-                  作り方
-                </Typography>
-                <Typography
-                  variant="body1"
-                  gutterBottom
-                  component="div"
-                  style={{ paddingTop: "0.5rem" }}
-                >
-                  {recipe.drinkMethod}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  {recipe.explanation}
-                </Typography>
-              </div>
-            </div>
+                <div id="cocktaildrinkmethod" style={{ paddingTop: "3rem" }}>
+                  <Typography
+                    variant="h6"
+                    component="p"
+                    style={{
+                      background: "linear-gradient(transparent 90%, #e3e3e3 0)",
+                    }}
+                  >
+                    作り方
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    gutterBottom
+                    component="div"
+                    style={{ paddingTop: "0.5rem" }}
+                  >
+                    {recipe.drinkMethod}
+                  </Typography>
+                  <Typography variant="body2" gutterBottom>
+                    {recipe.explanation}
+                  </Typography>
+                </div>
+              </Box>
+            </>
           )}
           <ToCocktailsLink />
         </div>
@@ -123,4 +122,5 @@ export const CocktailRecipe: React.VFC = () => {
     </Layout>
   );
 };
+
 export default CocktailRecipe;
