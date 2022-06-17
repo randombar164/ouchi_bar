@@ -1,5 +1,5 @@
 class V2::ConcreteIngredient < ApplicationRecord
-  self.table_name = "v2_concrete_ingredients"
+  self.table_name = 'v2_concrete_ingredients'
 
   validates :asin, uniqueness: true, allow_nil: true
 

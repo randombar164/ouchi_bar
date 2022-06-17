@@ -1,5 +1,5 @@
 class V2::UsersBaseDrink < ApplicationRecord
-  self.table_name = "v2_users_base_drinks"
+  self.table_name = 'v2_users_base_drinks'
 
   belongs_to :user
   belongs_to :base_drink
