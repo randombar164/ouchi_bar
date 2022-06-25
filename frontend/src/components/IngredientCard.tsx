@@ -48,16 +48,3 @@ export const IngredientCard: React.VFC<Props> = (prop) => {
     </div>
   );
 };
-//問題点
-/*
-  ×印以外の所を押しても、選択したものが消えてしまう
-*/
-//理由
-/*
-  onClickの場所が違う
-*/
-//解決策
-/*
-  まず、buttonのクラスをつける場所が違うんじゃないの？
-  svgのクラスに、onClickをつけることが出来ないかな？
-*/

@@ -10,10 +10,8 @@ import type { concreteIngredientType } from 'src/utils/types/type';
 import { useGetIngredientsFromCategory } from '../../utils/hooks/useGetIngredientsFromCategory';
 
 /* MUI */
-// import { Container } from "@mui/material";
 import { Box } from "@mui/material";
 import { List } from "@mui/material";
-// import { ListItem } from "@mui/material";
 import { Button } from "@mui/material";
 
 type NodeProps = {
@@ -30,14 +28,18 @@ type CategoryButtonProps = {
 const CategoryButton: React.VFC<CategoryButtonProps> = memo(
   ({ toNext, child }) => {
     return (
-      <button
-        onClick={() => {
-          return toNext(child);
-        }}
-        className="py-1 w-full border-b border-gray-100 border-solid"
-      >
-        <div className="py-1 ml-3 text-left">{child.name}</div>
-      </button>
+      <Button
+        variant="text"
+        onClick={() => {toNext(child)}}
+        sx={{
+          width: "100%",
+          borderBottomWidth: "1px",
+          borderColor: "rgb(243,244,246)",
+          borderStyle: "solid",
+          textAlign: "left",
+          color: "#505050",
+        }}>{child.name}
+      </Button>
     );
   }
 );
@@ -113,11 +115,12 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
               backgroundColor: "white",
             }}>
               {current.children.map((child: NodeProps, i: number) => {
-                return <CategoryButton key={i} toNext={toNext} child={child} />; // FIXME: CartegoryButtonでtailWindを使っている
+                return <CategoryButton key={i} toNext={toNext} child={child} />;
               })}
             </List>
             {routeIds.length >= 1 && (
               <Button
+                onClick={() => {back()}}
                 sx={{
                   py: 2,
                   px: 1,
@@ -143,7 +146,7 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
             {response?.concreteIngredients?.map((ingredient: any, i: any) => {
               return (
                 <div className="my-3" key={i}>
-                  <IngredientCard
+                  <IngredientCard //FIXME
                     canDelete={false}
                     imgSrc={ingredient.imgSrc}
                     name={ingredient.name}
