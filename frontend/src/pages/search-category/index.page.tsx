@@ -5,10 +5,14 @@ import { IngredientCard } from 'src/components/IngredientCard';
 import { Layout } from 'src/components/Layout';
 import data from 'src/static/category_tree.json';
 import { Context } from 'src/utils/contexts/provider';
-import { pushHome } from 'src/utils/hooks/pushHome';
 import type { concreteIngredientType } from 'src/utils/types/type';
 
 import { useGetIngredientsFromCategory } from '../../utils/hooks/useGetIngredientsFromCategory';
+
+/* MUI */
+// import { Container } from "@mui/material";
+import { ListItemText } from "@mui/material"
+import { Box } from "@mui/material";
 
 type NodeProps = {
   id: number;
@@ -88,11 +92,12 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
     router.reload();
   }, [router]);
 
+
   return (
     <Layout>
-      <div className="h-full bg-barGray-1">
+      <Box sx={{ background: "#EEEEEE" }}>
         {hasChild && (
-          <div>
+          <Box>
             <p className="py-4 pl-2 text-sm font-bold text-barGray-2">
               カテゴリを選択
             </p>
@@ -109,8 +114,9 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
                 ←戻る
               </button>
             )}
-          </div>
+          </Box>
         )}
+
         {!hasChild && response?.concreteIngredients?.length > 0 && (
           <div className="px-3">
             <p className="py-4 font-bold text-barGray-2">
@@ -145,7 +151,7 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
             </button>
           </div>
         )}
-      </div>
+      </Box>
     </Layout>
   );
 };
