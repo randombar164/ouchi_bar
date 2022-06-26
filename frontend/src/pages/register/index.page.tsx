@@ -1,17 +1,13 @@
 //mochikun用
-import { useRouter } from "next/router";
-import { useCallback, useContext } from "react";
-import { IngredientCard } from "src/components/IngredientCard";
-import { Layout } from "src/components/Layout";
-import { Context } from "src/utils/contexts/provider";
-import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
-import { pushHome } from "src/utils/hooks/pushHome";
-import { RegisterField } from "./RegisterField";
+import { useRouter } from 'next/router';
+import { useCallback, useContext } from 'react';
+import { IngredientCard } from 'src/components/IngredientCard';
+import { Layout } from 'src/components/Layout';
+import { Context } from 'src/utils/contexts/provider';
+import { useRegisterIngredients } from 'src/utils/hooks/useRegisterIngredients';
+import { RegisterField } from './RegisterField';
 
 const RegiterPage: React.VFC = (): JSX.Element => {
-  const { uuid } = useContext(Context);
-  if (!uuid) pushHome();
-
   const { concreteIngredients, setConcreteIngredients } = useContext(Context);
   const router = useRouter();
   const { registerFn } = useRegisterIngredients();
@@ -53,7 +49,7 @@ const RegiterPage: React.VFC = (): JSX.Element => {
                   canDelete={true}
                   imgSrc={concreteIngredient.imgSrc}
                   name={concreteIngredient.name}
-                  onClick={() => {
+                  delete={() => {
                     return handleDelete(concreteIngredient.id);
                   }}
                 />

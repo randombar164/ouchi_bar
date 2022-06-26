@@ -17,9 +17,6 @@ const sliceByNumber = (array: any[], number: number) => {
 };
 
 export const SakaguraPage: VFC = () => {
-  const { uuid } = useContext(Context);
-  if (!uuid) { pushHome(); }
-
   const { sakaguraIngredients, loading, error, getIngredientsFn } =
     useGetIngredients();
 
