@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import type { VFC } from "react";
-import styles from "src/styles/SingleShelf.module.css";
 
 type Props = {
   items: any[];
@@ -17,7 +16,12 @@ export const SingleShelf: VFC<Props> = ({ items }) => {
           );
         })}
       </Box>
-      <div className={`${styles.shelf}`}></div>
+      <Box sx = {{
+        boxShadow: 3, 
+        width: "100%", 
+        height: 11, 
+        bgcolor: (theme) => {return (theme.palette.mode === 'dark' ? '#101010' : '#fff')},
+        color: (theme) => {return (theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800')},}}></Box>
     </div>
   );
 };
