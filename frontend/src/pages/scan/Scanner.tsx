@@ -1,4 +1,9 @@
-import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import type { Exception, Result } from "@zxing/library";
 import { NotFoundException } from "@zxing/library";
 import { BarcodeFormat, DecodeHintType } from "@zxing/library";
@@ -93,13 +98,16 @@ export const Scanner: React.VFC<Props> = ({
           ></video>
         </div>
       ) : (
-        <div className="flex z-10 justify-center items-center py-4 w-11/12 text-center bg-white rounded-lg">
-          <p className="font-bold">
-            バーコードを認識しました
-            <br />
-            {res}
-          </p>
-        </div>
+        <Dialog open={true}>
+          <DialogTitle>材料が見つかりました</DialogTitle>
+          <DialogContent>
+            <Box></Box>
+            <DialogActions>
+              <Button>追加する</Button>
+              <Button>再度読み込む</Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
       )}
       <div className="absolute inset-0 m-auto w-full h-screen bg-black">
         <Webcam
