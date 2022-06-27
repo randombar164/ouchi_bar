@@ -1,4 +1,4 @@
-class V3::Category < ApplicationRecord
+class V3::AmazonBrowseNode < ApplicationRecord
   self.table_name = 'v3_categories'
 
   belongs_to :parent_category, class_name: 'V3::Category', optional: true

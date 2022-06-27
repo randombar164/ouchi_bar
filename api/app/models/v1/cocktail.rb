@@ -1,4 +1,4 @@
-class V1::Cocktail < BaseDrink
+class V1::Cocktail < V2::BaseDrink
   has_many :ingredients, class_name: 'V2::BaseDrinksBaseIngredient',
                          foreign_key: 'base_drink_id',
                          inverse_of: 'base_drink',

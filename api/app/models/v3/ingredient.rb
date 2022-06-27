@@ -1,4 +1,4 @@
-class V3::ConcreteIngredient < ApplicationRecord
+class V3::Ingredient < ApplicationRecord
   self.table_name = 'v3_concrete_ingredients'
 
   validates :asin, uniqueness: true, allow_nil: true

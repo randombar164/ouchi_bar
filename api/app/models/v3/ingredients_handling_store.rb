@@ -1,4 +1,4 @@
-class V3::ConcreteIngredientsHandlingStore < ApplicationRecord
+class V3::IngredientsHandlingStore < ApplicationRecord
   self.table_name = 'v3_concrete_ingredient_handling_stores'
 
   belongs_to :concrete_ingredient

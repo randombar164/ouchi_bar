@@ -1,4 +1,4 @@
-class V3::UsersConcreteIngredient < ApplicationRecord
+class V3::UsersIngredient < ApplicationRecord
   self.table_name = 'v3_users_concrete_ingredients'
 
   validates :user_id, uniqueness: {
