@@ -2,16 +2,12 @@ namespace :import_data_from_csv do
   OUTPUT_DIR = "./lib/tasks/master_data/outputs/"
   desc 'CSVからimportします。'
   task all_data: :environment do
-    # Rails.application.eager_load!
-    # models = ApplicationRecord.descendants.collect(&:name) - ['V1::Cocktail']
-
-    OUTPUT_DIR = "./lib/tasks/master_data/outputs/"
-
-    models = %w[Unit UnitConversion HandlingStore GlassType DrinkMethod Category BaseDrink Cocktail BaseIngredient BaseDrinksBaseIngredient ConcreteIngredient CocktailsConcreteIngredient ConcreteIngredientsHandlingStore]
+    Rails.application.eager_load!
+    models = ApplicationRecord.descendants.collect(&:name).filter{|name| name.include?("V3")}
     
     models.each do |model|
       p "Start: #{model} import"
-      rows = CSV.read(OUTPUT_DIR + "#{model.underscore}.csv", headers: true)
+      rows = CSV.read("./lib/tasks/master_data/outputs/v3" + "#{model.underscore}.csv", headers: true)
       rows.each_slice(1000) do |sliced_rows|
         array_of_hash = sliced_rows.map(&:to_hash)
         eval("#{model}.insert_all!(array_of_hash)")
