@@ -5,14 +5,14 @@ namespace :v3 do
     task all_data: :environment do
       Rails.application.eager_load!
       models = ApplicationRecord.descendants.collect(&:name).filter{|name| name.include?("V3")}
-      
+  
       models.each do |model|
         p "Start: #{model} import"
-        rows = CSV.read("./lib/tasks/master_data/outputs/v3" + "#{model.underscore}.csv", headers: true)
+        rows = CSV.read(OUTPUT_DIR + "#{model.split("::")[1].underscore}.csv", headers: true)
         rows.each_slice(1000) do |sliced_rows|
           array_of_hash = sliced_rows.map(&:to_hash)
           eval("#{model}.insert_all!(array_of_hash)")
-          ActiveRecord::Base.connection.execute("SELECT setval('#{model.underscore.pluralize}_id_seq', coalesce((SELECT MAX(id)+1 FROM #{model.underscore.pluralize}), 1), false)")
+          ActiveRecord::Base.connection.execute("SELECT setval('#{model..gsub(/::/, "_").underscore.pluralize}_id_seq', coalesce((SELECT MAX(id)+1 FROM #{model.underscore.pluralize}), 1), false)")
         end
         p "End: #{model} import"
         p ''
