@@ -24,15 +24,19 @@ class V3::Cocktail < ApplicationRecord
     )
   end
 
-  def self.where_cookable_cocktails(concrete_ingredient_ids)
-    cookable_cocktails_candidate_having_ci_counts = V3::CocktailsConcreteIngredient
-                                                    .where(concrete_ingredient_id: concrete_ingredient_ids)
+  # 所持している材料に紐づくカクテル全てを作れるカクテルの候補としている。
+  # 作れる候補となっているカクテルの材料数が正しいものを結果として返す
+  def self.where_cookable_cocktails(ingredient_ids)
+    # 候補のカクテルは[ {cocktail_id: 1, ingredient_counts: 3} ]で定義される。
+    # ingredient_countsは、「所持している材料」と「カクテルの材料の真値」の積集合の大きさ
+    cookable_cocktails_candidate = V3::CocktailsIngredient
+                                                    .where(ingredient_id: ingredient_ids)
                                                     .group(:cocktail_id)
                                                     .count
-    cocktails_enough_ci_counts = V3::CocktailsConcreteIngredient.group(:cocktail_id).count
+    correct_ingredient_counts_in_cocktail = V3::CocktailsIngredient.group(:cocktail_id).count
     cookable_cocktail_ids = []
-    cookable_cocktails_candidate_having_ci_counts.each do |cocktail_id, having_ci_count|
-      cookable_cocktail_ids << cocktail_id if having_ci_count == cocktails_enough_ci_counts[cocktail_id]
+    cookable_cocktails_candidate.each do |cocktail_id, having_ci_count|
+      cookable_cocktail_ids << cocktail_id if having_ci_count == correct_ingredient_counts_in_cocktail[cocktail_id]
     end
     return self.where(id: cookable_cocktail_ids)
   end

@@ -19,7 +19,7 @@ class V3::User < ApplicationRecord
   end
 
   def cocktails
-    return V3::Cocktail.where_cookable_cocktails(self.concrete_ingredient_ids)
+    return V3::Cocktail.where_cookable_cocktails(self.ingredient_ids)
   end
 
   # ============
