@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe 'Queries::GetCocktails', type: :request do
+RSpec.describe 'V2::Queries::GetCocktails', type: :request do
   let(:user) { V2::User.create! }
   let(:concrete_ingredient_ids) { V2::ConcreteIngredient.limit(100).map(&:id) }
 
   # カクテルのデータを入れると動きます。
-  describe 'GET /queries/get_cocktails' do
+  describe 'GET /v2/queries/get_cocktails' do
     it 'responds successfully returns a 200 response' do
       user.concrete_ingredients << V2::ConcreteIngredient.where(id: concrete_ingredient_ids)
       user.save!

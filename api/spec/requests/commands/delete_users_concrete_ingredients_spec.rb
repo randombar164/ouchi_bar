@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Commands::DeleteUsersConcreteIngredients', type: :request do
+RSpec.describe 'V2::Commands::DeleteUsersConcreteIngredients', type: :request do
   let(:user) { V2::User.create! }
   let(:concrete_ingredient_ids) { V2::ConcreteIngredient.limit(5).map(&:id) }
 
-  describe 'POST /commands/delete_users_concrete_ingredients' do
+  describe 'POST v2/commands/delete_users_concrete_ingredients' do
     it 'responds successfully returns a 200 response' do
       user.concrete_ingredients << V2::ConcreteIngredient.where(id: concrete_ingredient_ids)
       post v2_commands_delete_users_concrete_ingredients_path,

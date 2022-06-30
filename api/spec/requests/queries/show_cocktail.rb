@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Queries::ShowCocktail', type: :request do
+RSpec.describe 'V2::Queries::ShowCocktail', type: :request do
   let(:cocktail) { Cocktail.first }
 
   # カクテルのデータを入れると動きます。
-  describe 'GET /queries/show_cocktail' do
+  describe 'GET /v2/queries/show_cocktail' do
     it 'responds successfully returns a 200 response' do
       get v2_queries_show_cocktail_path, params: { id: cocktail.id }
       expect(response).to be_successful

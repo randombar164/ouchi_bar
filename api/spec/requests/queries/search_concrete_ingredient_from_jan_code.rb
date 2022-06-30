@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Queries::SearchConcreteIngredientFromJanCode', type: :request do
+RSpec.describe 'V2::Queries::SearchConcreteIngredientFromJanCode', type: :request do
   let(:base_ingredient) { V2::BaseIngredient.first }
   let(:concrete_ingredient) { V2::ConcreteIngredient.create!(name: 'sample', base_ingredient_id: base_ingredient.id, jan_code: 'sample') }
 
-  describe 'GET /queries/search_concrete_ingredient_from_jan_code' do
+  describe 'GET /v2/queries/search_concrete_ingredient_from_jan_code' do
     context 'responds successfully returns a 200 response' do
       it 'found from database' do
         get v2_queries_search_concrete_ingredient_from_jan_code_path, params: { jan_code: concrete_ingredient.jan_code }

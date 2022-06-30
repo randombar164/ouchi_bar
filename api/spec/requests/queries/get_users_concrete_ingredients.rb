@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Queries::GetUsersConcreteIngredients', type: :request do
+RSpec.describe 'V2::Queries::GetUsersConcreteIngredients', type: :request do
   let(:user) { V2::User.create! }
   let(:concrete_ingredient_ids) { V2::ConcreteIngredient.limit(10).map(&:id) }
 
-  describe 'GET /queries/get_users_concrete_ingredients' do
+  describe 'GET /v2/queries/get_users_concrete_ingredients' do
     it 'responds successfully returns a 200 response' do
       user.concrete_ingredients << V2::ConcreteIngredient.where(id: concrete_ingredient_ids)
       user.save!

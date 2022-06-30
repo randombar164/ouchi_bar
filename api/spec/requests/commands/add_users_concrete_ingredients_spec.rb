@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Commands::AddUsersConcreteIngredients', type: :request do
+RSpec.describe 'V2::Commands::AddUsersConcreteIngredients', type: :request do
   let(:user) { V2::User.create! }
   let(:concrete_ingredient_ids) { V2::ConcreteIngredient.limit(5).map(&:id) }
 
-  describe 'POST /commands/add_users_concrete_ingredients' do
+  describe 'POST v2/commands/add_users_concrete_ingredients' do
     it 'responds successfully returns a 200 response' do
       post v2_commands_add_users_concrete_ingredients_path,
            params: { user_uuid: user.uuid, concrete_ingredient_ids: concrete_ingredient_ids }
