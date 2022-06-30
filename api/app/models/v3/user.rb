@@ -30,9 +30,9 @@ class V3::User < ApplicationRecord
     self.ingredients << ingredients
   end
 
-  def delete_concrete_ingredients!(concrete_ingredient_ids)
-    concrete_ingredient_ids.each do |ci_id|
-      self.users_concrete_ingredients.destroy_by(concrete_ingredient_id: ci_id)
+  def delete_ingredients(ingredient_ids)
+    ingredient_ids.each do |ci_id|
+      self.users_ingredients.destroy_by(ingredient_id: ci_id)
     end
   end
 
