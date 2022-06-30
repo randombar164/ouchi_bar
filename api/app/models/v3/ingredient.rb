@@ -11,5 +11,5 @@ class V3::Ingredient < ApplicationRecord
   has_many :handling_stores, through: :concrete_ingredients_handling_stores
   has_many :cocktails_concrete_ingredients, dependent: :destroy
   has_many :cocktails, through: :cocktails_concrete_ingredients
-  has_many :users_concrete_ingredients, dependent: :destroy
+  has_many :users_ingredients, dependent: :destroy
 end

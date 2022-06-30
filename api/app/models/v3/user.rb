@@ -3,8 +3,8 @@ class V3::User < ApplicationRecord
 
   before_create :set_uuid
 
-  has_many :users_concrete_ingredients, dependent: :destroy
-  has_many :concrete_ingredients, through: :users_concrete_ingredients
+  has_many :users_ingredients, dependent: :destroy
+  has_many :ingredients, through: :users_ingredients
   has_many :users_base_drinks, dependent: :destroy
   has_many :base_drinks, through: :users_base_drinks
   has_many :v1_cocktails, through: :users_base_drinks, source: :base_drink, class_name: 'V1::Cocktail'
@@ -25,9 +25,9 @@ class V3::User < ApplicationRecord
   # ============
   # mutation methods
   # ============
-  def add_concrete_ingredients!(concrete_ingredient_ids)
-    concrete_ingredients = V3::ConcreteIngredient.where(id: concrete_ingredient_ids)
-    self.concrete_ingredients << concrete_ingredients
+  def add_ingredients(ingredient_ids)
+    ingredients = V3::Ingredient.where(id: ingredient_ids)
+    self.ingredients << ingredients
   end
 
   def delete_concrete_ingredients!(concrete_ingredient_ids)
