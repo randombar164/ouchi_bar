@@ -36,4 +36,23 @@ Rails.application.routes.draw do
       get 'search_concrete_ingredient_from_jan_code' => 'search_concrete_ingredient_from_jan_code#execute'
     end
   end
+
+  namespace :v3 do
+    namespace :commands do
+      # define api endpoints
+      post 'add_users_ingredients' => 'add_users_ingredients#execute'
+      post 'delete_users_ingredients' => 'delete_users_ingredients#execute'
+      post 'register_user' => 'register_user#execute'
+      post 'register_ingredient_by_amazon_product' => 'register_ingredient_by_amazon_product#execute'
+    end
+
+    namespace :queries do
+      # define api endpoints
+      get 'get_cocktails' => 'get_cocktails#execute'
+      get 'show_cocktail' => 'show_cocktail#execute'
+      get 'get_users_ingredients' => 'get_users_ingredients#execute'
+      get 'search_ingredient_from_category' => 'search_ingredient_from_category#execute'
+      get 'search_ingredient_from_jan_code' => 'search_ingredient_from_jan_code#execute'
+    end
+  end
 end
