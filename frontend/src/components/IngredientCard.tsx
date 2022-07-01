@@ -3,7 +3,7 @@ import type { IngredientCardProps } from 'src/utils/types/type';
 type Props = {
   canDelete: boolean;
   onClick?: () => void;
-  delete?: () => void;
+  onDelete?: () => void;
 } & IngredientCardProps;
 
 export const IngredientCard: React.VFC<Props> = (prop) => {
@@ -30,7 +30,7 @@ export const IngredientCard: React.VFC<Props> = (prop) => {
       </div>
       {prop.canDelete && (
         <svg
-          onClick={prop.delete}
+          onClick={prop.onDelete}
           xmlns="http://www.w3.org/2000/svg"
           className="w-9 h-9 text-barOrange-3"
           fill="none"

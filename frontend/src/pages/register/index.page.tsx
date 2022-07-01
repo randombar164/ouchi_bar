@@ -1,11 +1,12 @@
-//mochikun用
-import { useRouter } from 'next/router';
-import { useCallback, useContext } from 'react';
-import { IngredientCard } from 'src/components/IngredientCard';
-import { Layout } from 'src/components/Layout';
-import { Context } from 'src/utils/contexts/provider';
-import { useRegisterIngredients } from 'src/utils/hooks/useRegisterIngredients';
-import { RegisterField } from './RegisterField';
+import { useRouter } from "next/router";
+import { useCallback, useContext } from "react";
+import { IngredientCard } from "src/components/IngredientCard";
+import { Layout } from "src/components/Layout";
+import { Context } from "src/utils/contexts/provider";
+import { pushHome } from "src/utils/hooks/pushHome";
+import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
+
+import { RegisterField } from "./RegisterField";
 
 const RegiterPage: React.VFC = (): JSX.Element => {
   const { concreteIngredients, setConcreteIngredients } = useContext(Context);
@@ -28,7 +29,7 @@ const RegiterPage: React.VFC = (): JSX.Element => {
     });
     registerFn(ids);
     setConcreteIngredients([]);
-    router.push('/sakagura');
+    router.push("/sakagura");
   }, [concreteIngredients, setConcreteIngredients, registerFn, router]);
 
   return (
@@ -49,7 +50,8 @@ const RegiterPage: React.VFC = (): JSX.Element => {
                   canDelete={true}
                   imgSrc={concreteIngredient.imgSrc}
                   name={concreteIngredient.name}
-                  delete={() => {
+                  onDelete={() => {
+
                     return handleDelete(concreteIngredient.id);
                   }}
                 />
@@ -60,8 +62,8 @@ const RegiterPage: React.VFC = (): JSX.Element => {
         <button
           className={`block py-3 px-7 mx-auto text-white  rounded-3xl ${
             concreteIngredients.length > 0
-              ? 'bg-[#3BC808] shadow-lg'
-              : 'bg-barGray-2'
+              ? "bg-[#3BC808] shadow-lg"
+              : "bg-barGray-2"
           }`}
           onClick={handleRegister}
           disabled={concreteIngredients.length == 0}

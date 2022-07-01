@@ -1,12 +1,12 @@
-//mochikun用
-import type { VFC } from 'react';
-import { useEffect, useContext } from 'react';
-import { Context } from 'src/utils/contexts/provider';
-import { CocktailCards } from 'src/components/cocktailCard';
-import { Layout } from 'src/components/Layout';
-import { ToRegisterModal } from 'src/components/ToRegisterModal';
-import { useGetCocktails } from 'src/utils/hooks/useGetCocktails';
-
+import type { VFC } from "react";
+import { useContext,useEffect } from "react";
+import { CocktailCards } from "src/components/cocktailCard";
+import { Layout } from "src/components/Layout";
+import { ToRegisterModal } from "src/components/ToRegisterModal";
+import { Context } from "src/utils/contexts/provider";
+import { pushHome } from "src/utils/hooks/pushHome";
+import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
+        
 const CocktailPage: VFC = () => {
   const { cocktails, loading, error, getCocktailsFn } = useGetCocktails();
 
