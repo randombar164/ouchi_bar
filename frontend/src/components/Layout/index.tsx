@@ -6,13 +6,13 @@ type Props = {
 }
 
 export const Layout: React.VFC<Props> = ({ children }) => {
-	return (
-		<div className="flex overflow-y-auto justify-center bg-yellow-200">
-			<Header />
-			<div className="overflow-y-auto pt-12 pb-16 w-[320px] h-screen bg-white">
-				{children}
-			</div>
-			<Footer />
-		</div>
-	)
-}
+  return (
+    <div className="flex overflow-y-auto bg-yellow-200 justify-center">
+      <Header />
+      <div className="overflow-y-auto pt-12 pb-16 h-screen bg-white w-full max-w-[320px]">
+        {children}
+      </div>
+      <Footer />
+    </div>
+  );
+};
