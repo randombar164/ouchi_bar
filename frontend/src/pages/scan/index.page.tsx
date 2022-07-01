@@ -1,5 +1,8 @@
+import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 import Link from "next/link";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Context } from "src/utils/contexts/provider";
 import { useSearchByCode } from "src/utils/hooks/useSearchByCode";
 
@@ -60,13 +63,28 @@ const ScanPage: React.VFC = (): JSX.Element => {
         }
         onClose={handleClose}
       />
-      <div className="fixed top-0 z-30 py-4 w-full bg-black bg-opacity-75">
-        <Link href="/register">
-          <button className="inline-block py-3 px-6 ml-3 font-bold text-red-500 bg-white rounded-full border-2 border-white">
-            &lt; 登録画面に戻る
-          </button>
+      <Grid
+        container
+        justifyContent="start"
+        alignItems="center"
+        p={2}
+        sx={{
+          position: "fixed",
+          top: "0",
+          zIndex: 30,
+          background: "#424242",
+        }}
+      >
+        <Link href="/register" passHref>
+          <Button
+            variant="contained"
+            size="large"
+            startIcon={<ArrowBackIosOutlinedIcon />}
+          >
+            登録画面に戻る
+          </Button>
         </Link>
-      </div>
+      </Grid>
       <Scanner
         isScan={isScan}
         setIsScan={setIsScan}
