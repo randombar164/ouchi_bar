@@ -1,6 +1,8 @@
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import { useRouter } from "next/router";
 import { useCallback, useContext } from "react";
-import { Modal } from "src/components/Modal";
 import { ResultCard } from "src/pages/scan/ResultCard";
 import { Context } from "src/utils/contexts/provider";
 import type { ModalProps } from "src/utils/types/type";
@@ -17,16 +19,18 @@ export const SingleResult: React.VFC<Props> = (prop): JSX.Element => {
     router.push("/register");
   }, [prop, concreteIngredients, setConcreteIngredients, router]);
   return (
-    <Modal isShow={prop.visible} onClose={prop.onClose} className="mt-48">
-      <div className="py-8 px-6">
-        {prop.ingredient && (
-          <ResultCard
-            imgSrc={prop.ingredient.imgSrc}
-            name={prop.ingredient.name}
-            onClick={handleClick}
-          />
-        )}
-      </div>
-    </Modal>
+    <Dialog open={prop.visible} onClose={prop.onClose}>
+      <DialogTitle>材料が見つかりました</DialogTitle>
+      <DialogContent>
+        {prop.ingredient ||
+          (true && (
+            <ResultCard
+              imgSrc={prop.ingredient.imgSrc}
+              name={prop.ingredient.name}
+              onClick={handleClick}
+            />
+          ))}
+      </DialogContent>
+    </Dialog>
   );
 };

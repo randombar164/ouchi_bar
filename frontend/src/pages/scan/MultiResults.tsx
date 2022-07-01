@@ -1,6 +1,9 @@
+import { DialogContentText } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import { useRouter } from "next/router";
 import { useCallback, useContext, useEffect } from "react";
-import { Modal } from "src/components/Modal";
 import { ResultCard } from "src/pages/scan/ResultCard";
 import { Context } from "src/utils/contexts/provider";
 import { useRegisterCode } from "src/utils/hooks/useRegisterCode";
@@ -37,19 +40,16 @@ export const MultiResults: React.VFC<Props> = (prop): JSX.Element => {
     router.push("/register");
   }, [response, router, concreteIngredients, setConcreteIngredients]);
   return (
-    <Modal
-      isShow={prop.visible}
-      onClose={prop.onClose}
-      className="overflow-scroll my-auto h-5/6 max-h-[700px]"
-    >
-      <div className="py-8 px-6">
-        <p className="text-sm font-bold text-barGray-3">
+    <Dialog open={prop.visible} onClose={prop.onClose}>
+      <DialogTitle>材料の候補が見つかりました</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
           どれか一つをタップして追加してください
-        </p>
+        </DialogContentText>
         {prop.ingredients &&
           prop.ingredients.map((ingredient, i) => {
             return (
-              <div className="my-4" key={i}>
+              <div key={i}>
                 <ResultCard
                   imgSrc={ingredient.images.primary.medium.url}
                   name={ingredient.itemInfo.title.displayValue}
@@ -60,7 +60,7 @@ export const MultiResults: React.VFC<Props> = (prop): JSX.Element => {
               </div>
             );
           })}
-      </div>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 };
