@@ -1,14 +1,16 @@
-import { Layout } from "src/components/Layout";
+import { useRouter } from "next/router";
 import type { VFC } from "react";
 
+/* original component */
+import { Layout } from "src/components/Layout";
+import { CocktailCards } from "src/components/cocktailCard";
+
 /* MUI Component */
-import { Card } from "@mui/material";
-import { CardMedia } from "@mui/material";
-import { CardContent } from "@mui/material";
+import { Card, CardMedia, CardContent } from "@mui/material";
 import { Typography } from "@mui/material";
-// import { Box } from "@mui/material";
 import { Link } from "@mui/material";
-import { useRouter } from "next/router";
+import { List, ListItem, ListItemText } from "@mui/material";
+// import { Box } from "@mui/material";
 
 type IngredientProps = {
   img: string;
@@ -17,6 +19,8 @@ type IngredientProps = {
 };
 
 const IngredientShowCard: VFC<IngredientProps> = (ingredient) => {
+  // TODO: Cardの枠線を消す（Boxを使う？）
+  // HACK: margin, paddingをどこでつけるべきか
   return (
     <Card sx={{ display: "flex", mx: 2, my: 1, px: 2, py: 1 }}>
       <CardMedia
@@ -52,6 +56,7 @@ const IngredientShowCard: VFC<IngredientProps> = (ingredient) => {
 
 const ToCocktailsLink: React.VFC = () => {
   const router = useRouter();
+  // TODO: 材料一覧ページへのリンクになおす
   return (
     <Link
       component="button"
@@ -71,6 +76,8 @@ const IngredientPage: React.VFC = (): JSX.Element => {
     name: "whisky",
     content: "whisky content",
   };
+  const sample_cocktails: any[] = [];
+
   return (
     <Layout>
       <ToCocktailsLink />
@@ -79,6 +86,17 @@ const IngredientPage: React.VFC = (): JSX.Element => {
         name={sample_ingredient.name}
         content={sample_ingredient.content}
       />
+
+      <Typography
+        component="div"
+        variant="subtitle1"
+        sx={{ fontWeight: "bold", mx: 2 }}
+      >
+        作れるカクテル
+      </Typography>
+      {sample_cocktails.length === 0 && (
+        <CocktailCards cocktails={sample_cocktails.slice(0, 3)}></CocktailCards>
+      )}
     </Layout>
   );
 };
