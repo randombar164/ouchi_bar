@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import {CocktailImg} from 'src/components/CocktailImg';
 import { ContentWraper } from 'src/components/ContentWrapper';
 import { Layout } from 'src/components/Layout';
-import { useGetRecipe } from 'src/utils/hooks/useGetRecipe';
-import { useContext } from 'react';
 import { Context } from 'src/utils/contexts/provider';
 import { pushHome } from 'src/utils/hooks/pushHome';
-import CocktailImg from 'src/components/CocktailImg';
+import { useGetRecipe } from 'src/utils/hooks/useGetRecipe';
 
 const ToCocktailsLink: React.VFC = () => {
   return (
@@ -36,7 +36,7 @@ export const CocktailRecipe: React.VFC = () => {
           ) : (
             <>
               <div className="flex p-2 m-4">
-                <CocktailImg recipe={recipe} />
+                <CocktailImg recipe={recipe} width={80} height={80}/>
                 <p className="place-self-center py-4 text-lg font-bold">
                   {recipe.name}
                 </p>
