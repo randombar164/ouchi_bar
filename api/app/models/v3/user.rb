@@ -5,17 +5,9 @@ class V3::User < ApplicationRecord
 
   has_many :users_ingredients, dependent: :destroy
   has_many :ingredients, through: :users_ingredients
-  has_many :users_base_drinks, dependent: :destroy
-  has_many :base_drinks, through: :users_base_drinks
-  has_many :v1_cocktails, through: :users_base_drinks, source: :base_drink, class_name: 'V1::Cocktail'
 
   def set_uuid
     self.uuid = SecureRandom.uuid
-  end
-
-  def base_ingredients
-    base_ingredient_ids = self.concrete_ingredients.pluck(:base_ingredient_id).uniq
-    return V3::BaseIngredient.where(id: base_ingredient_ids)
   end
 
   def cocktails
