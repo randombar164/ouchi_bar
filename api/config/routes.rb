@@ -49,6 +49,7 @@ Rails.application.routes.draw do
     namespace :queries do
       # define api endpoints
       get 'get_cocktails' => 'get_cocktails#execute'
+      get 'get_users_recommended_ingredients' => 'get_users_recommended_ingredients#execute'
       get 'show_cocktail' => 'show_cocktail#execute'
       get 'get_users_ingredients' => 'get_users_ingredients#execute'
       get 'search_ingredient_from_category' => 'search_ingredient_from_category#execute'
