@@ -19,3 +19,9 @@ export type IngredientCardProps = {
   imgSrc: string;
   name: string;
 };
+
+export type Ingredient = {
+  img: string;
+  name: string;
+  content: string;
+};
