@@ -8,6 +8,15 @@ import { ToRegisterModal } from "src/components/ToRegisterModal";
 import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
 import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
 
+// import type { VFC } from "react";
+// import { useContext,useEffect } from "react";
+// import { CocktailCards } from "src/components/cocktailCard";
+// import { Layout } from "src/components/Layout";
+// import { ToRegisterModal } from "src/components/ToRegisterModal";
+// import { Context } from "src/utils/contexts/provider";
+// import { pushHome } from "src/utils/hooks/pushHome";
+// import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
+
 const CocktailPage: VFC = () => {
   const { cocktails, loading, error, getCocktailsFn } = useGetCocktails();
 
