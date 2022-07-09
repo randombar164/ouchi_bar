@@ -14,6 +14,7 @@ import { Link } from "@mui/material";
 import { Typography } from "@mui/material";
 
 const IngredientPage: React.VFC = (): JSX.Element => {
+  //TODO: APIを叩く
   const sample_ingredients: Ingredient[] = [
     {
       img: "/whisky.png",
@@ -41,12 +42,11 @@ const IngredientPage: React.VFC = (): JSX.Element => {
       {!showIngredientDetails ? (
         sample_ingredients?.map((ingredient) => {
           return (
-            <IngredientCard //TODO: IngredientCardの修正
+            <IngredientCard //TODO: IngredientCardの修正（旧UIのまま）
               canDelete={false}
               imgSrc={ingredient.img}
               name={ingredient.name}
               onClick={() => {
-                console.log("clicked");
                 setShowIngredientDetails(true);
               }}
             />
@@ -58,7 +58,6 @@ const IngredientPage: React.VFC = (): JSX.Element => {
             component="button"
             variant="body2"
             onClick={() => {
-              console.log("clicked");
               setShowIngredientDetails(false);
             }}
             sx={{ mx: 2 }}
