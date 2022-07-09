@@ -50,7 +50,7 @@ export const CocktailRecipe: React.VFC = () => {
                     paddingTop: "2rem",
                   }}>
                   <Grid item xs={6}>
-                    <CocktailImg recipe={recipe} width={0} height={0} />
+                    <CocktailImg recipe={recipe} width={100} height={100} />
                   </Grid>
                   <Grid item xs={6}>
                     <p style={{ fontSize: "16px" }}>{recipe.name}</p>
