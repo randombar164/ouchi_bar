@@ -1,7 +1,8 @@
-import type { ReactNode, VFC } from "react";
-import { useCallback } from "react";
-import { createContext, useEffect, useState } from "react";
-import type { concreteIngredientType } from "src/utils/types/type";
+import { useRouter } from 'next/router';
+import type { ReactNode, VFC } from 'react';
+import { useCallback } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import type { concreteIngredientType } from 'src/utils/types/type';
 
 type ContextProps = {
   uuid: string | null;
@@ -29,9 +30,12 @@ export const ContextProvider: VFC<{ children: ReactNode }> = (props) => {
   const [concreteIngredients, setConcreteIngredients] = useState<
     concreteIngredientType[]
   >([]);
+  const router = useRouter();
   useEffect(() => {
-    setUuid(localStorage.getItem("uuid"));
+    const _uuid = localStorage.getItem('uuid');
+    setUuid(_uuid);
     setIsVisited(true);
+    if (!_uuid) router.push('/');
   }, []);
 
   return (
@@ -41,10 +45,10 @@ export const ContextProvider: VFC<{ children: ReactNode }> = (props) => {
         setUuid: (u: string | null) => {
           setUuid(u);
           if (!u) {
-            localStorage.removeItem("uuid");
+            localStorage.removeItem('uuid');
             return;
           }
-          localStorage.setItem("uuid", u);
+          localStorage.setItem('uuid', u);
         },
         isVisited,
         concreteIngredients,
