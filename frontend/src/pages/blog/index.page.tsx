@@ -1,20 +1,20 @@
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 //import createTheme from '@mui/material/styles/createTheme';
-import matter from 'gray-matter';
-import type { GetStaticProps } from 'next';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useContext, useEffect } from 'react';
-import { NonFooterLayout } from 'src/components/Layout/nonFooter';
-import { Context } from 'src/utils/contexts/provider';
-import { useGetUser } from 'src/utils/hooks/useGetUser';
+import matter from "gray-matter";
+import type { GetStaticProps } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
+import { NonFooterLayout } from "src/components/Layout/nonFooter";
+import { Context } from "src/utils/contexts/provider";
+import { useGetUser } from "src/utils/hooks/useGetUser";
 
 export const getStaticProps: GetStaticProps = async () => {
   const blogs = ((context: __WebpackModuleApi.RequireContext) => {
     const keys = context.keys();
     const values = keys.map(context);
     const data = keys.map((key: any, index: number) => {
-      const slug = key.replace(/^.*[\\/]/, '').slice(0, -3);
+      const slug = key.replace(/^.*[\\/]/, "").slice(0, -3);
       const value: any = values[index];
       const document = matter(value.default);
       return {
@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async () => {
       };
     });
     return data;
-  })(require.context('src/static/blogData', true, /\.\/.*\.md$/));
+  })(require.context("src/static/blogData", true, /\.\/.*\.md$/));
 
   const sortingArticles = blogs.sort((a, b) => {
     return b.frontmatter.id - a.frontmatter.id;
