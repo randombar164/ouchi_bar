@@ -5,10 +5,14 @@ import { IngredientCard } from 'src/components/IngredientCard';
 import { Layout } from 'src/components/Layout';
 import data from 'src/static/category_tree.json';
 import { Context } from 'src/utils/contexts/provider';
-import { pushHome } from 'src/utils/hooks/pushHome';
 import type { concreteIngredientType } from 'src/utils/types/type';
 
 import { useGetIngredientsFromCategory } from '../../utils/hooks/useGetIngredientsFromCategory';
+
+/* MUI */
+import { Box } from "@mui/material";
+import { List } from "@mui/material";
+import { Button } from "@mui/material";
 
 type NodeProps = {
   id: number;
@@ -24,14 +28,18 @@ type CategoryButtonProps = {
 const CategoryButton: React.VFC<CategoryButtonProps> = memo(
   ({ toNext, child }) => {
     return (
-      <button
-        onClick={() => {
-          return toNext(child);
-        }}
-        className="py-1 w-full border-b border-gray-100 border-solid"
-      >
-        <div className="py-1 ml-3 text-left">{child.name}</div>
-      </button>
+      <Button
+        variant="text"
+        onClick={() => {toNext(child)}}
+        sx={{
+          width: "100%",
+          borderBottomWidth: "1px",
+          borderColor: "rgb(243,244,246)",
+          borderStyle: "solid",
+          textAlign: "left",
+          color: "#505050",
+        }}>{child.name}
+      </Button>
     );
   }
 );
@@ -88,38 +96,57 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
     router.reload();
   }, [router]);
 
+
   return (
     <Layout>
-      <div className="h-full bg-barGray-1">
+      <Box sx={{ background: "#EEEEEE" }}>
         {hasChild && (
-          <div>
-            <p className="py-4 pl-2 text-sm font-bold text-barGray-2">
-              カテゴリを選択
-            </p>
-            <div className="overflow-scroll h-auto max-h-[70vh] bg-white">
+          <Box>
+            <Box sx={{ 
+              fontWeight: "bold", 
+              fontSize: "14px", 
+              color: "#A7B6C8", 
+              py: 2, 
+              px: 1 
+              }}>カテゴリを選択</Box>
+            <List sx={{
+              width: "100%",
+              overflowY: "scroll",
+              backgroundColor: "white",
+            }}>
               {current.children.map((child: NodeProps, i: number) => {
                 return <CategoryButton key={i} toNext={toNext} child={child} />;
               })}
-            </div>
+            </List>
             {routeIds.length >= 1 && (
-              <button
-                className="py-4 pl-2 text-base font-bold text-barGray-2 outline-none"
-                onClick={back}
-              >
-                ←戻る
-              </button>
+              <Button
+                onClick={() => {back()}}
+                sx={{
+                  py: 2,
+                  px: 1,
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  color: "#A7B6C8",
+                  outline: "2px solid transparent",
+                  outlineOffset: "2px"
+                }}>←戻る</Button>
             )}
-          </div>
+          </Box>
         )}
+
         {!hasChild && response?.concreteIngredients?.length > 0 && (
-          <div className="px-3">
-            <p className="py-4 font-bold text-barGray-2">
-              商品を選択(1つ選んでタップしてください)
-            </p>
+          <Box sx={{ px: 2 }}>
+            <Box sx={{ 
+              fontWeight: "bold", 
+              fontSize: "14px", 
+              color: "#A7B6C8", 
+              py: 2, 
+              px: 1 
+              }}>商品を選択（１つ選んでタップしてください）</Box>
             {response?.concreteIngredients?.map((ingredient: any, i: any) => {
               return (
                 <div className="my-3" key={i}>
-                  <IngredientCard
+                  <IngredientCard //FIXME
                     canDelete={false}
                     imgSrc={ingredient.imgSrc}
                     name={ingredient.name}
@@ -130,22 +157,30 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
                 </div>
               );
             })}
-          </div>
+          </Box>
         )}
         {!hasChild && response?.concreteIngredients?.length == 0 && (
-          <div className="py-10">
-            <p className="font-bold text-center text-barGray-3">
-              検索結果が0件でした
-            </p>
-            <button
-              onClick={onReload}
-              className="py-4 pl-2 text-base font-bold text-barGray-2 outline-none"
-            >
-              ←戻る
-            </button>
-          </div>
-        )}
-      </div>
+          <Box sx={{ py: 10 }}>
+            <Box sx={{
+              fontWeight: "bold",
+              color: "#505050",
+              textAlign: "center",
+            }}>検索結果が０件でした</Box>
+            <Button
+              variant="text"
+              onClick={() => {onReload()}}
+              sx={{
+                py: 2,
+                px: 1,
+                fontSize: "16px",
+                lineHeight: "24px",
+                fontWeight: "bold",
+                color: "#A7B6C8",
+                outline: "2px solid transparent",
+                outlineOffset: "2px"
+              }}>←戻る</Button>
+          </Box>)}
+      </Box>
     </Layout>
   );
 };
