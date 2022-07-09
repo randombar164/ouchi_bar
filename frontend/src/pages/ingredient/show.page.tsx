@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import type { VFC } from "react";
 
 /* original component */
 import { Layout } from "src/components/Layout";
@@ -49,7 +48,15 @@ const IngredientShowPage: React.VFC = (): JSX.Element => {
       >
         作れるカクテル
       </Typography>
-      <CocktailCards cocktails={sample_cocktails.slice(0, 3)}></CocktailCards>
+      {/* //TODO: CocktailCardに変更する */}
+      <CocktailCards cocktails={sample_cocktails.slice(0, 3)} />
+      <Typography
+        component="div"
+        variant="subtitle1"
+        sx={{ fontWeight: "bold", mx: 2, textAlign: "right" }}
+      >
+        もっと見る
+      </Typography>
     </Layout>
   );
 };
