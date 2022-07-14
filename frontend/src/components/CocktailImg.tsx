@@ -1,25 +1,29 @@
 type CocktailImgProps = {
   recipe: any;
+  width: number;
+  height: number | "";
 };
 
 type DrinkMethod = "Build" | "Shake" | "Blend" | "Stir";
 
-const CocktailImg: React.VFC<CocktailImgProps> = ({ recipe }) => {
+export const CocktailImg: React.VFC<CocktailImgProps> = ({
+  recipe,
+  width,
+  height,
+}) => {
   const drinkMethod: DrinkMethod = recipe.drnkmethod;
 
   return (
     <div>
       {drinkMethod === "Build" ? (
-        <img src="/build.png" alt="ビルド" />
+        <img src='/build.png' width={width} height={height} alt='ビルド' />
       ) : drinkMethod === "Shake" ? (
-        <img src="/shake.png" alt="シェイク" />
+        <img src='/shake.png' width={width} height={height} alt='シェイク' />
       ) : drinkMethod === "Blend" ? (
-        <img src="/blend.png" alt="ブレンド" />
+        <img src='/blend.png' width={width} height={height} alt='ブレンド' />
       ) : (
-        <img src="/stir.png" width={100} alt="ステア" />
+        <img src='/stir.png' width={width} height={height} alt='ステア' />
       )}
     </div>
   );
 };
-
-export default CocktailImg;

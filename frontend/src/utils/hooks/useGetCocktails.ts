@@ -22,6 +22,5 @@ export const useGetCocktails = () => {
       explanation: cocktail?.cookExplanation,
     };
   });
-
   return { cocktails, loading, error, getCocktailsFn };
 };
