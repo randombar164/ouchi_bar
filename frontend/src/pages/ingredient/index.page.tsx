@@ -2,7 +2,7 @@ import { useState } from "react";
 
 /* original component */
 import { Layout } from "src/components/Layout";
-import { CocktailCard } from "src/components/cocktailCard";
+import { CocktailCards } from "src/components/cocktailCards";
 import { IngredientCard } from "src/components/IngredientCard";
 import { IngredientShowField } from "src/components/IngredientShowField";
 
@@ -73,7 +73,7 @@ const IngredientPage: React.VFC = (): JSX.Element => {
             作れるカクテル
           </Typography>
           {/* //TODO: CocktailCardに変更する */}
-          <CocktailCard cocktails={sample_cocktails.slice(0, 3)} />
+          <CocktailCards cocktails={sample_cocktails.slice(0, 3)} />
           <Typography
             component="div"
             variant="subtitle1"

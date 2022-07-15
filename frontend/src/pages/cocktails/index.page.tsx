@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import type { VFC } from "react";
 import { useEffect } from "react";
-import { CocktailCard } from "src/components/cocktailCard";
+import { CocktailCards } from "src/components/cocktailCards";
 import { Layout } from "src/components/Layout";
 import { ToRegisterModal } from "src/components/ToRegisterModal";
 import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
@@ -25,7 +25,7 @@ const CocktailPage: VFC = () => {
       {error && <p>エラーが発生しました</p>}
       {cocktails && (
         <div className="container">
-          <CocktailCard cocktails={cocktails} recipe={recipe} />
+          <CocktailCards cocktails={cocktails} recipe={recipe} />
         </div>
       )}
     </Layout>

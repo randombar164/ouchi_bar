@@ -19,7 +19,7 @@ type CocktailProps = {
   recipe: RecipeProps;
 };
 
-export const CocktailCard: VFC<CocktailProps> = ({ cocktails }) => {
+export const CocktailCards: VFC<CocktailProps> = ({ cocktails }) => {
   return (
     <>
       {cocktails.map((cocktail, recipe) => {
@@ -29,7 +29,8 @@ export const CocktailCard: VFC<CocktailProps> = ({ cocktails }) => {
               <Grid
                 container
                 spacing={3}
-                sx={{ display: "flex", alignItems: "center" }}>
+                sx={{ display: "flex", alignItems: "center" }}
+              >
                 <Grid item xs={3}>
                   <CocktailImg recipe={recipe} width={50} height={50} />
                 </Grid>
@@ -42,7 +43,8 @@ export const CocktailCard: VFC<CocktailProps> = ({ cocktails }) => {
                       fontSize: "0.75rem",
                       lineHeight: "1rem",
                       color: "#2196f3",
-                    }}>
+                    }}
+                  >
                     {"すぐ作れる！"}
                   </h2>
                 </Grid>
