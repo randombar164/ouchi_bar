@@ -8,6 +8,7 @@ import { IngredientShowField } from "src/components/IngredientShowField";
 
 /* type */
 import type { Ingredient } from "src/utils/types/type";
+import type { Cocktail } from "src/utils/types/type";
 
 /* MUI Component */
 import { Link } from "@mui/material";
@@ -32,7 +33,30 @@ const IngredientPage: React.VFC = (): JSX.Element => {
       content: "whisky content",
     },
   ];
-  const sample_cocktails: any[] = [];
+  const sample_cocktails: Cocktail[] = [
+    {
+      id: 1,
+      name: "50キャリバー",
+      strength: 36,
+      cockExplanation:
+        "氷を入れたハイボールグラスに材料を注ぎステア、最後にソーダを加える",
+      drinkMethodId: 1,
+      glassTypeId: 1,
+    },
+    {
+      id: 496,
+      name: "アデレ・スペシャル",
+      strength: 37.7,
+      cockExplanation: "ステアして、カクテル・グラスに注ぐ",
+      drinkMethodId: 4,
+      glassTypeId: 3,
+    },
+  ];
+
+  // おすすめの材料たち
+  // const ingredients: Ingredient[] = [] // FIXME: APIどこ〜？
+  // 材料を登録することによって作れるようになるカクテルたち
+  // const cocktails: Cocktail[] = [];
 
   const [showIngredientDetails, setShowIngredientDetails] =
     useState<boolean>(false);
@@ -72,7 +96,6 @@ const IngredientPage: React.VFC = (): JSX.Element => {
           >
             作れるカクテル
           </Typography>
-          {/* //TODO: CocktailCardに変更する */}
           <CocktailCards cocktails={sample_cocktails.slice(0, 3)} />
           <Typography
             component="div"

@@ -25,3 +25,12 @@ export type Ingredient = {
   name: string;
   content: string;
 };
+
+export type Cocktail = {
+  id: number;
+  name: string;
+  strength: number;
+  cockExplanation: string;
+  drinkMethodId: number;
+  glassTypeId: number;
+};

@@ -4,27 +4,17 @@ import type { VFC } from "react";
 
 import { CocktailImg } from "./CocktailImg";
 
-type RecipeProps = {
-  id: any;
-  name: any;
-  strength: any;
-  explanation: any;
-  drinkMethod: any;
-  glassType: any;
-  ingredients: any;
+import type { Cocktail } from "src/utils/types/type";
+
+type CocktailCardsProps = {
+  cocktails: Cocktail[];
 };
 
-type CocktailProps = {
-  cocktails: any[];
-  recipe: RecipeProps;
-};
-
-export const CocktailCards: VFC<CocktailProps> = ({ cocktails }) => {
-  // CocktailCardsのpropsでうまくrecipeを受け取れていない
-  // -> 「全部同じのが表示される問題」ここ？？
+export const CocktailCards: VFC<CocktailCardsProps> = ({ cocktails }) => {
+  console.log(cocktails);
   return (
     <>
-      {cocktails.map((cocktail, recipe) => {
+      {cocktails.map((cocktail) => {
         return (
           <Link href={`/cocktail-recipe/${cocktail.id}`} key={cocktail.id}>
             <Card style={{ padding: "0.5rem", margin: "0.25rem" }}>
@@ -34,7 +24,11 @@ export const CocktailCards: VFC<CocktailProps> = ({ cocktails }) => {
                 sx={{ display: "flex", alignItems: "center" }}
               >
                 <Grid item xs={3}>
-                  <CocktailImg recipe={recipe} width={50} height={50} />
+                  <CocktailImg
+                    drinkMethodId={cocktail.drinkMethodId}
+                    width={50}
+                    height={50}
+                  />
                 </Grid>
                 <Grid item xs={9}>
                   <h1 style={{ padding: "0.5em 0", fontWeight: "bold" }}>

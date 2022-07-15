@@ -6,6 +6,7 @@ import { Layout } from "src/components/Layout";
 import { ToRegisterModal } from "src/components/ToRegisterModal";
 import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
 import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
+import { Cocktail } from "src/utils/types/type";
 
 const CocktailPage: VFC = () => {
   const { cocktails, loading, error, getCocktailsFn } = useGetCocktails();
@@ -14,10 +15,6 @@ const CocktailPage: VFC = () => {
     getCocktailsFn();
   }, [getCocktailsFn]);
 
-  const router = useRouter();
-  const cocktailId = Number(router?.query.id);
-  const { recipe } = useGetRecipe(cocktailId);
-
   return (
     <Layout>
       {loading && <p style={{ margin: "1rem" }}>ローディング中です</p>}
@@ -25,7 +22,7 @@ const CocktailPage: VFC = () => {
       {error && <p>エラーが発生しました</p>}
       {cocktails && (
         <div className="container">
-          <CocktailCards cocktails={cocktails} recipe={recipe} />
+          <CocktailCards cocktails={cocktails} />
         </div>
       )}
     </Layout>
