@@ -11,7 +11,7 @@ type CocktailCardsProps = {
 };
 
 export const CocktailCards: VFC<CocktailCardsProps> = ({ cocktails }) => {
-  console.log(cocktails);
+  // console.log(cocktails);
   return (
     <>
       {cocktails.map((cocktail) => {
