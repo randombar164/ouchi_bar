@@ -3,7 +3,9 @@ import { useCallback, useContext } from "react";
 import { IngredientCard } from "src/components/IngredientCard";
 import { Layout } from "src/components/Layout";
 import { Context } from "src/utils/contexts/provider";
+
 import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
+
 import { RegisterField } from "./RegisterField";
 
 const RegiterPage: React.VFC = (): JSX.Element => {
@@ -48,7 +50,7 @@ const RegiterPage: React.VFC = (): JSX.Element => {
                   canDelete={true}
                   imgSrc={concreteIngredient.imgSrc}
                   name={concreteIngredient.name}
-                  delete={() => {
+                  onDelete={() => {
                     return handleDelete(concreteIngredient.id);
                   }}
                 />

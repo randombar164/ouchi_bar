@@ -1,10 +1,11 @@
+import { useRouter } from "next/router";
 import type { VFC } from "react";
-import { useEffect, useContext } from "react";
-import { Context } from "src/utils/contexts/provider";
-import { CocktailCards } from "src/components/cocktailCard";
+import { useEffect } from "react";
+import { CocktailCard } from "src/components/cocktailCard";
 import { Layout } from "src/components/Layout";
 import { ToRegisterModal } from "src/components/ToRegisterModal";
 import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
+import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
 
 const CocktailPage: VFC = () => {
   const { cocktails, loading, error, getCocktailsFn } = useGetCocktails();
@@ -13,14 +14,18 @@ const CocktailPage: VFC = () => {
     getCocktailsFn();
   }, [getCocktailsFn]);
 
+  const router = useRouter();
+  const cocktailId = Number(router?.query.id);
+  const { recipe } = useGetRecipe(cocktailId);
+
   return (
     <Layout>
-      {loading && <p>ローディング中です</p>}
+      {loading && <p style={{ margin: "1rem" }}>ローディング中です</p>}
       {cocktails?.length == 0 && <ToRegisterModal name="作成可能なカクテル" />}
       {error && <p>エラーが発生しました</p>}
       {cocktails && (
         <div className="container">
-          <CocktailCards cocktails={cocktails} />
+          <CocktailCard cocktails={cocktails} recipe={recipe} />
         </div>
       )}
     </Layout>

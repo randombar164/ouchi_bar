@@ -1,36 +1,60 @@
 import type { IngredientCardProps } from 'src/utils/types/type';
 
+
+/* MUI */
+import { Card, CardMedia } from "@mui/material"
+import { Box } from "@mui/material"
+
 type Props = {
   canDelete: boolean;
   onClick?: () => void;
-  delete?: () => void;
+  onDelete?: () => void;
 } & IngredientCardProps;
 
 export const IngredientCard: React.VFC<Props> = (prop) => {
   return (
-    <div
-      id="card"
-      className="flex justify-between items-center py-3 px-8 w-full bg-white rounded-lg shadow-xl drop-shadow-md"
+    <Card
       onClick={prop.onClick}
+      sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        py: 2,
+        px: 4,
+        width: "100%",
+        backgroundColor: "white",
+        borderRadius: "0.5rem",
+        boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+        filter: "drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))"
+      }}
     >
-      <div
-        className="flex gap-1 justify-center items-center"
-        onClick={prop.onClick}
+      <Box
+        sx={{
+          marginRight: "2rem",
+          height: "6rem"
+        }}
       >
-        <div className="mr-8 h-24">
-          <img
-            src={prop.imgSrc}
-            alt={`${prop.name}の写真`}
-            className="h-full"
-          />
-        </div>
-        <div>
-          <h1 className="text-sm font-bold text-gray-700">{prop.name}</h1>
-        </div>
-      </div>
+        <CardMedia
+          component="img"
+          image={prop.imgSrc}
+          alt={`${prop.name}の写真`}
+          sx={{
+            height: "100%",
+          }}
+        />
+      </Box>
+      <Box
+        sx={{
+          fontSize: "0.875rem",
+          lineHeight: "1.25rem",
+          fontWeight: "bold",
+          color: "rgb(55 65 81)"
+        }}>
+        {prop.name}
+      </Box>
       {prop.canDelete && (
         <svg
-          onClick={prop.delete}
+          onClick={prop.onDelete}
           xmlns="http://www.w3.org/2000/svg"
           className="w-9 h-9 text-barOrange-3"
           fill="none"
@@ -45,19 +69,6 @@ export const IngredientCard: React.VFC<Props> = (prop) => {
           />
         </svg>
       )}
-    </div>
+    </Card>
   );
 };
-//問題点
-/*
-  ×印以外の所を押しても、選択したものが消えてしまう
-*/
-//理由
-/*
-  onClickの場所が違う
-*/
-//解決策
-/*
-  まず、buttonのクラスをつける場所が違うんじゃないの？
-  svgのクラスに、onClickをつけることが出来ないかな？
-*/

@@ -1,12 +1,11 @@
 import Button from "@mui/material/Button";
 //import createTheme from '@mui/material/styles/createTheme';
+
 import matter from "gray-matter";
 import type { GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
 import { NonFooterLayout } from "src/components/Layout/nonFooter";
-import { Context } from "src/utils/contexts/provider";
 import { useGetUser } from "src/utils/hooks/useGetUser";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -37,7 +36,13 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const BlogList: React.VFC = (props: any) => {
+  const router = useRouter();
   const { getUserFn } = useGetUser();
+
+  const handleClick = () => {
+    router.push("/sakagura");
+    getUserFn();
+  };
 
   return (
     <NonFooterLayout>
@@ -49,7 +54,7 @@ const BlogList: React.VFC = (props: any) => {
             作れるカクテルを見つけよう
           </h1>
 
-          <Button variant="contained" onClick={getUserFn} color="primary">
+          <Button variant="contained" onClick={handleClick} color="primary">
             お家barに行く
           </Button>
         </div>
