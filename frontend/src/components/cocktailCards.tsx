@@ -3,7 +3,6 @@ import Link from "next/link";
 import type { VFC } from "react";
 
 import { CocktailImg } from "./CocktailImg";
-
 import type { Cocktail } from "src/utils/types/type";
 
 type CocktailCardsProps = {
