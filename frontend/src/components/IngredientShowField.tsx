@@ -22,20 +22,19 @@ export const IngredientShowField: React.VFC<IngredientShowFieldProps> = (
         sx={{ flexBasis: "40%" }}
       />
       <CardContent
-        sx={{ display: "flex", flexDirection: "column", flexBasis: "60%" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flexBasis: "60%",
+          textAlign: "center",
+        }}
       >
-        <Typography
-          component="div"
-          variant="h5"
-          align="center"
-          sx={{ flexBasis: "50%" }}
-        >
+        <Typography component="div" variant="h5" sx={{ flexBasis: "50%" }}>
           {props.ingredient.name}
         </Typography>
         <Typography
           component="div"
           variant="subtitle1"
-          align="center"
           sx={{ flexBasis: "50%" }}
         >
           {props.ingredient.content}
