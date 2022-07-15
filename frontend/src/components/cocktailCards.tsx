@@ -20,6 +20,8 @@ type CocktailProps = {
 };
 
 export const CocktailCards: VFC<CocktailProps> = ({ cocktails }) => {
+  // CocktailCardsのpropsでうまくrecipeを受け取れていない
+  // -> 「全部同じのが表示される問題」ここ？？
   return (
     <>
       {cocktails.map((cocktail, recipe) => {
