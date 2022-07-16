@@ -5,7 +5,7 @@ namespace :v3 do
     task all_data: :environment do
       models = %w[Unit UnitConversion HandlingStore GlassType DrinkMethod AmazonBrowseNode Category Cocktail Ingredient CocktailsIngredient IngredientsHandlingStore].map{|name| "V3::#{name}"}
 
-      models.each do |model|f
+      models.each do |model|
         p "Start: #{model} import"
         rows = CSV.read(OUTPUT_DIR + "#{model.underscore}.csv", headers: true)
         rows.each_slice(1000) do |sliced_rows|
