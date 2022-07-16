@@ -3,9 +3,9 @@ import { useCallback, useState } from "react";
 
 const hostname = `${process.env.NEXT_PUBLIC_API_ORIGIN}`;
 
-export const useGetApi = (url: string, params?: any) => {
+export const useGetApi = <T>(url: string, params?: any) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [response, setResponse] = useState<any | null>(null);
+  const [response, setResponse] = useState<T | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   const getFn = useCallback(async () => {
@@ -36,9 +36,9 @@ export const useGetApi = (url: string, params?: any) => {
   return { loading, error, response, getFn };
 };
 
-export const usePostApi = (url: string) => {
+export const usePostApi = <T>(url: string) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [response, setResponse] = useState<any>(null);
+  const [response, setResponse] = useState<T | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const postFn = useCallback(
     async (body: any) => {
