@@ -10,7 +10,7 @@ export const useGetApi = (url: string, params?: any) => {
 
   const getFn = useCallback(async () => {
     setLoading(true);
-    await fetch(hostname + "/v2" + url, {
+    await fetch(hostname + url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export const usePostApi = (url: string) => {
   const postFn = useCallback(
     async (body: any) => {
       setLoading(true);
-      await fetch(hostname + "/v2" + url, {
+      await fetch(hostname + url, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",

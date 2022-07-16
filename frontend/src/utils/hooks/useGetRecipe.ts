@@ -4,7 +4,7 @@ import { useGetApi } from "./useApi";
 
 export const useGetRecipe = (cocktailId: number) => {
   const { loading, response, getFn } = useGetApi(
-    `/queries/show_cocktail?id=${cocktailId}`
+    `/v2/queries/show_cocktail?id=${cocktailId}`
   );
   useEffect(() => {
     getFn();
