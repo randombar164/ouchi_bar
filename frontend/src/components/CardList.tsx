@@ -5,12 +5,14 @@ import { CocktailImg } from "./CocktailImg";
 import type { Cocktail } from "src/utils/types/type";
 
 type CardListProps = {
-  items: {
-    id: number;
-    name: string;
-    imgTag: React.ReactNode;
-    caption: React.ReactNode;
-  }[];
+  items:
+    | {
+        id: number;
+        name: string;
+        imgTag: JSX.Element;
+        caption: JSX.Element;
+      }[]
+    | undefined;
   onClick: (id: number) => void; // 各Cardに割り当てられるonclickを受け取る
   cardHeight: number | string;
 };
@@ -19,7 +21,7 @@ export const CardList: VFC<CardListProps> = (props) => {
   // console.log(props);
   return (
     <>
-      {props.items.map((item) => {
+      {props.items?.map((item) => {
         return (
           <Link
             underline="none"

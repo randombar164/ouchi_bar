@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import type { VFC } from "react";
 import { useEffect } from "react";
 
-import { useGetCocktails } from "src/utils/hooks/v2/useGetCocktails";
-// orinal component
+import { useGetCocktails } from "src/utils/hooks/v3/useGetCocktails";
+// orignal component
 import { CardList } from "src/components/CardList";
 import { Layout } from "src/components/Layout";
 import { ToRegisterModal } from "src/components/ToRegisterModal";
@@ -14,6 +14,7 @@ const CocktailPage: VFC = () => {
   useEffect(() => {
     getCocktailsFn();
   }, [getCocktailsFn]);
+  // console.log(cocktails);
 
   const items = cocktails?.map((cocktail) => {
     return {

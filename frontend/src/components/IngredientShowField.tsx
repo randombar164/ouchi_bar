@@ -1,5 +1,5 @@
 /* MUI Component */
-import { Card, CardMedia, CardContent } from "@mui/material";
+import { Card, CardMedia, CardContent, Box, Button } from "@mui/material";
 import { Typography } from "@mui/material";
 
 /* type */
@@ -7,7 +7,10 @@ import type { Ingredient } from "src/utils/types/type";
 
 /* componentごとにPropsの型を宣言 */
 type IngredientShowFieldProps = {
-  ingredient: Ingredient;
+  ingredient: {
+    img: string | undefined;
+    name: string | undefined;
+  };
 };
 
 export const IngredientShowField: React.VFC<IngredientShowFieldProps> = (
@@ -19,7 +22,7 @@ export const IngredientShowField: React.VFC<IngredientShowFieldProps> = (
         component="img"
         image={props.ingredient.img}
         alt={`${props.ingredient.name}の画像`}
-        sx={{ flexBasis: "40%" }}
+        sx={{ flexBasis: "40%", height: 100, width: 100, margin: "auto" }}
       />
       <CardContent
         sx={{
@@ -29,16 +32,27 @@ export const IngredientShowField: React.VFC<IngredientShowFieldProps> = (
           textAlign: "center",
         }}
       >
-        <Typography component="div" variant="h5" sx={{ flexBasis: "50%" }}>
+        <Typography component="div" variant="inherit" sx={{ flexBasis: "50%" }}>
           {props.ingredient.name}
         </Typography>
-        <Typography
+        <Box sx={{ flexBasis: "50%" }}>
+          <Button
+            sx={{
+              backgroundColor: "#DDDDDD",
+              color: "black",
+              borderRadius: 3,
+            }}
+          >
+            お家に登録する
+          </Button>
+        </Box>
+        {/* <Typography
           component="div"
           variant="subtitle1"
           sx={{ flexBasis: "50%" }}
         >
           {props.ingredient.content}
-        </Typography>
+        </Typography> */}
       </CardContent>
     </Card>
   );
