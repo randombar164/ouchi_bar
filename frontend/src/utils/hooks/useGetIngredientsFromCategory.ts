@@ -4,7 +4,7 @@ import { useGetApi } from "src/utils/hooks/useApi";
 export const useGetIngredientsFromCategory = () => {
   const [nodeId, setNodeId] = useState(0)
   const { loading, error, response, getFn } = useGetApi(
-    `/queries/search_concrete_ingredient_from_category?id=${nodeId}`
+    `/v2/queries/search_concrete_ingredient_from_category?id=${nodeId}`
   );
 
   const getIngredientsFromCategory = (id: number) => {

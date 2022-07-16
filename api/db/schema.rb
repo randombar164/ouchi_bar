@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_14_170925) do
+ActiveRecord::Schema.define(version: 2022_07_08_083515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "base_drinks", force: :cascade do |t|
+  create_table "v2_base_drinks", force: :cascade do |t|
     t.string "name"
     t.float "strength"
     t.text "cook_explanation"
@@ -23,11 +23,11 @@ ActiveRecord::Schema.define(version: 2022_05_14_170925) do
     t.bigint "glass_type_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["drink_method_id"], name: "index_base_drinks_on_drink_method_id"
-    t.index ["glass_type_id"], name: "index_base_drinks_on_glass_type_id"
+    t.index ["drink_method_id"], name: "index_v2_base_drinks_on_drink_method_id"
+    t.index ["glass_type_id"], name: "index_v2_base_drinks_on_glass_type_id"
   end
 
-  create_table "base_drinks_base_ingredients", force: :cascade do |t|
+  create_table "v2_base_drinks_base_ingredients", force: :cascade do |t|
     t.bigint "base_ingredient_id", null: false
     t.bigint "base_drink_id", null: false
     t.string "amount"
@@ -37,18 +37,18 @@ ActiveRecord::Schema.define(version: 2022_05_14_170925) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["base_drink_id"], name: "base_drinks_base_ingredients_index_2"
     t.index ["base_ingredient_id"], name: "base_drinks_base_ingredients_index_1"
-    t.index ["unit_id"], name: "index_base_drinks_base_ingredients_on_unit_id"
+    t.index ["unit_id"], name: "index_v2_base_drinks_base_ingredients_on_unit_id"
   end
 
-  create_table "base_ingredients", force: :cascade do |t|
+  create_table "v2_base_ingredients", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "category_id"
-    t.index ["category_id"], name: "index_base_ingredients_on_category_id"
+    t.index ["category_id"], name: "index_v2_base_ingredients_on_category_id"
   end
 
-  create_table "base_ingredients_concrete_ingredients", force: :cascade do |t|
+  create_table "v2_base_ingredients_concrete_ingredients", force: :cascade do |t|
     t.bigint "base_ingredient_id", null: false
     t.bigint "concrete_ingredient_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -57,17 +57,17 @@ ActiveRecord::Schema.define(version: 2022_05_14_170925) do
     t.index ["concrete_ingredient_id"], name: "base_ingredients_concrete_ingredients_index_2"
   end
 
-  create_table "categories", force: :cascade do |t|
+  create_table "v2_categories", force: :cascade do |t|
     t.string "name"
     t.bigint "amazon_browse_node_id"
     t.string "category_full_path"
     t.bigint "parent_category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["parent_category_id"], name: "index_categories_on_parent_category_id"
+    t.index ["parent_category_id"], name: "index_v2_categories_on_parent_category_id"
   end
 
-  create_table "cocktails", force: :cascade do |t|
+  create_table "v2_cocktails", force: :cascade do |t|
     t.string "name"
     t.float "strength"
     t.text "cook_explanation"
@@ -75,11 +75,11 @@ ActiveRecord::Schema.define(version: 2022_05_14_170925) do
     t.bigint "glass_type_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["drink_method_id"], name: "index_cocktails_on_drink_method_id"
-    t.index ["glass_type_id"], name: "index_cocktails_on_glass_type_id"
+    t.index ["drink_method_id"], name: "index_v2_cocktails_on_drink_method_id"
+    t.index ["glass_type_id"], name: "index_v2_cocktails_on_glass_type_id"
   end
 
-  create_table "cocktails_concrete_ingredients", force: :cascade do |t|
+  create_table "v2_cocktails_concrete_ingredients", force: :cascade do |t|
     t.bigint "concrete_ingredient_id", null: false
     t.bigint "cocktail_id", null: false
     t.string "amount"
@@ -89,10 +89,10 @@ ActiveRecord::Schema.define(version: 2022_05_14_170925) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["cocktail_id"], name: "cocktails_concrete_ingredients_index_2"
     t.index ["concrete_ingredient_id"], name: "cocktails_concrete_ingredients_index_1"
-    t.index ["unit_id"], name: "index_cocktails_concrete_ingredients_on_unit_id"
+    t.index ["unit_id"], name: "index_v2_cocktails_concrete_ingredients_on_unit_id"
   end
 
-  create_table "concrete_ingredients", force: :cascade do |t|
+  create_table "v2_concrete_ingredients", force: :cascade do |t|
     t.bigint "base_ingredient_id"
     t.string "name"
     t.text "tag"
@@ -104,12 +104,12 @@ ActiveRecord::Schema.define(version: 2022_05_14_170925) do
     t.string "asin"
     t.text "detail_page_url"
     t.boolean "registered_by_user"
-    t.index ["asin"], name: "index_concrete_ingredients_on_asin", unique: true
-    t.index ["base_ingredient_id"], name: "index_concrete_ingredients_on_base_ingredient_id"
-    t.index ["category_id"], name: "index_concrete_ingredients_on_category_id"
+    t.index ["asin"], name: "index_v2_concrete_ingredients_on_asin", unique: true
+    t.index ["base_ingredient_id"], name: "index_v2_concrete_ingredients_on_base_ingredient_id"
+    t.index ["category_id"], name: "index_v2_concrete_ingredients_on_category_id"
   end
 
-  create_table "concrete_ingredients_handling_stores", force: :cascade do |t|
+  create_table "v2_concrete_ingredients_handling_stores", force: :cascade do |t|
     t.bigint "concrete_ingredient_id", null: false
     t.bigint "handling_store_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -118,47 +118,47 @@ ActiveRecord::Schema.define(version: 2022_05_14_170925) do
     t.index ["handling_store_id"], name: "concrete_ingredients_handling_stores_index_2"
   end
 
-  create_table "drink_methods", force: :cascade do |t|
+  create_table "v2_drink_methods", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "glass_types", force: :cascade do |t|
+  create_table "v2_glass_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "handling_stores", force: :cascade do |t|
+  create_table "v2_handling_stores", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "unit_conversions", force: :cascade do |t|
+  create_table "v2_unit_conversions", force: :cascade do |t|
     t.bigint "unit_id", null: false
     t.float "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["unit_id"], name: "index_unit_conversions_on_unit_id"
+    t.index ["unit_id"], name: "index_v2_unit_conversions_on_unit_id"
   end
 
-  create_table "units", force: :cascade do |t|
+  create_table "v2_units", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "is_display_before_amount", default: false, null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "v2_users", force: :cascade do |t|
     t.string "uuid"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["uuid"], name: "index_users_on_uuid", unique: true
+    t.index ["uuid"], name: "index_v2_users_on_uuid", unique: true
   end
 
-  create_table "users_base_drinks", force: :cascade do |t|
+  create_table "v2_users_base_drinks", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "base_drink_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -167,7 +167,7 @@ ActiveRecord::Schema.define(version: 2022_05_14_170925) do
     t.index ["user_id"], name: "users_drink_drinks_index_1"
   end
 
-  create_table "users_concrete_ingredients", force: :cascade do |t|
+  create_table "v2_users_concrete_ingredients", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "concrete_ingredient_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -177,25 +177,152 @@ ActiveRecord::Schema.define(version: 2022_05_14_170925) do
     t.index ["user_id"], name: "users_concrete_ingredients_index_1"
   end
 
-  add_foreign_key "base_drinks", "drink_methods"
-  add_foreign_key "base_drinks", "glass_types"
-  add_foreign_key "base_drinks_base_ingredients", "base_drinks"
-  add_foreign_key "base_drinks_base_ingredients", "base_ingredients"
-  add_foreign_key "base_drinks_base_ingredients", "units"
-  add_foreign_key "base_ingredients_concrete_ingredients", "base_ingredients"
-  add_foreign_key "base_ingredients_concrete_ingredients", "concrete_ingredients"
-  add_foreign_key "categories", "categories", column: "parent_category_id"
-  add_foreign_key "cocktails", "drink_methods"
-  add_foreign_key "cocktails", "glass_types"
-  add_foreign_key "cocktails_concrete_ingredients", "cocktails"
-  add_foreign_key "cocktails_concrete_ingredients", "concrete_ingredients"
-  add_foreign_key "cocktails_concrete_ingredients", "units"
-  add_foreign_key "concrete_ingredients", "base_ingredients"
-  add_foreign_key "concrete_ingredients_handling_stores", "concrete_ingredients"
-  add_foreign_key "concrete_ingredients_handling_stores", "handling_stores"
-  add_foreign_key "unit_conversions", "units"
-  add_foreign_key "users_base_drinks", "base_drinks"
-  add_foreign_key "users_base_drinks", "users"
-  add_foreign_key "users_concrete_ingredients", "concrete_ingredients"
-  add_foreign_key "users_concrete_ingredients", "users"
+  create_table "v3_amazon_browse_nodes", force: :cascade do |t|
+    t.string "name"
+    t.bigint "amazon_browse_node_id"
+    t.string "node_path"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "v3_categories", force: :cascade do |t|
+    t.string "name"
+    t.string "full_path"
+    t.bigint "amazon_browse_node_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["amazon_browse_node_id"], name: "v3_categories_index_1"
+  end
+
+  create_table "v3_cocktails", force: :cascade do |t|
+    t.string "name"
+    t.float "strength"
+    t.text "cook_explanation"
+    t.bigint "drink_method_id", null: false
+    t.bigint "glass_type_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["drink_method_id"], name: "v3_cocktails_index_1"
+    t.index ["glass_type_id"], name: "v3_cocktails_index_2"
+  end
+
+  create_table "v3_cocktails_ingredients", force: :cascade do |t|
+    t.string "amount"
+    t.string "additional_explanation"
+    t.boolean "can_be_other_ingredients"
+    t.bigint "ingredient_id", null: false
+    t.bigint "cocktail_id", null: false
+    t.bigint "unit_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cocktail_id"], name: "cocktails_ingredients_index_2"
+    t.index ["ingredient_id"], name: "cocktails_ingredients_index_1"
+    t.index ["unit_id"], name: "cocktails_ingredients_index_3"
+  end
+
+  create_table "v3_drink_methods", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "v3_glass_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "v3_handling_stores", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "v3_ingredients", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "img_src"
+    t.string "jan_code"
+    t.string "asin"
+    t.text "detail_page_url"
+    t.bigint "category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["asin"], name: "index_v3_ingredients_on_asin", unique: true
+    t.index ["category_id"], name: "v3_ingredients_index_1"
+  end
+
+  create_table "v3_ingredients_handling_stores", force: :cascade do |t|
+    t.bigint "ingredient_id", null: false
+    t.bigint "handling_store_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["handling_store_id"], name: "v3_ingredients_handling_stores_index_2"
+    t.index ["ingredient_id"], name: "v3_ingredients_handling_stores_index_1"
+  end
+
+  create_table "v3_unit_conversions", force: :cascade do |t|
+    t.bigint "unit_id", null: false
+    t.float "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["unit_id"], name: "index_v3_unit_conversions_on_unit_id"
+  end
+
+  create_table "v3_units", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_display_before_amount", default: false, null: false
+  end
+
+  create_table "v3_users", force: :cascade do |t|
+    t.string "uuid", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uuid"], name: "v3_cocktails_ingredients_index_1"
+  end
+
+  create_table "v3_users_ingredients", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "ingredient_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ingredient_id"], name: "v3_users_ingredients_index_2"
+    t.index ["user_id", "ingredient_id"], name: "v3_users_ingredients_index_3", unique: true
+    t.index ["user_id"], name: "v3_users_ingredients_index_1"
+  end
+
+  add_foreign_key "v2_base_drinks", "v2_drink_methods", column: "drink_method_id"
+  add_foreign_key "v2_base_drinks", "v2_glass_types", column: "glass_type_id"
+  add_foreign_key "v2_base_drinks_base_ingredients", "v2_base_drinks", column: "base_drink_id"
+  add_foreign_key "v2_base_drinks_base_ingredients", "v2_base_ingredients", column: "base_ingredient_id"
+  add_foreign_key "v2_base_drinks_base_ingredients", "v2_units", column: "unit_id"
+  add_foreign_key "v2_base_ingredients_concrete_ingredients", "v2_base_ingredients", column: "base_ingredient_id"
+  add_foreign_key "v2_base_ingredients_concrete_ingredients", "v2_concrete_ingredients", column: "concrete_ingredient_id"
+  add_foreign_key "v2_categories", "v2_categories", column: "parent_category_id"
+  add_foreign_key "v2_cocktails", "v2_drink_methods", column: "drink_method_id"
+  add_foreign_key "v2_cocktails", "v2_glass_types", column: "glass_type_id"
+  add_foreign_key "v2_cocktails_concrete_ingredients", "v2_cocktails", column: "cocktail_id"
+  add_foreign_key "v2_cocktails_concrete_ingredients", "v2_concrete_ingredients", column: "concrete_ingredient_id"
+  add_foreign_key "v2_cocktails_concrete_ingredients", "v2_units", column: "unit_id"
+  add_foreign_key "v2_concrete_ingredients", "v2_base_ingredients", column: "base_ingredient_id"
+  add_foreign_key "v2_concrete_ingredients_handling_stores", "v2_concrete_ingredients", column: "concrete_ingredient_id"
+  add_foreign_key "v2_concrete_ingredients_handling_stores", "v2_handling_stores", column: "handling_store_id"
+  add_foreign_key "v2_unit_conversions", "v2_units", column: "unit_id"
+  add_foreign_key "v2_users_base_drinks", "v2_base_drinks", column: "base_drink_id"
+  add_foreign_key "v2_users_base_drinks", "v2_users", column: "user_id"
+  add_foreign_key "v2_users_concrete_ingredients", "v2_concrete_ingredients", column: "concrete_ingredient_id"
+  add_foreign_key "v2_users_concrete_ingredients", "v2_users", column: "user_id"
+  add_foreign_key "v3_categories", "v3_amazon_browse_nodes", column: "amazon_browse_node_id"
+  add_foreign_key "v3_cocktails", "v3_drink_methods", column: "drink_method_id"
+  add_foreign_key "v3_cocktails", "v3_glass_types", column: "glass_type_id"
+  add_foreign_key "v3_cocktails_ingredients", "v3_cocktails", column: "cocktail_id"
+  add_foreign_key "v3_cocktails_ingredients", "v3_ingredients", column: "ingredient_id"
+  add_foreign_key "v3_cocktails_ingredients", "v3_units", column: "unit_id"
+  add_foreign_key "v3_ingredients", "v3_categories", column: "category_id"
+  add_foreign_key "v3_ingredients_handling_stores", "v3_handling_stores", column: "handling_store_id"
+  add_foreign_key "v3_ingredients_handling_stores", "v3_ingredients", column: "ingredient_id"
+  add_foreign_key "v3_unit_conversions", "v3_units", column: "unit_id"
+  add_foreign_key "v3_users_ingredients", "v3_ingredients", column: "ingredient_id"
+  add_foreign_key "v3_users_ingredients", "v3_users", column: "user_id"
 end

@@ -13,7 +13,7 @@ export const useRegisterIngredients = () => {
 
   // このあたりでrequestBodyのidsを更新する？
   const { loading, error, response, postFn } = usePostApi(
-    `/commands/add_users_concrete_ingredients`
+    `/v2/commands/add_users_concrete_ingredients`
   );
 
   const registerFn = (ingredientIds: number[]) => {

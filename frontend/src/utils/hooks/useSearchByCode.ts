@@ -5,7 +5,7 @@ import { useGetApi } from "./useApi";
 export const useSearchByCode = () => {
   const [barcode, setBarcode] = useState("");
   const { loading, response, getFn } = useGetApi(
-    `/queries/search_concrete_ingredient_from_jan_code?jan_code=${barcode}`
+    `/v2/queries/search_concrete_ingredient_from_jan_code?jan_code=${barcode}`
   );
 
   const searchByCode = useCallback(

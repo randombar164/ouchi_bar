@@ -1,2 +1,0 @@
-class GlassType < ApplicationRecord
-end

@@ -6,7 +6,7 @@ import { Context } from "../contexts/provider";
 export const useGetCocktails = () => {
   const { uuid } = useContext(Context);
   const { loading, error, response, getFn } = useGetApi(
-    `/queries/get_cocktails?uuid=${uuid}`
+    `/v2/queries/get_cocktails?uuid=${uuid}`
   );
 
   const getCocktailsFn = useCallback(() => {
