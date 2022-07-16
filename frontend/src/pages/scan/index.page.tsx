@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { Context } from "src/utils/contexts/provider";
-import { useSearchByCode } from "src/utils/hooks/useSearchByCode";
+import { useSearchByCode } from "src/utils/hooks/v2/useSearchByCode";
 
 import { MultiResults } from "./MultiResults";
 import { NoResult } from "./NoResult";

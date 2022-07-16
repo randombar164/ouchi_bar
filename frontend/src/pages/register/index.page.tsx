@@ -3,8 +3,8 @@ import { useCallback, useContext } from "react";
 import { IngredientCard } from "src/components/IngredientCard";
 import { Layout } from "src/components/Layout";
 import { Context } from "src/utils/contexts/provider";
-import { pushHome } from "src/utils/hooks/pushHome";
-import { useRegisterIngredients } from "src/utils/hooks/useRegisterIngredients";
+import { pushHome } from "src/utils/hooks/v2/pushHome";
+import { useRegisterIngredients } from "src/utils/hooks/v2/useRegisterIngredients";
 
 import { RegisterField } from "./RegisterField";
 

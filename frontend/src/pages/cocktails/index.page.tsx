@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import { CocktailCard } from "src/components/CocktailCard";
 import { Layout } from "src/components/Layout";
 import { ToRegisterModal } from "src/components/ToRegisterModal";
-import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
-import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
+import { useGetCocktails } from "src/utils/hooks/v2/useGetCocktails";
+import { useGetRecipe } from "src/utils/hooks/v2/useGetRecipe";
 
 // import type { VFC } from "react";
 // import { useContext,useEffect } from "react";
@@ -14,8 +14,8 @@ import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
 // import { Layout } from "src/components/Layout";
 // import { ToRegisterModal } from "src/components/ToRegisterModal";
 // import { Context } from "src/utils/contexts/provider";
-// import { pushHome } from "src/utils/hooks/pushHome";
-// import { useGetCocktails } from "src/utils/hooks/useGetCocktails";
+// import { pushHome } from "src/utils/hooks/v2/pushHome";
+// import { useGetCocktails } from "src/utils/hooks/v2/useGetCocktails";
 
 const CocktailPage: VFC = () => {
   const { cocktails, loading, error, getCocktailsFn } = useGetCocktails();

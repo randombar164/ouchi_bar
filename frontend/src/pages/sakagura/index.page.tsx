@@ -4,8 +4,8 @@ import { Layout } from "src/components/Layout";
 import { ToRegisterModal } from "src/components/ToRegisterModal";
 import { SingleShelf } from "src/pages/sakagura/SingleShelf";
 import { Context } from "src/utils/contexts/provider";
-import { pushHome } from "src/utils/hooks/pushHome";
-import { useGetIngredients } from "src/utils/hooks/useGetIngredients";
+import { pushHome } from "src/utils/hooks/v2/pushHome";
+import { useGetIngredients } from "src/utils/hooks/v2/useGetIngredients";
 
 const sliceByNumber = (array: any[], number: number) => {
   if (!array) return;

@@ -5,7 +5,7 @@ import type { GetStaticProps } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { NonFooterLayout } from 'src/components/Layout/nonFooter';
-import { useGetUser } from 'src/utils/hooks/useGetUser';
+import { useGetUser } from 'src/utils/hooks/v2/useGetUser';
 
 export const getStaticProps: GetStaticProps = async () => {
   const blogs = ((context: __WebpackModuleApi.RequireContext) => {

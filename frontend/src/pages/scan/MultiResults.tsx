@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect } from "react";
 import { Modal } from "src/components/Modal";
 import { ResultCard } from "src/pages/scan/ResultCard";
 import { Context } from "src/utils/contexts/provider";
-import { useRegisterCode } from "src/utils/hooks/useRegisterCode";
+import { useRegisterCode } from "src/utils/hooks/v2/useRegisterCode";
 import type { ModalProps } from "src/utils/types/type";
 
 type Props = {
