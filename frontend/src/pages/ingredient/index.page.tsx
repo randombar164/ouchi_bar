@@ -39,7 +39,7 @@ const IngredientPage: React.VFC = (): JSX.Element => {
   );
 
   const sample_cocktails = [
-    // この材料が追加したときに作れるようになるカクテル -> APIみあたらない
+    // FIXME: mock dataなのでapiを叩いて取得するようにする
     {
       id: 1,
       name: "cocktail 1",
