@@ -8,8 +8,8 @@ import { CocktailImg } from "src/components/CocktailImg";
 import { ContentWrapper } from "src/components/ContentWrapper";
 import { Layout } from "src/components/Layout";
 import { Context } from "src/utils/contexts/provider";
-import { pushHome } from "src/utils/hooks/pushHome";
-import { useGetRecipe } from "src/utils/hooks/useGetRecipe";
+import { pushHome } from "src/utils/hooks/v2/pushHome";
+import { useGetRecipe } from "src/utils/hooks/v2/useGetRecipe";
 
 const ToCocktailsLink: React.VFC = () => {
   return (
