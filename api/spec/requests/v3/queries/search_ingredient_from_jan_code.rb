@@ -10,7 +10,14 @@ RSpec.describe 'V3::Queries::SearchIngredientFromJanCode', type: :request do
       it 'found from database' do
         get v3_queries_search_ingredient_from_jan_code_path, params: { jan_code: ingredient.jan_code }
         expect(response).to be_successful
-        expect(JSON.parse(response.body)['ingredient']['name']).to eq ingredient.name
+        expect(JSON.parse(response.body)['ingredients'][0]['name']).to eq ingredient.name
+        expect(JSON.parse(response.body)['found_from_database']).to eq true
+      end
+
+      xit 'found from amazon products' do
+        get v3_queries_search_ingredient_from_jan_code_path, params: { jan_code: ingredient.jan_code }
+        expect(response).to be_successful
+        expect(JSON.parse(response.body)['ingredients'][0]['name']).to eq ingredient.name
         expect(JSON.parse(response.body)['found_from_database']).to eq true
       end
 
