@@ -1,5 +1,5 @@
 type CocktailImgProps = {
-  drinkMethodId: number;
+  drinkMethodId: number | undefined;
   width: number | string;
   height: number | string;
 };

@@ -3,13 +3,11 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useEffect } from "react";
 import { CocktailImg } from "src/components/CocktailImg";
 import { ContentWrapper } from "src/components/ContentWrapper";
 import { Layout } from "src/components/Layout";
-import { Context } from "src/utils/contexts/provider";
-import { pushHome } from "src/utils/hooks/v2/pushHome";
-import { useGetRecipe } from "src/utils/hooks/v2/useGetRecipe";
+import { useGetRecipe } from "src/utils/hooks/v3/useGetRecipe";
 
 const ToCocktailsLink: React.VFC = () => {
   return (
@@ -27,7 +25,11 @@ const ToCocktailsLink: React.VFC = () => {
 export const CocktailRecipe: React.VFC = () => {
   const router = useRouter();
   const cocktailId = Number(router?.query.id);
-  const { loading, recipe } = useGetRecipe(cocktailId);
+  const { loading, recipe, getRecipeFn } = useGetRecipe(cocktailId);
+
+  useEffect(() => {
+    getRecipeFn();
+  }, [getRecipeFn]);
 
   // console.log(recipe.drinkMethodId);
 
@@ -52,13 +54,13 @@ export const CocktailRecipe: React.VFC = () => {
                 >
                   <Grid item xs={6}>
                     <CocktailImg
-                      drinkMethodId={recipe.drinkMethodId}
+                      drinkMethodId={recipe?.drinkMethod?.id}
                       width={100}
                       height={100}
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <p style={{ fontSize: "16px" }}>{recipe.name}</p>
+                    <p style={{ fontSize: "16px" }}>{recipe?.name}</p>
                   </Grid>
                 </Grid>
                 <div id="cocktailIngredients" style={{ paddingTop: "3rem" }}>
@@ -72,7 +74,7 @@ export const CocktailRecipe: React.VFC = () => {
                     材料
                   </Typography>
                   <div>
-                    {recipe?.ingredients?.map((ingredient: any, i: number) => {
+                    {recipe?.cocktailsIngredients?.map((ingredient, i) => {
                       return (
                         <Box
                           key={i}
@@ -83,11 +85,11 @@ export const CocktailRecipe: React.VFC = () => {
                           }}
                         >
                           <Typography variant="body2" gutterBottom>
-                            {ingredient.name}
+                            {ingredient?.ingredient?.name}
                           </Typography>
                           <Typography variant="body2" gutterBottom>
-                            {ingredient.amount}
-                            {ingredient.unit}
+                            {ingredient?.amount}
+                            {ingredient?.unit?.name}
                           </Typography>
                         </Box>
                       );
@@ -110,10 +112,10 @@ export const CocktailRecipe: React.VFC = () => {
                     component="div"
                     style={{ paddingTop: "0.5rem" }}
                   >
-                    {recipe.drinkMethod}
+                    {recipe?.drinkMethod?.name}
                   </Typography>
                   <Typography variant="body2" gutterBottom>
-                    {recipe.explanation}
+                    {recipe?.cookExplanation}
                   </Typography>
                 </div>
               </Box>

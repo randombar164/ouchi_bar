@@ -2,9 +2,6 @@
 import { Card, CardMedia, CardContent, Box, Button } from "@mui/material";
 import { Typography } from "@mui/material";
 
-/* type */
-import type { Ingredient } from "src/utils/types/type";
-
 /* componentごとにPropsの型を宣言 */
 type IngredientShowFieldProps = {
   ingredient: {

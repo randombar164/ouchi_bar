@@ -2,14 +2,8 @@ import { useEffect, useState } from "react";
 
 /* original component */
 import { Layout } from "src/components/Layout";
-// import { CocktailCards } from "src/components/cocktailCards";
-// import { IngredientCard } from "src/components/IngredientCard";
 import { CardList } from "src/components/CardList";
 import { IngredientShowField } from "src/components/IngredientShowField";
-
-/* type */
-// import type { Ingredient } from "src/utils/types/type";
-// import type { Cocktail } from "src/utils/types/type";
 
 /* MUI Component */
 import { Link } from "@mui/material";
@@ -18,7 +12,6 @@ import { useGetRecommendedIngredients } from "src/utils/hooks/v3/useGetRecommend
 import { CocktailImg } from "src/components/CocktailImg";
 
 const IngredientPage: React.VFC = (): JSX.Element => {
-  // おすすめの材料たち
   const {
     recommendedIngredients,
     loading,
