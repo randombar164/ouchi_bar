@@ -4,9 +4,21 @@ import { useGetApi } from "src/utils/hooks/useApi";
 import type { Cocktail } from "src/utils/types/type";
 import { Context } from "../../contexts/provider";
 
+type CocktailsResponseType = {
+  cocktails: {
+    id: number;
+    name: string;
+    strength: number;
+    drinkMethodId: number;
+    glassTypeId: number;
+    cookExplanation: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
+};
 export const useGetCocktails = () => {
   const { uuid } = useContext(Context);
-  const { loading, error, response, getFn } = useGetApi(
+  const { loading, error, response, getFn } = useGetApi<CocktailsResponseType>(
     `/v2/queries/get_cocktails?uuid=${uuid}`
   );
 
@@ -15,17 +27,6 @@ export const useGetCocktails = () => {
     getFn();
   }, [uuid, getFn]);
 
-  const cocktails: Cocktail[] = response?.cocktails?.map(
-    (cocktail: Cocktail) => {
-      return {
-        id: cocktail?.id,
-        name: cocktail?.name,
-        strength: cocktail?.strength,
-        cockExplanation: cocktail?.cockExplanation,
-        drinkMethodId: cocktail?.drinkMethodId,
-        glassTypeId: cocktail?.glassTypeId,
-      };
-    }
-  );
+  const cocktails = response?.cocktails;
   return { cocktails, loading, error, getCocktailsFn };
 };
