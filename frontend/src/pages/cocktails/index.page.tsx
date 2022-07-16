@@ -1,37 +1,52 @@
 import { useRouter } from "next/router";
 import type { VFC } from "react";
 import { useEffect } from "react";
-import { CocktailCards } from "src/components/cocktailCards";
-import { Layout } from "src/components/Layout";
-import { ToRegisterModal } from "src/components/ToRegisterModal";
 
 import { useGetCocktails } from "src/utils/hooks/v2/useGetCocktails";
-import { useGetRecipe } from "src/utils/hooks/v2/useGetRecipe";
-
-// import type { VFC } from "react";
-// import { useContext,useEffect } from "react";
-// import { CocktailCards } from "src/components/cocktailCard";
-// import { Layout } from "src/components/Layout";
-// import { ToRegisterModal } from "src/components/ToRegisterModal";
-// import { Context } from "src/utils/contexts/provider";
-// import { pushHome } from "src/utils/hooks/v2/pushHome";
-// import { useGetCocktails } from "src/utils/hooks/v2/useGetCocktails";
+// orinal component
+import { CardList } from "src/components/CardList";
+import { Layout } from "src/components/Layout";
+import { ToRegisterModal } from "src/components/ToRegisterModal";
+import { CocktailImg } from "src/components/CocktailImg";
 
 const CocktailPage: VFC = () => {
   const { cocktails, loading, error, getCocktailsFn } = useGetCocktails();
-
   useEffect(() => {
     getCocktailsFn();
   }, [getCocktailsFn]);
+
+  const items = cocktails?.map((cocktail) => {
+    return {
+      id: cocktail.id,
+      name: cocktail.name,
+      imgTag: (
+        <CocktailImg
+          drinkMethodId={cocktail.drinkMethodId}
+          height={50}
+          width={50}
+        />
+      ),
+      caption: <h2>"すぐ作れる"</h2>,
+    };
+  });
+
+  const router = useRouter();
+  const toCocktailRecipePage = (id: number) => {
+    router.push(`/cocktail-recipe/${id}`);
+  };
 
   return (
     <Layout>
       {loading && <p style={{ margin: "1rem" }}>ローディング中です</p>}
       {cocktails?.length == 0 && <ToRegisterModal name="作成可能なカクテル" />}
       {error && <p>エラーが発生しました</p>}
-      {cocktails && (
+      {items && (
         <div className="container">
-          <CocktailCards cocktails={cocktails} />
+          <CardList
+            items={items}
+            onClick={toCocktailRecipePage}
+            cardHeight={50}
+          ></CardList>
         </div>
       )}
     </Layout>
