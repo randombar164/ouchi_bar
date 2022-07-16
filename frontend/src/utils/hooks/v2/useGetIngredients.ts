@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useCallback } from "react";
 import { useGetApi } from "src/utils/hooks/useApi";
 
-import { Context } from "../contexts/provider";
+import { Context } from "../../contexts/provider";
 
 export const useGetIngredients = () => {
   const { uuid } = useContext(Context);

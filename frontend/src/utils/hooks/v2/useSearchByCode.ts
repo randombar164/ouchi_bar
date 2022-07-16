@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { useGetApi } from "./useApi";
+import { useGetApi } from "../useApi";
 
 export const useSearchByCode = () => {
   const [barcode, setBarcode] = useState("");
