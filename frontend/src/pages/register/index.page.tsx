@@ -3,7 +3,6 @@ import { useCallback, useContext } from "react";
 import { IngredientCard } from "src/components/IngredientCard";
 import { Layout } from "src/components/Layout";
 import { Context } from "src/utils/contexts/provider";
-
 import { useRegisterIngredients } from "src/utils/hooks/v2/useRegisterIngredients";
 
 import { RegisterField } from "./RegisterField";
@@ -34,7 +33,7 @@ const RegiterPage: React.VFC = (): JSX.Element => {
 
   return (
     <Layout>
-      <div className=" py-8 px-4 mt-0 w-full ">
+      <div className=" py-8 px-4 mt-0 w-full">
         <div id="registerPageTitle" className="py-6 font-bold">
           あなたが持っている材料を登録
         </div>
