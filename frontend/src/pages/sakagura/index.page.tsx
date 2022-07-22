@@ -1,13 +1,11 @@
 import type { VFC } from "react";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Layout } from "src/components/Layout";
 import { ToRegisterModal } from "src/components/ToRegisterModal";
 import { SingleShelf } from "src/pages/sakagura/SingleShelf";
-import { Context } from "src/utils/contexts/provider";
-import { pushHome } from "src/utils/hooks/v2/pushHome";
-import { useGetIngredients } from "src/utils/hooks/v2/useGetIngredients";
+import { useGetIngredients } from "src/utils/hooks/v3/useGetIngredients";
 
-const sliceByNumber = (array: any[], number: number) => {
+const sliceByNumber = (array: any, number: number) => {
   if (!array) return;
   const slicedArrLength = Math.ceil(array.length / number);
   const slicedArr = new Array(slicedArrLength).fill(0).map((_, i) => {
@@ -35,7 +33,7 @@ export const SakaguraPage: VFC = () => {
       )}
 
       {slicedIngredients &&
-        slicedIngredients.map((ingredient: any, i: number) => {
+        slicedIngredients.map((ingredient, i) => {
           return <SingleShelf key={i} items={ingredient} />;
         })}
 
