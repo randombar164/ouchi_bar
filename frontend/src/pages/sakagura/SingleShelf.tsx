@@ -20,7 +20,7 @@ export const SingleShelf: VFC<Ingredients> = ({ items }) => {
           height: 150,
         }}
       >
-        {items?.map((item, i) => {
+        {items.map((item, i) => {
           return (
             <Box key={i} sx={{ width: 40 }}>
               <img src={item.imgSrc} alt="お酒の画像" width={40} height={110} />
