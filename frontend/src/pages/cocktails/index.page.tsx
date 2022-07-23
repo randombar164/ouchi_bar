@@ -9,6 +9,9 @@ import { Layout } from "src/components/Layout";
 import { ToRegisterModal } from "src/components/ToRegisterModal";
 import { CocktailImg } from "src/components/CocktailImg";
 
+// MUI Component
+import { Box } from "@mui/material";
+
 const CocktailPage: VFC = () => {
   const { cocktails, loading, error, getCocktailsFn } = useGetCocktails();
   useEffect(() => {
@@ -42,13 +45,13 @@ const CocktailPage: VFC = () => {
       {cocktails?.length == 0 && <ToRegisterModal name="作成可能なカクテル" />}
       {error && <p>エラーが発生しました</p>}
       {items && (
-        <div className="container">
+        <Box>
           <CardList
             items={items}
             onClick={toCocktailRecipePage}
             cardHeight={50}
           ></CardList>
-        </div>
+        </Box>
       )}
     </Layout>
   );
