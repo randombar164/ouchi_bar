@@ -36,7 +36,7 @@ const IngredientPage: React.VFC = (): JSX.Element => {
               width: "auto",
               height: "100%",
               margin: "auto",
-              fontSize: "5px",
+              fontSize: "4px",
             }}
           />
         </Box>
