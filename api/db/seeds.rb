@@ -6,10 +6,22 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user = V2::User.create
-p user.uuid
-# base_ingredientの最初の10件に紐付いているconcrete_ingredientsを酒蔵に登録
-concrete_ingredient_ids = [670, 671, 76, 587, 419, 262, 256, 189, 179, 494, 495, 496, 461]
-concrete_ingredient_ids.each do |ci_id|
-  V2::UsersConcreteIngredient.create(user_id: user.id, concrete_ingredient_id: ci_id)
+# base_ingredientの最初の9件に紐付いているconcrete_ingredientsを酒蔵に登録
+ingredient_ids = [670, 671, 76, 587, 419, 262, 189, 179, 494, 495, 496, 461]
+begin
+  user = V2::User.create!
+  V2::UsersConcreteIngredient.create!(ingredient_ids.map{|i| {user_id: user.id, concrete_ingredient_id: i}})
+  puts '"V2"のユーザー作成に成功しました。'
+  puts user.uuid
+rescue => e
+  puts '"V2"のユーザー作成に失敗しました。'
+end
+
+begin
+  user = V3::User.create!
+  V3::UsersIngredient.create!(ingredient_ids.map{|i| {user_id: user.id, ingredient_id: i}})
+  puts '"V3"のユーザー作成に成功しました。'
+  puts user.uuid
+rescue => e
+  puts '"V3"のユーザー作成に失敗しました。'
 end
