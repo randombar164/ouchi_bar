@@ -1,42 +1,57 @@
-//mochikun用
 import { useRouter } from "next/router";
 import type { VFC } from "react";
 import { useEffect } from "react";
-import { CocktailCard } from "src/components/CocktailCard";
+
+import { useGetCocktails } from "src/utils/hooks/v3/useGetCocktails";
+// orignal component
+import { CardList } from "src/components/CardList";
 import { Layout } from "src/components/Layout";
 import { ToRegisterModal } from "src/components/ToRegisterModal";
-import { useGetCocktails } from "src/utils/hooks/v2/useGetCocktails";
-import { useGetRecipe } from "src/utils/hooks/v2/useGetRecipe";
+import { CocktailImg } from "src/components/CocktailImg";
 
-// import type { VFC } from "react";
-// import { useContext,useEffect } from "react";
-// import { CocktailCards } from "src/components/cocktailCard";
-// import { Layout } from "src/components/Layout";
-// import { ToRegisterModal } from "src/components/ToRegisterModal";
-// import { Context } from "src/utils/contexts/provider";
-// import { pushHome } from "src/utils/hooks/v2/pushHome";
-// import { useGetCocktails } from "src/utils/hooks/v2/useGetCocktails";
+// MUI Component
+import { Box } from "@mui/material";
 
 const CocktailPage: VFC = () => {
   const { cocktails, loading, error, getCocktailsFn } = useGetCocktails();
-
   useEffect(() => {
     getCocktailsFn();
   }, [getCocktailsFn]);
+  // console.log(cocktails);
+
+  const items = cocktails?.map((cocktail) => {
+    return {
+      id: cocktail.id,
+      name: cocktail.name,
+      imgTag: (
+        <CocktailImg
+          drinkMethodId={cocktail.drinkMethodId}
+          height={50}
+          width={50}
+        />
+      ),
+      caption: <h2>"すぐ作れる"</h2>,
+    };
+  });
 
   const router = useRouter();
-  const cocktailId = Number(router?.query.id);
-  const { recipe } = useGetRecipe(cocktailId);
+  const toCocktailRecipePage = (id: number) => {
+    router.push(`/cocktail-recipe/${id}`);
+  };
 
   return (
     <Layout>
       {loading && <p style={{ margin: "1rem" }}>ローディング中です</p>}
-      {cocktails?.length == 0 && <ToRegisterModal name='作成可能なカクテル' />}
+      {cocktails?.length == 0 && <ToRegisterModal name="作成可能なカクテル" />}
       {error && <p>エラーが発生しました</p>}
-      {cocktails && (
-        <div className='container'>
-          <CocktailCard cocktails={cocktails} recipe={recipe} />
-        </div>
+      {items && (
+        <Box>
+          <CardList
+            items={items}
+            onClick={toCocktailRecipePage}
+            cardHeight={50}
+          ></CardList>
+        </Box>
       )}
     </Layout>
   );
