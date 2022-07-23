@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
+import { useGetRecommendedIngredients } from "src/utils/hooks/v3/useGetRecommendedIngredients";
 
 /* original component */
 import { Layout } from "src/components/Layout";
 import { CardList } from "src/components/CardList";
 import { IngredientShowField } from "src/components/IngredientShowField";
+import { CocktailImg } from "src/components/CocktailImg";
 
 /* MUI Component */
 import { Link } from "@mui/material";
 import { Typography } from "@mui/material";
-import { useGetRecommendedIngredients } from "src/utils/hooks/v3/useGetRecommendedIngredients";
-import { CocktailImg } from "src/components/CocktailImg";
+import { Box } from "@mui/material";
 
 const IngredientPage: React.VFC = (): JSX.Element => {
   const {
@@ -26,7 +27,20 @@ const IngredientPage: React.VFC = (): JSX.Element => {
     return {
       id: ingredient.id,
       name: ingredient.name,
-      imgTag: <img src={ingredient?.imgSrc} />,
+      imgTag: (
+        <Box sx={{ height: 50 }}>
+          <img
+            src={ingredient?.imgSrc}
+            alt={`${ingredient?.name}の画像`}
+            style={{
+              width: "auto",
+              height: "100%",
+              margin: "auto",
+              fontSize: "5px",
+            }}
+          />
+        </Box>
+      ),
       caption: <h2>作れるカクテルがｘ個増えます</h2>,
     };
   });
