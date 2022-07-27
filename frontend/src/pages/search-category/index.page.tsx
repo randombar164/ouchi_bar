@@ -1,3 +1,7 @@
+/* MUI */
+import { Box } from "@mui/material";
+import { List } from "@mui/material";
+import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import { memo, useCallback, useContext } from "react";
 import { useState } from "react";
@@ -7,12 +11,7 @@ import data from "src/static/category_tree.json";
 import { Context } from "src/utils/contexts/provider";
 import type { concreteIngredientType } from "src/utils/types/type";
 
-import { useGetIngredientsFromCategory } from "../../utils/hooks/useGetIngredientsFromCategory";
-
-/* MUI */
-import { Box } from "@mui/material";
-import { List } from "@mui/material";
-import { Button } from "@mui/material";
+import { useGetIngredientsFromCategory } from "../../utils/hooks/v3/useGetIngredientsFromCategory";
 
 type NodeProps = {
   id: number;
@@ -66,7 +65,6 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
 
   const { response, getIngredientsFromCategory } =
     useGetIngredientsFromCategory();
-
   const back = useCallback(() => {
     setRouteIds([...routeIds.slice(0, -1)]); //pop_back
     let parent: NodeProps = data.category;
@@ -148,36 +146,38 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
           </Box>
         )}
 
-        {!hasChild && response?.concreteIngredients?.length > 0 && (
-          <Box sx={{ px: 2 }}>
-            <Box
-              sx={{
-                fontWeight: "bold",
-                fontSize: "14px",
-                color: "#A7B6C8",
-                py: 2,
-                px: 1,
-              }}
-            >
-              商品を選択（１つ選んでタップしてください）
+        {!hasChild &&
+          response?.userIngredients &&
+          response?.userIngredients?.length > 0 && (
+            <Box sx={{ px: 2 }}>
+              <Box
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "14px",
+                  color: "#A7B6C8",
+                  py: 2,
+                  px: 1,
+                }}
+              >
+                商品を選択（１つ選んでタップしてください）
+              </Box>
+              {response?.userIngredients?.map((ingredient: any, i: any) => {
+                return (
+                  <div className="my-3" key={i}>
+                    <IngredientCard //FIXME
+                      canDelete={false}
+                      imgSrc={ingredient.imgSrc}
+                      name={ingredient.name}
+                      onClick={() => {
+                        return handleClick(ingredient);
+                      }}
+                    />
+                  </div>
+                );
+              })}
             </Box>
-            {response?.concreteIngredients?.map((ingredient: any, i: any) => {
-              return (
-                <div className="my-3" key={i}>
-                  <IngredientCard //FIXME
-                    canDelete={false}
-                    imgSrc={ingredient.imgSrc}
-                    name={ingredient.name}
-                    onClick={() => {
-                      return handleClick(ingredient);
-                    }}
-                  />
-                </div>
-              );
-            })}
-          </Box>
-        )}
-        {!hasChild && response?.concreteIngredients?.length == 0 && (
+          )}
+        {!hasChild && response?.userIngredients?.length == 0 && (
           <Box sx={{ py: 10 }}>
             <Box
               sx={{
