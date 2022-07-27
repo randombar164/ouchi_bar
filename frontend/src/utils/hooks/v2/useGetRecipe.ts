@@ -26,6 +26,7 @@ export const useGetRecipe = (cocktailId: number) => {
     name: cocktail?.name,
     strength: cocktail?.strength,
     explanation: cocktail?.cookExplanation,
+    drinkMethodId: cocktail?.drinkMethod?.id,
     drinkMethod: cocktail?.drinkMethod?.name,
     glassType: cocktail?.glassType?.name,
     ingredients: ingredients,

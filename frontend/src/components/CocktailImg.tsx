@@ -1,29 +1,39 @@
 type CocktailImgProps = {
-  recipe: any;
-  width: number;
-  height: number | "";
+  drinkMethodId: number | undefined;
+  width: number | string;
+  height: number | string;
 };
 
-type DrinkMethod = "Build" | "Shake" | "Blend" | "Stir";
+import { Box } from "@mui/material";
 
-export const CocktailImg: React.VFC<CocktailImgProps> = ({
-  recipe,
-  width,
-  height,
-}) => {
-  const drinkMethod: DrinkMethod = recipe.drnkmethod;
-
+export const CocktailImg: React.VFC<CocktailImgProps> = (props) => {
   return (
-    <div>
-      {drinkMethod === "Build" ? (
-        <img src='/build.png' width={width} height={height} alt='ビルド' />
-      ) : drinkMethod === "Shake" ? (
-        <img src='/shake.png' width={width} height={height} alt='シェイク' />
-      ) : drinkMethod === "Blend" ? (
-        <img src='/blend.png' width={width} height={height} alt='ブレンド' />
+    <Box sx={{ width: props.width, height: props.height }}>
+      {props.drinkMethodId === 1 ? (
+        <img
+          src="/build.png"
+          style={{ height: "100%", width: "auto", margin: "0 auto" }}
+          alt="ビルド"
+        />
+      ) : props.drinkMethodId === 2 ? (
+        <img
+          src="/shake.png"
+          style={{ height: "100%", width: "auto", margin: "0 auto" }}
+          alt="シェイク"
+        />
+      ) : props.drinkMethodId === 3 ? (
+        <img
+          src="/blend.png"
+          style={{ height: "100%", width: "auto", margin: "0 auto" }}
+          alt="ブレンド"
+        />
       ) : (
-        <img src='/stir.png' width={width} height={height} alt='ステア' />
+        <img
+          src="/stir.png"
+          style={{ height: "100%", width: "auto", margin: "0 auto" }}
+          alt="ステア"
+        />
       )}
-    </div>
+    </Box>
   );
 };

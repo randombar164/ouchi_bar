@@ -1,18 +1,17 @@
-import { useRouter } from 'next/router';
-import { memo, useCallback, useContext } from 'react';
-import { useState } from 'react';
-import { IngredientCard } from 'src/components/IngredientCard';
-import { Layout } from 'src/components/Layout';
-import data from 'src/static/category_tree.json';
-import { Context } from 'src/utils/contexts/provider';
-import type { concreteIngredientType } from 'src/utils/types/type';
-
-import { useGetIngredientsFromCategory } from '../../utils/hooks/useGetIngredientsFromCategory';
-
 /* MUI */
 import { Box } from "@mui/material";
 import { List } from "@mui/material";
 import { Button } from "@mui/material";
+import { useRouter } from "next/router";
+import { memo, useCallback, useContext } from "react";
+import { useState } from "react";
+import { IngredientCard } from "src/components/IngredientCard";
+import { Layout } from "src/components/Layout";
+import data from "src/static/category_tree.json";
+import { Context } from "src/utils/contexts/provider";
+import type { concreteIngredientType } from "src/utils/types/type";
+
+import { useGetIngredientsFromCategory } from "../../utils/hooks/v3/useGetIngredientsFromCategory";
 
 type NodeProps = {
   id: number;
@@ -30,7 +29,9 @@ const CategoryButton: React.VFC<CategoryButtonProps> = memo(
     return (
       <Button
         variant="text"
-        onClick={() => {toNext(child)}}
+        onClick={() => {
+          toNext(child);
+        }}
         sx={{
           width: "100%",
           borderBottomWidth: "1px",
@@ -38,12 +39,14 @@ const CategoryButton: React.VFC<CategoryButtonProps> = memo(
           borderStyle: "solid",
           textAlign: "left",
           color: "#505050",
-        }}>{child.name}
+        }}
+      >
+        {child.name}
       </Button>
     );
   }
 );
-CategoryButton.displayName = 'CategoryButton';
+CategoryButton.displayName = "CategoryButton";
 
 const SearchCategoryPage: React.VFC = (): JSX.Element => {
   const [routeIds, setRouteIds] = useState<number[]>([data.category.id]);
@@ -55,14 +58,13 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
   const handleClick = useCallback(
     (ingredient: concreteIngredientType) => {
       setConcreteIngredients([...concreteIngredients, ingredient]);
-      router.push('/register');
+      router.push("/register");
     },
     [concreteIngredients, router, setConcreteIngredients]
   );
 
   const { response, getIngredientsFromCategory } =
     useGetIngredientsFromCategory();
-
   const back = useCallback(() => {
     setRouteIds([...routeIds.slice(0, -1)]); //pop_back
     let parent: NodeProps = data.category;
@@ -96,31 +98,38 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
     router.reload();
   }, [router]);
 
-
   return (
     <Layout>
       <Box sx={{ background: "#EEEEEE" }}>
         {hasChild && (
           <Box>
-            <Box sx={{ 
-              fontWeight: "bold", 
-              fontSize: "14px", 
-              color: "#A7B6C8", 
-              py: 2, 
-              px: 1 
-              }}>カテゴリを選択</Box>
-            <List sx={{
-              width: "100%",
-              overflowY: "scroll",
-              backgroundColor: "white",
-            }}>
+            <Box
+              sx={{
+                fontWeight: "bold",
+                fontSize: "14px",
+                color: "#A7B6C8",
+                py: 2,
+                px: 1,
+              }}
+            >
+              カテゴリを選択
+            </Box>
+            <List
+              sx={{
+                width: "100%",
+                overflowY: "scroll",
+                backgroundColor: "white",
+              }}
+            >
               {current.children.map((child: NodeProps, i: number) => {
                 return <CategoryButton key={i} toNext={toNext} child={child} />;
               })}
             </List>
             {routeIds.length >= 1 && (
               <Button
-                onClick={() => {back()}}
+                onClick={() => {
+                  back();
+                }}
                 sx={{
                   py: 2,
                   px: 1,
@@ -128,47 +137,62 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
                   fontWeight: "bold",
                   color: "#A7B6C8",
                   outline: "2px solid transparent",
-                  outlineOffset: "2px"
-                }}>←戻る</Button>
+                  outlineOffset: "2px",
+                }}
+              >
+                ←戻る
+              </Button>
             )}
           </Box>
         )}
 
-        {!hasChild && response?.concreteIngredients?.length > 0 && (
-          <Box sx={{ px: 2 }}>
-            <Box sx={{ 
-              fontWeight: "bold", 
-              fontSize: "14px", 
-              color: "#A7B6C8", 
-              py: 2, 
-              px: 1 
-              }}>商品を選択（１つ選んでタップしてください）</Box>
-            {response?.concreteIngredients?.map((ingredient: any, i: any) => {
-              return (
-                <div className="my-3" key={i}>
-                  <IngredientCard //FIXME
-                    canDelete={false}
-                    imgSrc={ingredient.imgSrc}
-                    name={ingredient.name}
-                    onClick={() => {
-                      return handleClick(ingredient);
-                    }}
-                  />
-                </div>
-              );
-            })}
-          </Box>
-        )}
-        {!hasChild && response?.concreteIngredients?.length == 0 && (
+        {!hasChild &&
+          response?.userIngredients &&
+          response?.userIngredients?.length > 0 && (
+            <Box sx={{ px: 2 }}>
+              <Box
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "14px",
+                  color: "#A7B6C8",
+                  py: 2,
+                  px: 1,
+                }}
+              >
+                商品を選択（１つ選んでタップしてください）
+              </Box>
+              {response?.userIngredients?.map((ingredient: any, i: any) => {
+                return (
+                  <div className="my-3" key={i}>
+                    <IngredientCard //FIXME
+                      canDelete={false}
+                      imgSrc={ingredient.imgSrc}
+                      name={ingredient.name}
+                      onClick={() => {
+                        return handleClick(ingredient);
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </Box>
+          )}
+        {!hasChild && response?.userIngredients?.length == 0 && (
           <Box sx={{ py: 10 }}>
-            <Box sx={{
-              fontWeight: "bold",
-              color: "#505050",
-              textAlign: "center",
-            }}>検索結果が０件でした</Box>
+            <Box
+              sx={{
+                fontWeight: "bold",
+                color: "#505050",
+                textAlign: "center",
+              }}
+            >
+              検索結果が０件でした
+            </Box>
             <Button
               variant="text"
-              onClick={() => {onReload()}}
+              onClick={() => {
+                onReload();
+              }}
               sx={{
                 py: 2,
                 px: 1,
@@ -177,9 +201,13 @@ const SearchCategoryPage: React.VFC = (): JSX.Element => {
                 fontWeight: "bold",
                 color: "#A7B6C8",
                 outline: "2px solid transparent",
-                outlineOffset: "2px"
-              }}>←戻る</Button>
-          </Box>)}
+                outlineOffset: "2px",
+              }}
+            >
+              ←戻る
+            </Button>
+          </Box>
+        )}
       </Box>
     </Layout>
   );
